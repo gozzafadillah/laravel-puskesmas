@@ -13,6 +13,7 @@ use App\Http\Controllers\CekAkunController;
 use App\Http\Controllers\DaftarAkunPasienController;
 use App\Http\Controllers\ListObatController;
 use App\Http\Controllers\ProfileEditController;
+use App\Http\Controllers\TambahObatCategoryController;
 use App\Http\Controllers\TambahObatController;
 
 
@@ -25,7 +26,7 @@ use App\Http\Controllers\TambahObatController;
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "web" middleware group. Make something great!
 |
-*/ 
+*/
 
 Route::redirect('/', '/posts');
 
@@ -39,7 +40,7 @@ Route::get('/about', function () {
     ]);
 });
 
-Route::get('/posts', function(){
+Route::get('/posts', function () {
     return view('posts', [
         'active' => 'posts',
         "title" => "Post"
@@ -49,7 +50,7 @@ Route::get('/posts', function(){
 Route::get('/posts', [PostController::class, 'index']);
 Route::get('posts/{post:slug}', [PostController::class, 'show']);
 
-Route::get('/categories', function() {
+Route::get('/categories', function () {
     return view('categories', [
         'title' => 'Kategori',
         'active' => 'categories',
@@ -64,7 +65,7 @@ Route::post('/logout', [LoginController::class, 'logout']);
 Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');
 Route::post('/register', [RegisterController::class, 'store']);
 
-Route::get('/dashboard', function() {
+Route::get('/dashboard', function () {
     return view('dashboard.index');
 })->middleware('auth');
 
@@ -95,7 +96,9 @@ Route::get('/dashboard/listobat', [ListObatController::class, 'index'])->middlew
 
 //farmasi
 Route::resource('/dashboard/tambahobat', TambahObatController::class)->middleware('farmasi');
-
-
-
-
+Route::get("/dashboard/tambahacategoryobat", [TambahObatCategoryController::class, 'index']);
+Route::get('/dashboard/tambahacategoryobat/create', [TambahObatCategoryController::class, 'create']);
+Route::post('/dashboard/tambahacategoryobat', [TambahObatCategoryController::class, 'store']);
+Route::get('/dashboard/tambahacategoryobat/edit/{obatCategory}', [TambahObatCategoryController::class, 'edit']);
+Route::put('/dashboard/tambahacategoryobat/edit/{obatCategory}', [TambahObatCategoryController::class, 'update']);
+Route::delete('/dashboard/tambahacategoryobat/delete/{obatCategory}', [TambahObatCategoryController::class, 'destroy']);

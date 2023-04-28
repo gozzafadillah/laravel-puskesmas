@@ -21,22 +21,22 @@ class Post extends Model
         //         ->orwhere('body', 'like', '%' . $filters['search']. '%'); //mencari pada bagian isi/body
         //  }
 
-         $query->when($filters['search'] ?? false, function($query, $search){
-            return $query->where('title', 'like', '%' . $search. '%') //mencari pada bagian juudul
-                ->orwhere('body', 'like', '%' .$search. '%'); //mencari pada bagian isi/body
-         });
+        $query->when($filters['search'] ?? false, function ($query, $search) {
+            return $query->where('title', 'like', '%' . $search . '%') //mencari pada bagian juudul
+                ->orwhere('body', 'like', '%' . $search . '%'); //mencari pada bagian isi/body
+        });
 
-          $query->when($filters['category'] ?? false, function($query, $category){
-            return $query->whereHas('category', function($query) use ($category) { //cari data berdasarkan kategori yang sama
+        $query->when($filters['category'] ?? false, function ($query, $category) {
+            return $query->whereHas('category', function ($query) use ($category) { //cari data berdasarkan kategori yang sama
                 $query->where('slug', $category);
             });
-         });
+        });
 
-          $query->when($filters['author'] ?? false, function($query, $author){
-            return $query->whereHas('author', function($query) use ($author) { //cari data berdasarkan kategori yang sama
+        $query->when($filters['author'] ?? false, function ($query, $author) {
+            return $query->whereHas('author', function ($query) use ($author) { //cari data berdasarkan kategori yang sama
                 $query->where('username', $author);
             });
-         });
+        });
     }
 
     public function category()
@@ -46,7 +46,7 @@ class Post extends Model
 
     public function author()
     {
-        return $this->belongsTo(User::class, 'user_id');    
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function getRouteKeyName()
@@ -54,7 +54,7 @@ class Post extends Model
         return 'slug';
     }
 
-     public function sluggable(): array
+    public function sluggable(): array
     {
         return [
             'slug' => [
@@ -62,5 +62,4 @@ class Post extends Model
             ]
         ];
     }
-
 }
