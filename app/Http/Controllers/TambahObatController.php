@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Obat;
+use App\Models\ObatCategory;
 
 class TambahObatController extends Controller
 {
@@ -12,15 +13,15 @@ class TambahObatController extends Controller
      */
     public function index(Request $request)
     {
-        $search = $request->input('search');
-        $obats = Obat::where('nama_obat', 'like', '%'.$search.'%')
-                  ->orWhere('kode_obat', 'like', '%'.$search.'%')
-                  ->get();
-        // return view('dashboard.tambahobat.create', compact('obats'), [
-        //     'obats' => Obat::all()
-        // ]);
-         return view('dashboard.tambahobat.create', compact('obats'));
-        
+        // $search = $request->input('search');
+        // $obats = Obat::where('nama_obat', 'like', '%' . $search . '%')
+        //     ->orWhere('kode_obat', 'like', '%' . $search . '%')
+        //     ->get();
+        $obats = Obat::with('category')->get();
+        return view('dashboard.tambahobat.index', [
+            'obats' => $obats,
+        ]);
+        // return view('dashboard.tambahobat.index', compact('obats'));
     }
 
     /**
@@ -28,7 +29,13 @@ class TambahObatController extends Controller
      */
     public function create()
     {
-        return view('dashboard.tambahobat.create');
+        return view(
+            'dashboard.tambahobat.create',
+            [
+                'categories' => ObatCategory::all(),
+                'title' => 'Tambah Obat Puskesmas',
+            ]
+        );
     }
 
     /**
@@ -61,30 +68,29 @@ class TambahObatController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Obat $obat)
+    public function edit($kode_obat)
     {
-        return view('dashboard.tambahobat.create', [
-            'obat' => $obat
+        $obat = Obat::where('kode_obat', $kode_obat)->firstOrFail();
+        return view('dashboard.tambahobat.edit', [
+            'obat' => $obat,
+            'categories' => ObatCategory::all(),
+            'title' => "Edit Obat Puskesmas"
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Obat $obat)
+    public function update(Request $request, $kode_obat)
     {
-        $rules = [
+        $validatedData = $request->validate([
             'nama_obat' => 'required',
             'kategori_obat' => 'required',
             'stok' => 'required',
             'harga' => 'required'
-        ];
+        ]);
 
-        
-
-        $validatedData = $request->validate($rules);
-        // @ddd();
-        Obat::where('kode_obat', $request->kode_obat)
+        Obat::where('kode_obat', $kode_obat)
             ->update($validatedData);
 
         return redirect('/dashboard/tambahobat')->with('status', 'Postingan Berhasil di Edit!');
@@ -95,7 +101,6 @@ class TambahObatController extends Controller
      */
     public function destroy(Request $request, Obat $obat)
     {
-        // dd($request->kode_obat);
         Obat::destroy($request->kode_obat);
 
         return redirect('/dashboard/tambahobat')->with('status', 'Obat Berhasil dihapus!');

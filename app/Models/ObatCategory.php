@@ -10,4 +10,9 @@ class ObatCategory extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+
+    public function obats()
+    {
+        return $this->hasMany(Obat::class);
+    }
 }

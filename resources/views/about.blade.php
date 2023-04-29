@@ -7,4 +7,3 @@
     <img src="img/{{ $image }}" alt="Roro Jonggarang" width="200" class="img-thumbnail rounded-circle">
     <script src="css/style.css"></script>
 @endsection
-    

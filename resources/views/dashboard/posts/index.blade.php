@@ -7,7 +7,7 @@
     
     <div class="table-responsive">
         <a href="/dashboard/posts/create"  class="btn btn-primary mb-3"><span data-feather="plus-circle"></span> Buat Baru</a>
-
+    
         @if (session()->has('status'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                 {{  session('status') }}
@@ -46,5 +46,7 @@
           </tbody>
         </table>
       </div>
+
+    
 
 @endsection

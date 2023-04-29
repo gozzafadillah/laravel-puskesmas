@@ -18,4 +18,9 @@ class Obat extends Model
     {
         return 'kode_obat';
     }
+
+    public function category()
+    {
+        return $this->belongsTo(ObatCategory::class, 'kategori_obat', 'id');
+    }
 }

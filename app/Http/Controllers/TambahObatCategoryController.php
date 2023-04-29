@@ -120,9 +120,12 @@ class TambahObatCategoryController extends Controller
             Storage::delete($obatCategory->image);
         }
 
-        ObatCategory::destroy($obatCategory->id);
+        $obatCategory->delete();
 
-        return redirect('/dashboard/tambahacategoryobat')->with('status', 'Postingan Berhasil dihapus!');
+        return response()->json([
+            'success' => true,
+            'message' => 'Data has been deleted.'
+        ]);
     }
 
     // generate slug for name category

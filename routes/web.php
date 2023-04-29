@@ -15,7 +15,8 @@ use App\Http\Controllers\ListObatController;
 use App\Http\Controllers\ProfileEditController;
 use App\Http\Controllers\TambahObatCategoryController;
 use App\Http\Controllers\TambahObatController;
-
+use App\Models\ObatCategory;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -95,10 +96,36 @@ Route::get('/dashboard/listobat', [ListObatController::class, 'index'])->middlew
 
 
 //farmasi
+// add obat
 Route::resource('/dashboard/tambahobat', TambahObatController::class)->middleware('farmasi');
-Route::get("/dashboard/tambahacategoryobat", [TambahObatCategoryController::class, 'index']);
-Route::get('/dashboard/tambahacategoryobat/create', [TambahObatCategoryController::class, 'create']);
-Route::post('/dashboard/tambahacategoryobat', [TambahObatCategoryController::class, 'store']);
-Route::get('/dashboard/tambahacategoryobat/edit/{obatCategory}', [TambahObatCategoryController::class, 'edit']);
-Route::put('/dashboard/tambahacategoryobat/edit/{obatCategory}', [TambahObatCategoryController::class, 'update']);
-Route::delete('/dashboard/tambahacategoryobat/delete/{obatCategory}', [TambahObatCategoryController::class, 'destroy']);
+// add category
+Route::get("/dashboard/tambahacategoryobat", [TambahObatCategoryController::class, 'index'])->middleware('farmasi');
+Route::get('/dashboard/tambahacategoryobat/create', [TambahObatCategoryController::class, 'create'])->middleware('farmasi');
+Route::post('/dashboard/tambahacategoryobat', [TambahObatCategoryController::class, 'store'])->middleware('farmasi');
+Route::get('/dashboard/tambahacategoryobat/edit/{obatCategory}', [TambahObatCategoryController::class, 'edit'])->middleware('farmasi');
+Route::put('/dashboard/tambahacategoryobat/edit/{obatCategory}', [TambahObatCategoryController::class, 'update'])->middleware('farmasi');
+Route::delete('/dashboard/tambahacategoryobat/delete/{obatCategory}', [TambahObatCategoryController::class, 'destroy'])->middleware('farmasi');
+Route::get('/search/categoryobat', function (Request $request) {
+    $output = "";
+    $query = $request->input('query');
+    $results = ObatCategory::where('name', 'like', '%' . $query . '%')->get();
+    $output = '';
+    foreach ($results as $key => $result) {
+        $output .= '
+        <tr>
+            <td>' . ($key + 1) . '</td>
+            <td>' . $result->name . '</td>
+            <td>' . $result->slug . '</td>
+            <td>
+                <img style="width: 12rem" src="' . asset('storage/' . $result->image) . '" alt="...">
+            </td>
+            <td>
+            <div class="d-flex">
+            <a class="badge bg-primary border-0" href="/dashboard/tambahacategoryobat/edit/' . $result->id . '"><span data-feather="edit"></span></a> 
+            <a href="#" class="btn btn-danger btn-sm" onclick="if(confirm("Are you sure you want to delete this data?")) { deleteData({{ ' . $result->id . ' }}, {{' . ($key + 1) . '}}); }"><span data-feather="trash"></span></a>
+        </div>
+            </td>
+        </tr>';
+    }
+    return response($output);
+})->name('search')->middleware('farmasi');
