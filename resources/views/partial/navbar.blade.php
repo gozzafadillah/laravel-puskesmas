@@ -1,3 +1,13 @@
+<style>
+    a.hover-bg {
+        text-decoration: none;
+    }
+
+    a.hover-bg:hover {
+        background-color: gray;
+    }
+</style>
+
 <div class="position-absolute px-3 py-1 text-light col-md "
     style="background-color: rgba(0, 0, 0, 0.7); font-size: 12px;">
     <?php setlocale(LC_TIME, 'id_ID'); ?>
@@ -78,7 +88,7 @@
     <ul class="navbar-nav mr-3">
         <li class="nav-item">
             <!-- Tombol cari -->
-            <button class="btn btn-outline-secondary bg-dark border-0 d-inline text-light" type="button"
+            <button class="btn btn-outline-secondary bg-light text-dark border-0 d-inline text-light" type="button"
                 data-bs-toggle="modal" data-bs-target="#tombolcari"><i class="bi bi-search"></i> Pencarian</button>
 
             <!-- Modal -->
@@ -92,21 +102,28 @@
                                 aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form action="/posts">
-
-                                @if (request('category'))
-                                    <input type="hidden" name="category" value="{{ request('category') }}">
-                                @endif
-                                @if (request('author'))
-                                    <input type="hidden" name="author" value="{{ request('author') }}">
-                                @endif
-
+                            <form onkeypress="return event.keyCode !== 13;" method="GET"
+                                action="{{ route('searchPost') }}" id="search-form">
                                 <div class="input-group mb-3" style="width: 450px;">
-                                    <input type="text" class="form-control" placeholder="Search..." name="search"
-                                        value="{{ request('search') }}">
-                                    <button class="btn btn-dark" type="submit"><i class="bi bi-search"></i></button>
+                                    <input autocomplete="off" type="text" class="form-control" id="search-post"
+                                        placeholder="Search..." name="search">
+                                    <button class="btn btn-dark" type="button"><i class="bi bi-search"></i></button>
                                 </div>
                             </form>
+
+                            <div id="result-post"></div>
+
+                            {{-- <a style="text-decoration: none" class="text-dark" href="#">
+                                <h5>Hello</h5>
+                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nemo omnis assumenda ad,
+                                    numquam distinctio commodi nam esse fugit modi praesentium.</p>
+                            </a>
+                            <a style="text-decoration: none" class="text-dark" href="#">
+                                <h5>Hello</h5>
+                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nemo omnis assumenda ad,
+                                    numquam distinctio commodi nam esse fugit modi praesentium.</p>
+                            </a> --}}
+
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
@@ -118,3 +135,30 @@
         </li>
     </ul>
 </nav>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var typingTimer;
+        var doneTypingInterval = 200;
+
+        $('#search-post').on('keyup', function() {
+            clearTimeout(typingTimer);
+            typingTimer = setTimeout(doneTyping, doneTypingInterval);
+        });
+
+        function doneTyping() {
+            var query = $('#search-post').val();
+            if (query.trim() === '') { // periksa apakah query kosong atau hanya berisi spasi
+                $('#result-post').html(''); // kosongkan hasil pencarian
+                return;
+            }
+
+            $.get('{{ route('searchPost') }}', {
+                query: query
+            }, function(data) {
+                $('#result-post').html(data);
+                feather.replace();
+            });
+        }
+    });
+</script>
