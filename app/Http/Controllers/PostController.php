@@ -51,11 +51,30 @@ class PostController extends Controller
         } else {
             foreach ($results as $result) {
                 $output .= '
-                <a class="btn-search-post text-dark hover-bg" href="/posts/' . $result->slug . '">
-                <h5>' . $result->title . '</h5>
-                <p class="mb-1" disabled>' . $result->category->name . '</p>
-                <p>' . $result->excerpt . '</p>
-                </a>
+                <hr>
+                <div class="btn-search-post">
+                    <a class="text-dark" href="/posts/' . $result->slug . '">
+                        <div class="post-content">
+                            <h5>' . $result->title . '</h5>
+                            <p class="mb-1" disabled>' . $result->category->name . '</p>
+                            <p>' . $result->excerpt . '</p>
+                        </div>
+                    </a>
+                </div>
+                <style>
+                    .btn-search-post a {
+                        text-decoration: none;
+                    }
+                    .post-content {
+                        padding: 10px;
+                        transition: all 0.2s ease-in-out;
+                    }
+                    .post-content:hover {
+                        background-color: grey;
+                        color: white;
+                        cursor: pointer;
+                    }
+                </style>
                 ';
             }
         }
