@@ -48,6 +48,8 @@ Route::get('/posts', function () {
     ]);
 });
 
+Route::get("/search/post", [PostController::class, 'search'])->name('searchPost');
+
 Route::get('/posts', [PostController::class, 'index']);
 Route::get('posts/{post:slug}', [PostController::class, 'show']);
 

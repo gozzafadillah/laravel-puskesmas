@@ -11,7 +11,7 @@ class PostController extends Controller
 {
     public function index()
     {
-        
+
         $title = '';
         if (request('category')) {
             $category = Category::firstWhere('slug', request('category'));
@@ -22,7 +22,7 @@ class PostController extends Controller
             $author = User::firstWhere('username', request('author'));
             $title = ' Postingan dari ' . $author->name;
         };
-        
+
         return view('posts', [
             "title" => $title,
             'active' => 'posts',
@@ -33,10 +33,32 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
-        return view ('post', [
+        return view('post', [
             "title" => "Postingan",
             'active' => 'posts',
             "post" => $post
         ]);
+    }
+
+    public function search(Request $request)
+    {
+        $output = "";
+        $query = $request->input('query');
+        $results = Post::where('title', 'like', '%' . $query . '%')->get();
+
+        if (count($results) == 0) {
+            $output = '<p>Tidak ada hasil yang ditemukan</p>';
+        } else {
+            foreach ($results as $result) {
+                $output .= '
+                <a class="btn-search-post text-dark hover-bg" href="/posts/' . $result->slug . '">
+                <h5>' . $result->title . '</h5>
+                <p class="mb-1" disabled>' . $result->category->name . '</p>
+                <p>' . $result->excerpt . '</p>
+                </a>
+                ';
+            }
+        }
+        return response($output);
     }
 }

@@ -44,7 +44,7 @@
 
             @if ($posts[0]->image)
                 <img src="{{ asset('storage/' . $posts[0]->image) }}" alt="{{ $posts[0]->category->name }}"
-                    class="img-fluid rounded mx-auto d-block" width="1200px" height="400px">
+                    class="img-fluid rounded mx-auto d-block" width="500px" height="400px">
             @else
                 <img src="https://source.unsplash.com/1200x400?{{ $posts[0]->category->name }}"
                     alt="{{ $posts[0]->category->name }}" class="img-fluid">
