@@ -87,7 +87,9 @@
                 @foreach ($users as $user)
                     @if ($user->cek == 0)
                         <tr>
-                            <td>{{ $user->name }}</td>
+                            <td>{{ $user->name }} <button onclick="showData('{{ $user->NIK }}')" class="border-0"
+                                    data-bs-toggle="modal" data-bs-target="#exampleModal"><span
+                                        data-feather="eye"></span></button></td>
                             <td>{{ $user->alamat }}</td>
                             <td>{{ $user->bpjs }} <button onclick="copyToClipboard('{{ $user->bpjs }}')"
                                     class="border-0"><span data-feather="copy"></span></button></td>
