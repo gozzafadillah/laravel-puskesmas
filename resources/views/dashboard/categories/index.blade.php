@@ -6,7 +6,7 @@
     </div>
 
     <div class="table-responsive col-lg-6">
-        <a href="/dashboard/categories/create" class="btn btn-primary mb-3"><span data-feather="plus-circle"></span> Buat
+        <a href="/dashboard/post/categories/create" class="btn btn-primary mb-3"><span data-feather="plus-circle"></span> Buat
             Baru</a>
 
         @if (session()->has('status'))
@@ -33,7 +33,7 @@
                         <td>{{ $category->slug }}</td>
                         <td>
 
-                            <form action="/dashboard/categories/{{ $category->id }}" method="post" class="d-inline">
+                            <form action="/dashboard/post/categories/{{ $category->id }}" method="post" class="d-inline">
                                 @csrf
                                 @method('delete')
                                 <button class="badge bg-danger border-0"

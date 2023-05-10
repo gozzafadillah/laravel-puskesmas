@@ -80,7 +80,7 @@ Route::get('/dashboard/posts/checkSlug', [DashboardPostController::class, 'check
 
 Route::resource('/dashboard/posts', DashboardPostController::class)->middleware('admin');
 
-Route::resource('/dashboard/categories', AdminCategoryController::class)->except('show')->middleware('admin');
+Route::resource('/dashboard/post/categories', AdminCategoryController::class)->except('show')->middleware('admin');
 
 Route::get('/dashboard/verifikasi', [CekAkunController::class, 'index'])->middleware('admin');
 

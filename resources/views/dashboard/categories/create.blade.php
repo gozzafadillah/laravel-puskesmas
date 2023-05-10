@@ -6,7 +6,7 @@
     </div>
 
     <div class="col-lg-8">
-        <form action="/dashboard/categories" method="post" class="mb-3" enctype="multipart/form-data">
+        <form action="/dashboard/post/categories" method="post" class="mb-3" enctype="multipart/form-data">
             @csrf
 
 

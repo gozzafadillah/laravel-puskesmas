@@ -109,16 +109,9 @@
                          </a>
                      </li>
                      <li class="nav-item">
-                         <a class="nav-link {{ Request::is('dashboard/posts*') ? 'active' : '' }}" href="/dashboard/posts">
+                         <a class="nav-link {{ Request::is('dashboard/post*') ? 'active' : '' }}" href="/dashboard/posts">
                              <span data-feather="file-text" class="align-text-bottom"></span>
                              Posting Blog
-                         </a>
-                     </li>
-                     <li class="nav-item">
-                         <a class="nav-link {{ Request::is('dashboard/categories*') ? 'active' : '' }}"
-                             href="/dashboard/categories">
-                             <span data-feather="grid" class="align-text-bottom"></span>
-                             Kategori Posting
                          </a>
                      </li>
                      <li class="nav-item">
