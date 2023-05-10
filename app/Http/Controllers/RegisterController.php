@@ -40,7 +40,7 @@ class RegisterController extends Controller
 
         // check dia punya bpjs atau tidak
         if ($validateData['bpjs'] == null) {
-            $validateData['cek'] = 1;
+            $validateData['cek'] = 0;
         }
 
         // Hitung umur dari tanggal lahir
