@@ -104,12 +104,12 @@ Route::get('/dashboard/listobat', [ListObatController::class, 'index'])->middlew
 // add obat
 Route::resource('/dashboard/tambahobat', TambahObatController::class)->middleware('farmasi');
 // add category
-Route::get("/dashboard/tambahacategoryobat", [TambahObatCategoryController::class, 'index'])->middleware('farmasi');
-Route::get('/dashboard/tambahacategoryobat/create', [TambahObatCategoryController::class, 'create'])->middleware('farmasi');
-Route::post('/dashboard/tambahacategoryobat', [TambahObatCategoryController::class, 'store'])->middleware('farmasi');
-Route::get('/dashboard/tambahacategoryobat/edit/{obatCategory}', [TambahObatCategoryController::class, 'edit'])->middleware('farmasi');
-Route::put('/dashboard/tambahacategoryobat/edit/{obatCategory}', [TambahObatCategoryController::class, 'update'])->middleware('farmasi');
-Route::delete('/dashboard/tambahacategoryobat/delete/{obatCategory}', [TambahObatCategoryController::class, 'destroy'])->middleware('farmasi');
+Route::get("/dashboard/tambahobatcategory", [TambahObatCategoryController::class, 'index'])->middleware('farmasi');
+Route::get('/dashboard/tambahobatcategory/create', [TambahObatCategoryController::class, 'create'])->middleware('farmasi');
+Route::post('/dashboard/tambahobatcategory', [TambahObatCategoryController::class, 'store'])->middleware('farmasi');
+Route::get('/dashboard/tambahobatcategory/edit/{obatCategory}', [TambahObatCategoryController::class, 'edit'])->middleware('farmasi');
+Route::put('/dashboard/tambahobatcategory/edit/{obatCategory}', [TambahObatCategoryController::class, 'update'])->middleware('farmasi');
+Route::delete('/dashboard/tambahobatcategory/delete/{obatCategory}', [TambahObatCategoryController::class, 'destroy'])->middleware('farmasi');
 Route::get('/search/categoryobat', function (Request $request) {
     $output = "";
     $query = $request->input('query');

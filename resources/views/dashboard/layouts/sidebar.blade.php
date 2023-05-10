@@ -183,13 +183,7 @@
                              Daftar Obat
                          </a>
                      </li>
-                     <li class="nav-item">
-                         <a class="nav-link {{ Request::is('dashboard/tambahacategoryobat*') ? 'active' : '' }}"
-                             href="/dashboard/tambahacategoryobat">
-                             <span data-feather="activity" class="align-text-bottom"></span>
-                             Kategori Obat
-                         </a>
-                     </li>
+
                  </ul>
              @endcan
          @else

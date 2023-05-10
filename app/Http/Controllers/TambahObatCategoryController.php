@@ -59,7 +59,7 @@ class TambahObatCategoryController extends Controller
 
         ObatCategory::create($newRequest);
 
-        return redirect('/dashboard/tambahacategoryobat');
+        return redirect('/dashboard/tambahobatcategory');
     }
 
     /**
@@ -88,9 +88,8 @@ class TambahObatCategoryController extends Controller
     {
         $validate = $request->validate([
             'name' => 'required',
-            'image' => 'required'
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
-
 
         $slugCategory = $this->generateSlug($validate['name']);
 
@@ -98,7 +97,9 @@ class TambahObatCategoryController extends Controller
             if ($request->oldImage) {
                 Storage::delete($request->oldImage);
             }
-            $validate['image'] = $request->file('image')->store('post-images');
+            $validate['image'] = $request->file('image')->store('obat-category');
+        } else {
+            $validate['image'] = $request->oldImage;
         }
 
         ObatCategory::where('id', "=", $obatCategory->id)
@@ -108,7 +109,7 @@ class TambahObatCategoryController extends Controller
                 'image' => $validate['image']
             ]);
 
-        return redirect('/dashboard/tambahacategoryobat');
+        return redirect('/dashboard/tambahobatcategory');
     }
 
     /**
