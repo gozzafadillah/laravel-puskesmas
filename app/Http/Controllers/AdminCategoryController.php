@@ -12,7 +12,7 @@ class AdminCategoryController extends Controller
      */
     public function index()
     {
-        
+
         return view('dashboard.categories.index', [
             'categories' => Category::all()
         ]);
@@ -37,16 +37,16 @@ class AdminCategoryController extends Controller
             'name' => 'required|unique:categories',
             'slug' => 'required',
             'image' => 'image|file|max:1024'
-            
+
         ]);
 
-        if($request->file('image')){
+        if ($request->file('image')) {
             $validatedData['image'] = $request->file('image')->store('category-images');
         }
 
         Category::create($validatedData);
 
-        return redirect('/dashboard/categories')->with('status', 'Kategori Berhasil ditambah');
+        return redirect('/dashboard/post/categories')->with('status', 'Kategori Berhasil ditambah');
     }
 
     /**
@@ -81,12 +81,12 @@ class AdminCategoryController extends Controller
     {
         $category = Category::find($category->id);
         // Cek apakah data ditemukan pada database
-    if (!$category) {
-        return redirect('/dashboard/categories')->with('status', 'Data tidak ditemukan.');
-    }
+        if (!$category) {
+            return redirect('/dashboard/post/categories')->with('status', 'Data tidak ditemukan.');
+        }
         // dd($category->id); // Cek nilai dari $obat->id
         Category::destroy($category->id);
         // // dd();
-        return redirect('/dashboard/categories')->with('status', 'Kategori Berhasil dihapus!');
+        return redirect('/dashboard/post/categories')->with('status', 'Kategori Berhasil dihapus!');
     }
 }

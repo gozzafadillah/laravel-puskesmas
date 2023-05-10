@@ -8,14 +8,55 @@ use DateTime;
 
 class DaftarAkunPasienController extends Controller
 {
-     public function index()
+    public function index()
     {
-        return view('dashboard.daftarpasien.create');
+        return view(
+            'dashboard.daftarpasien.index',
+            [
+                'users' => User::where('is_admin', '=', 0)->latest()->get()
+            ]
+        );
+    }
+
+    public function search(Request $request)
+    {
+        $output = "";
+        $query = $request->input('query');
+        $results = User::where(function ($q) use ($query) {
+            $q->where('name', 'like', '%' . $query . '%')
+                ->orWhere('NIK', 'like', '%' . $query . '%');
+        })
+            ->where('is_admin', '=', 0)
+            ->latest()
+            ->get();
+        foreach ($results as $key => $result) {
+            $output .= '
+        <tr>
+            <td>' . ($key + 1) . '</td>
+            <td>' . $result->NIK . '</td>
+            <td>' . $result->name . '</td>
+            <td>
+            <div class="d-flex">
+            <a class="badge m-1 bg-primary border-0" href="/dashboard/tambahacategoryobat/edit/' . $result->id . '"><span data-feather="edit"></span></a> 
+            <a href="#" class="badge m-1 bg-danger border-0" onclick="if(confirm("Are you sure you want to delete this data?")) { deleteData({{ ' . $result->id . ' }}, {{' . ($key + 1) . '}}); }"><span data-feather="trash"></span></a>
+        </div>
+            </td>
+        </tr>';
+        }
+
+        return response($output);
+    }
+
+    public function create()
+    {
+        return view("dashboard.daftarpasien.create", [
+            'title' => 'Tambah User'
+        ]);
     }
 
     public function store(Request $request)
     {
-         $validateData = $request->validate([
+        $validateData = $request->validate([
             'name' => 'required|Min:3|Max:255',
             'NIK' => 'required|unique:users|Min:16|Max:255',
             'alamat' => 'required|Min:3|Max:255',
@@ -41,9 +82,71 @@ class DaftarAkunPasienController extends Controller
         // Tambahkan umur ke data yang akan disimpan ke database
         $validateData['age'] = $age;
 
-        User::create($validateData); 
+        User::create($validateData);
 
         // dd('Registrasi Berhasil'); //ngecek data udah masuk apa blom
-        return redirect('/dashboard/daftarpasien')->with('status','Akun Berhasil di Buat, Silahkan Login');
+        return redirect('/dashboard/daftarpasien')->with('status', 'Akun Berhasil di Buat, Silahkan Login');
+    }
+
+    public function showUser($nik)
+    {
+        $query = User::where('nik', $nik)->firstOrFail();
+        $output = "";
+
+        $output .= '
+        <div class="modal-body" style="display: flex; flex-direction:column">
+            <div class="info-pair">
+                <p class="title"><strong>Name:</strong></p>
+                <p class="value">' . $query->name . '</p>
+            </div>
+            <div class="info-pair">
+                <p class="title"><strong>NIK:</strong></p>
+                <p class="value">' . $query->NIK . '</p>
+            </div>
+            <div class="info-pair">
+                <p class="title"><strong>Alamat:</strong></p>
+                <p class="value">' . $query->alamat . '</p>
+            </div>
+            <div class="info-pair">
+                <p class="title"><strong>Kepala Keluarga:</strong></p>
+                <p class="value">' . $query->kepalakeluarga . '</p>
+            </div>
+            <div class="info-pair">
+                <p class="title"><strong>Opsi BPJS:</strong></p>
+                <p class="value">' . $query->opsibpjs . '</p>';
+        $output .= '</div>';
+        if ($query->bpjs) {
+            $output .= '<div class="info-pair">
+                <p class="title"><strong>BPJS:</strong></p>
+                <p class="value">' . $query->bpjs . '</p>
+                </div>';
+        }
+        $output .= '<div class="info-pair">
+                <p class="title"><strong>Username:</strong></p>
+                <p class="value">' . $query->username . '</p>
+            </div>
+            <div class="info-pair">
+                <p class="title"><strong>Email:</strong></p>
+                <p class="value">' . $query->email . '</p>
+            </div>
+            <div class="info-pair">
+                <p class="title"><strong>Tanggal Lahir:</strong></p>
+                <p class="value">' . $query->tgllahir . '</p>
+            </div>
+        </div>
+        
+        <style>
+        .info-pair {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+          }
+          
+          .title {
+            margin-right: 10px;
+          }
+        </style>';
+
+        return response($output);
     }
 }

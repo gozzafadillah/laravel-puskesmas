@@ -20,7 +20,7 @@ class RegisterController extends Controller
 
     public function store(Request $request)
     {
-         $validateData = $request->validate([
+        $validateData = $request->validate([
             'name' => 'required|Min:3|Max:255',
             'NIK' => 'required|unique:users|Min:16|Max:255',
             'alamat' => 'required|Min:3|Max:255',
@@ -28,7 +28,7 @@ class RegisterController extends Controller
             'opsibpjs' => 'required',
             'is_admin' => 'required',
             'cek' => 'required',
-            'bpjs' => ($request->input('opsibpjs') === 'YA') ? 'required' : 'nullable',
+            'bpjs' => ($request->input('opsibpjs') === 'YA') ? 'required|unique:users,bpjs' : 'nullable',
             'username' => 'required|Min:3|Max:255|unique:users',
             'email' => 'required|unique:users',
             'password' => 'nullable|min:6|required_with:confirm_password|same:confirm_password',
@@ -38,6 +38,11 @@ class RegisterController extends Controller
         $validateData['password'] = bcrypt($validateData['password']);
         // $validateData['password'] = Hash::make($validateData['password']); //fitur enskripsi laravel
 
+        // check dia punya bpjs atau tidak
+        if ($validateData['bpjs'] == null) {
+            $validateData['cek'] = 1;
+        }
+
         // Hitung umur dari tanggal lahir
         $tgllahir = new DateTime($validateData['tgllahir']);
         $today = new DateTime('today');
@@ -46,9 +51,11 @@ class RegisterController extends Controller
         // Tambahkan umur ke data yang akan disimpan ke database
         $validateData['age'] = $age;
 
-        User::create($validateData); 
+        // ddd($validateData);
+
+        User::create($validateData);
 
         // dd('Registrasi Berhasil'); //ngecek data udah masuk apa blom
-        return redirect('/login')->with('status','Akun Anda Berhasil di Buat, Silahkan Login');
+        return redirect('/login')->with('status', 'Akun Anda Berhasil di Buat, Silahkan Login');
     }
 }

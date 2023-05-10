@@ -80,15 +80,18 @@ Route::get('/dashboard/posts/checkSlug', [DashboardPostController::class, 'check
 
 Route::resource('/dashboard/posts', DashboardPostController::class)->middleware('admin');
 
-Route::resource('/dashboard/categories', AdminCategoryController::class)->except('show')->middleware('admin');
+Route::resource('/dashboard/post/categories', AdminCategoryController::class)->except('show')->middleware('admin');
 
 Route::get('/dashboard/verifikasi', [CekAkunController::class, 'index'])->middleware('admin');
 
 Route::put('/dashboard/verifikasi/{user}', [CekAkunController::class, 'update'])->name('verifikasi.update');
 
+// ===> users feature admin
 Route::get('/dashboard/daftarpasien', [DaftarAkunPasienController::class, 'index'])->middleware('admin');
-
-Route::post('/dashboard/daftarpasien', [DaftarAkunPasienController::class, 'store']);
+Route::get("/search/user", [DaftarAkunPasienController::class, 'search'])->name('listUser')->middleware('admin');
+Route::get("/dashboard/daftarpasien/create", [DaftarAkunPasienController::class, 'create'])->middleware('admin');
+Route::post('/dashboard/daftarpasien', [DaftarAkunPasienController::class, 'store'])->middleware('admin');
+Route::get('/dashboard/daftarpasien/{user:nik}', [DaftarAkunPasienController::class, 'showUser'])->middleware('admin');
 
 //administrasi
 
@@ -110,7 +113,7 @@ Route::delete('/dashboard/tambahacategoryobat/delete/{obatCategory}', [TambahOba
 Route::get('/search/categoryobat', function (Request $request) {
     $output = "";
     $query = $request->input('query');
-    $results = ObatCategory::where('name', 'like', '%' . $query . '%')->get();
+    $results = ObatCategory::where('name', 'like', '%' . $query . '%')->latest()->get();
     $output = '';
     foreach ($results as $key => $result) {
         $output .= '

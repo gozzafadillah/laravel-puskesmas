@@ -32,7 +32,9 @@
                     @if ($user->cek == 2)
                         <tr>
 
-                            <td>{{ $user->name }}</td>
+                            <td>{{ $user->name }} <button onclick="showData('{{ $user->NIK }}')" class="border-0"
+                                    data-bs-toggle="modal" data-bs-target="#exampleModal"><span
+                                        data-feather="eye"></span></button></td>
                             <td>{{ $user->alamat }}</td>
                             <td>{{ $user->bpjs }} <button onclick="copyToClipboard('{{ $user->bpjs }}')"
                                     class="border-0"><span data-feather="copy"></span></button></td>
@@ -85,7 +87,9 @@
                 @foreach ($users as $user)
                     @if ($user->cek == 0)
                         <tr>
-                            <td>{{ $user->name }}</td>
+                            <td>{{ $user->name }} <button onclick="showData('{{ $user->NIK }}')" class="border-0"
+                                    data-bs-toggle="modal" data-bs-target="#exampleModal"><span
+                                        data-feather="eye"></span></button></td>
                             <td>{{ $user->alamat }}</td>
                             <td>{{ $user->bpjs }} <button onclick="copyToClipboard('{{ $user->bpjs }}')"
                                     class="border-0"><span data-feather="copy"></span></button></td>
@@ -118,6 +122,8 @@
         </table>
     </div>
 
+    @include('dashboard.layouts.modalPasien')
+
     <script>
         function copyToClipboard(text) {
             const elem = document.createElement('textarea');
@@ -140,5 +146,27 @@
         $(document).ready(function() {
             $('#example1').DataTable();
         });
+
+        function showData(nik) {
+            $.ajax({
+                url: '/dashboard/daftarpasien/' + nik,
+                method: 'GET',
+                beforeSend: function() {
+                    // show loading animation before the request is sent
+                    $('#exampleModal #modal-body').html(
+                        '<div class="text-center"><p>Tunggu Sebentar...</p></div>');
+                },
+                success: function(response) {
+                    // hide the loading animation and display the data
+                    $('#exampleModal #modal-body').html(response);
+                },
+                error: function(xhr) {
+                    alert('Terjadi kesalahan saat memuat data.');
+                }
+            });
+
+            // show the modal after the request is sent
+            $('#exampleModal').modal('show');
+        }
     </script>
 @endsection
