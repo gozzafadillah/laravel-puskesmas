@@ -6,7 +6,7 @@
     </div>
 
     <div class="col-lg-8">
-        <form action="/dashboard/tambahacategoryobat/edit/{{ $category->id }}" method="post" class="mb-5"
+        <form action="/dashboard/tambahobatcategory/edit/{{ $category->id }}" method="post" class="mb-5"
             enctype="multipart/form-data">
             @method('put')
             @csrf

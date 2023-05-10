@@ -6,7 +6,10 @@
     </div>
 
     <div class="table-responsive col-lg-6">
-        <a href='/dashboard/tambahacategoryobat/create' class="btn btn-primary mb-3"><span data-feather="plus"
+        <a href='/dashboard/tambahobat' class="btn btn-success mb-3"><span data-feather="arrow-left"
+                class="align-text-bottom"></span>
+        </a>
+        <a href='/dashboard/tambahobatcategory/create' class="btn btn-primary mb-3"><span data-feather="plus"
                 class="align-text-bottom"></span> Tambah Category</a>
 
         <form id="search-form" action="{{ route('search') }}" method="GET">
@@ -41,7 +44,7 @@
                         <td>
                             <div class="d-flex">
                                 <a class="badge bg-primary border-0"
-                                    href="/dashboard/tambahacategoryobat/edit/{{ $category->id }}"><span
+                                    href="/dashboard/tambahobatcategory/edit/{{ $category->id }}"><span
                                         data-feather="edit"></span></a>
                                 <a href="#" class="btn btn-danger btn-sm"
                                     onclick="if(confirm('Are you sure you want to delete this data?')) { deleteData({{ $category->id }}, {{ $key + 1 }}); }"><span
@@ -89,7 +92,7 @@
 
 
             $.ajax({
-                url: '/dashboard/tambahacategoryobat/delete/' + id,
+                url: '/dashboard/tambahobatcategory/delete/' + id,
                 type: 'DELETE',
                 data: {
                     _token: '{{ csrf_token() }}',
