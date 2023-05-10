@@ -6,8 +6,10 @@
     </div>
 
     <div class="table-responsive col-lg-6">
-        <a href="/dashboard/post/categories/create" class="btn btn-primary mb-3"><span data-feather="plus-circle"></span> Buat
+        <a href="/dashboard/posts" class="btn btn-primary mb-3"><span data-feather="arrow-left"></span></a>
+        <a href="/dashboard/post/categories/create" class="btn btn-primary mb-3"><span data-feather="plus"></span> Buat
             Baru</a>
+
 
         @if (session()->has('status'))
             <div class="alert alert-success alert-dismissible fade show col-lg-10" role="alert">
