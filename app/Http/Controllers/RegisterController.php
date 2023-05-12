@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use DateTime;
-use Illuminate\Support\Facades\Hash;
 // use Illuminate\Support\Facades\Hash; //fitur enskripsi laravel
 
 class RegisterController extends Controller
@@ -40,7 +39,7 @@ class RegisterController extends Controller
 
         // check dia punya bpjs atau tidak
         if ($validateData['bpjs'] == null) {
-            $validateData['cek'] = 0;
+            $validateData['cek'] = 1;
         }
 
         // Hitung umur dari tanggal lahir
