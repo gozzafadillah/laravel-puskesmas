@@ -12,6 +12,7 @@ use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\CekAkunController;
 use App\Http\Controllers\DaftarAkunPasienController;
 use App\Http\Controllers\ListObatController;
+use App\Http\Controllers\PoliController;
 use App\Http\Controllers\ProfileEditController;
 use App\Http\Controllers\TambahObatCategoryController;
 use App\Http\Controllers\TambahObatController;
@@ -85,6 +86,8 @@ Route::resource('/dashboard/post/categories', AdminCategoryController::class)->e
 Route::get('/dashboard/verifikasi', [CekAkunController::class, 'index'])->middleware('admin');
 
 Route::put('/dashboard/verifikasi/{user}', [CekAkunController::class, 'update'])->name('verifikasi.update');
+
+Route::resource("/dashboard/poli", PoliController::class)->middleware("admin");
 
 // ===> users feature admin
 Route::get('/dashboard/daftarpasien', [DaftarAkunPasienController::class, 'index'])->middleware('admin');

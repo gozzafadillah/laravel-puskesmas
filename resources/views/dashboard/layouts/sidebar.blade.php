@@ -115,6 +115,12 @@
                          </a>
                      </li>
                      <li class="nav-item">
+                         <a class="nav-link {{ Request::is('dashboard/poli*') ? 'active' : '' }}" href="/dashboard/posts">
+                             <span data-feather="activity" class="align-text-bottom"></span>
+                             Poli
+                         </a>
+                     </li>
+                     <li class="nav-item">
                          <a class="nav-link {{ Request::is('dashboard/verifikasi*') ? 'active' : '' }}"
                              href="/dashboard/verifikasi">
                              <span data-feather="user" class="align-text-bottom"></span>
@@ -124,7 +130,7 @@
                      <li class="nav-item">
                          <a class="nav-link {{ Request::is('dashboard/daftarpasien*') ? 'active' : '' }}"
                              href="/dashboard/daftarpasien">
-                             <span data-feather="user" class="align-text-bottom"></span>
+                             <span data-feather="user-plus" class="align-text-bottom"></span>
                              Daftar Akun
                          </a>
                      </li>
