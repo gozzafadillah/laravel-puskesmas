@@ -5,11 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Poli extends Model
+class Ruangan extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
-    protected $table = 'poli';
+    protected $table = "ruangan";
 
     public $incrementing = false;
     protected $primaryKey = 'kode';
@@ -19,13 +20,9 @@ class Poli extends Model
         return 'kode';
     }
 
-    public function ruangan()
+    // Model Ruangan
+    public function poli()
     {
-        return $this->hasOne(Ruangan::class, 'kode_ruangan', 'kode');
-    }
-
-    public function dokter()
-    {
-        return $this->belongsTo(Dokter::class, 'dokter');
+        return $this->belongsTo(Poli::class, 'kode', 'kode_ruangan');
     }
 }

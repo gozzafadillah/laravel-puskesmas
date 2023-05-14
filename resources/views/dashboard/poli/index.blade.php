@@ -21,6 +21,7 @@
                     <th scope="col">Nomer</th>
                     <th scope="col">Nama</th>
                     <th scope="col">Dokter</th>
+                    <th scope="col">Ruangan</th>
                     <th scope="col">Jadwal</th>
                     <th scope="col">Active</th>
                     <th scope="col">Action</th>
@@ -29,12 +30,25 @@
             <tbody>
                 @foreach ($data as $poli)
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $poli->kode }}</td>
                         <td>{{ $poli->name }}</td>
-                        <td>{{ $poli->dokter }}</td>
-                        <td>{{ $poli->jadwal }}</td>
-                        <td>{{ $poli->isActive }}</td>
-                        <td>action</td>
+                        <td>{{ $poli->Dokter->name }}</td>
+                        <td>{{ $poli->ruangan }}</td>
+                        <td>{{ $poli->jadwal . ' WIB' }}</td>
+                        <td>{!! $poli->isActive
+                            ? "<span class='badge bg-success border-0'>active</span>"
+                            : "<span class='badge bg-danger border-0'>non active</span>" !!}</td>
+                        <td>
+                            <div class="d-flex gap-2">
+                                <form action="/dashboard/poli/{{ $poli->kode }}" method="POST">
+                                    @csrf
+                                    @method('delete')
+                                    <button type="submit" class="badge bg-danger border-0"
+                                        onclick="return confirm('Apakah Kamu akan Hapus Postingan Ini?')"><span
+                                            data-feather="trash"></span></button>
+                                </form>
+                            </div>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

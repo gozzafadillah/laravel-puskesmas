@@ -115,9 +115,16 @@
                          </a>
                      </li>
                      <li class="nav-item">
-                         <a class="nav-link {{ Request::is('dashboard/poli*') ? 'active' : '' }}" href="/dashboard/posts">
+                         <a class="nav-link {{ Request::is('dashboard/poli*') ? 'active' : '' }}" href="/dashboard/poli">
                              <span data-feather="activity" class="align-text-bottom"></span>
                              Poli
+                         </a>
+                     </li>
+                     <li class="nav-item">
+                         <a class="nav-link {{ Request::is('dashboard/ruangan*') ? 'active' : '' }}"
+                             href="/dashboard/ruangan">
+                             <span data-feather="box" class="align-text-bottom"></span>
+                             Ruangan
                          </a>
                      </li>
                      <li class="nav-item">
