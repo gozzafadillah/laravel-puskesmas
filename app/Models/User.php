@@ -60,4 +60,9 @@ class User extends Authenticatable
     {
         return 'id';
     }
+
+    public function Antrian()
+    {
+        return $this->hasOne(Antrian::class, "NIK");
+    }
 }

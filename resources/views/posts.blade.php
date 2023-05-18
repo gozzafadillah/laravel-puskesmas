@@ -8,31 +8,23 @@
                 <div class="col-12 text-center">
                     <h2 class="section-title mb-3">Nomor Antrian</h2>
                 </div>
-                <!-- topic-item -->
-                <div class="col-lg-4 col-sm-6 mb-4">
-                    <button class="px-4 py-5 bg-white shadow text-center d-block match-height border-0"
-                        style="width: 300px; height: 230px;">
-                        <p class="h3">Poli Umum</p>
-                        <br>
-                        <p class="fs-1">0</p>
-                        <p class="mb-0">&nbsp;</p>
-                </div>
-                <div class="col-lg-4 col-sm-6 mb-4">
-                    <button class="px-4 py-5 bg-white shadow text-center d-block match-height border-0"
-                        style="width: 300px; height: 230px;">
-                        <p class="h3">Poli Gigi</p>
-                        <br>
-                        <p class="fs-1">0</p>
-                        <p class="mb-0">&nbsp;</p>
-                </div>
-                <div class="col-lg-4 col-sm-6 mb-4">
-                    <button class="px-4 py-5 bg-white shadow text-center d-block match-height border-0"
-                        style="width: 300px; height: 230px;">
-                        <p class="h3">Poli Lansia</p>
-                        <br>
-                        <p class="fs-1">0</p>
-                        <p class="mb-0">&nbsp;</p>
-                </div>
+                <!-- Poli-item -->
+                @foreach ($polis as $poli)
+                    <div class="col-lg-4 col-sm-6 mb-4">
+                        <div class="px-4 py-5 bg-white shadow text-center d-block match-height border-0"
+                            style="width: 300px; height: 230px;">
+                            <p class="h3">{{ $poli->name }}</p>
+                            <br>
+                            @foreach ($antrian as $antrianItem)
+                                @if ($poli->kode == $antrianItem->kode_poli)
+                                    <p class="fs-1">{{ $antrianItem->kode_antrian }}</p>
+                                    <p class="mb-0">&nbsp;</p>
+                                @endif
+                            @endforeach
+                            <p class="mb-0">&nbsp;</p>
+                        </div>
+                    </div>
+                @endforeach
             </div>
         </div>
     </section>

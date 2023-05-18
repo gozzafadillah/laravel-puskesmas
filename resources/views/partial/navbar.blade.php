@@ -37,6 +37,10 @@
                 </li>
 
                 <li class="nav-item">
+                    <a class="nav-link {{ $active === 'antrian' ? 'active' : '' }}" href="/antrian">Antrian</a>
+                </li>
+
+                <li class="nav-item">
                     <a class="nav-link {{ $active === 'about' ? 'active' : '' }}" href="/about">Tentang Puskesmas</a>
                 </li>
             </ul>
@@ -85,7 +89,7 @@
         </div>
 
     </div>
-    <ul class="navbar-nav mr-3">
+    <ul class="navbar-nav" style="margin-right:1.5rem">
         <li class="nav-item">
             <!-- Tombol cari -->
             <button class="btn btn-outline-secondary bg-light text-dark border-0 d-inline text-light" type="button"
