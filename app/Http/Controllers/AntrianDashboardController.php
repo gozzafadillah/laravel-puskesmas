@@ -7,12 +7,12 @@ use App\Models\Poli;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class AntrianController extends Controller
+class AntrianDashboardController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function showAntrians()
+    public function index()
     {
         $poli = Poli::where('isActive', 1)->latest()->get();
         $antrian = [];
@@ -30,12 +30,10 @@ class AntrianController extends Controller
             ];
             array_push($antrian, $data);
         }
-
-        return view("antrian.show", [
+        return view('dashboard.antrian.index', [
+            "antrian" => json_decode(json_encode($antrian), false),
             'polis' => Poli::where('isActive', 1)->latest()->get(),
-            'title' => 'Nomor Antrian',
             'active' => 'antrian',
-            "antrian" => json_decode(json_encode($antrian), false)
         ]);
     }
 
@@ -44,7 +42,7 @@ class AntrianController extends Controller
      */
     public function create()
     {
-        // 
+        //
     }
 
     /**
@@ -100,9 +98,9 @@ class AntrianController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Antrian $antrian)
+    public function show($kode_antrian)
     {
-        //
+        ddd(auth()->user());
     }
 
     /**
@@ -127,19 +125,5 @@ class AntrianController extends Controller
     public function destroy(Antrian $antrian)
     {
         //
-    }
-
-    public function generateKodeAntrian($kode_poli)
-    {
-        // Ambil nomor urut terakhir dari entri antrian untuk poli ini
-        $lastUrutan = $this->antrian()->max('urutan');
-
-        // Tingkatkan nomor urut
-        $urutan = $lastUrutan ? $lastUrutan + 1 : 1;
-
-        // Buat kode antrian dengan format yang diinginkan
-        $kodeAntrian = $kode_poli . '-' . str_pad($urutan, 4, '0', STR_PAD_LEFT);
-
-        return $kodeAntrian;
     }
 }

@@ -10,9 +10,11 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardPostController;
 use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\AntrianController;
+use App\Http\Controllers\AntrianDashboardController;
 use App\Http\Controllers\CekAkunController;
 use App\Http\Controllers\DaftarAkunPasienController;
 use App\Http\Controllers\ListObatController;
+use App\Http\Controllers\PasienController;
 use App\Http\Controllers\PoliController;
 use App\Http\Controllers\ProfileEditController;
 use App\Http\Controllers\RuanganController;
@@ -148,4 +150,8 @@ Route::group(['middleware' => 'auth'], function () {
         }
         return response($output);
     })->name('search')->middleware('farmasi');
+
+    // pasien dashboard
+    Route::resource("/dashboard/antrian", AntrianDashboardController::class);
+    Route::get("/dashboard/tiket", [PasienController::class, "getTIket"]);
 });
