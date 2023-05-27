@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dokter;
 use Illuminate\Http\Request;
 use App\Models\User;
 use DateTime;
@@ -79,10 +80,22 @@ class DaftarAkunPasienController extends Controller
         $today = new DateTime('today');
         $age = $tgllahir->diff($today)->y;
 
+
+
         // Tambahkan umur ke data yang akan disimpan ke database
         $validateData['age'] = $age;
 
-        User::create($validateData);
+        $user = User::create($validateData);
+
+
+        // cek apakah dia is_admin = 2 (dokter)
+        if ($validateData['is_admin'] == 2) {
+            $dataDokter = [
+                'name' => $user['name'],
+                'userid' => $user['id']
+            ];
+            Dokter::create($dataDokter);
+        }
 
         // dd('Registrasi Berhasil'); //ngecek data udah masuk apa blom
         return redirect('/dashboard/daftarpasien')->with('status', 'Akun Berhasil di Buat, Silahkan Login');

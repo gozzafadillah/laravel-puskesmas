@@ -5,23 +5,24 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Antrian extends Model
+class Ruangan extends Model
 {
     use HasFactory;
 
     protected $guarded = [];
+    protected $table = "ruangan";
 
-    protected $table = 'antrian';
     public $incrementing = false;
-    protected $primaryKey = 'kode_antrian';
+    protected $primaryKey = 'kode';
 
     public function getRouteKeyName()
     {
-        return 'kode_antrian';
+        return 'kode';
     }
 
-    public function User()
+    // Model Ruangan
+    public function poli()
     {
-        return $this->belongsTo(User::class, "NIK", "NIK");
+        return $this->belongsTo(Poli::class, 'kode', 'kode_ruangan');
     }
 }

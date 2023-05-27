@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Poli;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
@@ -23,9 +25,28 @@ class PostController extends Controller
             $title = ' Postingan dari ' . $author->name;
         };
 
+        $poli = Poli::where('isActive', 1)->latest()->get();
+        $antrian = [];
+
+        foreach ($poli as $poli) {
+            $query = DB::table('antrian')
+                ->where('kode_poli', $poli->kode)
+                ->where('status', 0)
+                ->orderByRaw("SUBSTRING_INDEX(kode_antrian, '-', -1) ASC")
+                ->value('kode_antrian');
+
+            $data = [
+                "kode_antrian" => $query,
+                "kode_poli" => $poli->kode
+            ];
+            array_push($antrian, $data);
+        }
+
         return view('posts', [
             "title" => $title,
             'active' => 'posts',
+            'polis' => Poli::where('isActive', 1)->latest()->get(),
+            'antrian' => json_decode(json_encode($antrian), false),
             // "posts" => Post::all()
             "posts" => Post::latest()->filter(request(['search', 'category', 'author']))->paginate(7)->withQueryString() //menampilkan 7per halaman dan data/postingan terbaru
         ]);
