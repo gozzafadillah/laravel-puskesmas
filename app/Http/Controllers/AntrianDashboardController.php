@@ -26,7 +26,7 @@ class AntrianDashboardController extends Controller
 
             $data = [
                 "kode_antrian" => $query,
-                "kode_poli" => $poli->kode
+                "kode_poli" => $poli->kode_poli
             ];
             array_push($antrian, $data);
         }

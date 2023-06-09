@@ -13,7 +13,7 @@
     <label for="kode_poli" class="form-label">Pilih Poli</label>
     <select class="form-control" name="kode_poli" id="kode_poli">
       @foreach ($polis as $poli)
-        <option value="{{ $poli->kode }}">{{ $poli->name }}</option>
+        <option value="{{ $poli->kode_poli }}">{{ $poli->name }}</option>
       @endforeach
     </select>
   </div>

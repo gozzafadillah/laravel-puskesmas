@@ -15,6 +15,7 @@ use App\Http\Controllers\CekAkunController;
 use App\Http\Controllers\DaftarAkunPasienController;
 use App\Http\Controllers\ListObatController;
 use App\Http\Controllers\PasienController;
+use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\PoliController;
 use App\Http\Controllers\ProfileEditController;
 use App\Http\Controllers\RekamMedisController;
@@ -113,7 +114,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard/daftarpasien/{user:nik}', [DaftarAkunPasienController::class, 'showUser'])->middleware('admin');
 
     //administrasi
-
+    Route::get('/dashboard/pembayaran/list', [PembayaranController::class, 'index'])->middleware('administrasi');
 
     //dokter
     Route::get('/dashboard/listobat', [ListObatController::class, 'index'])->middleware('dokter');

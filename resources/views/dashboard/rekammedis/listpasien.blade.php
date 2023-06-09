@@ -9,7 +9,7 @@
       <h5>{{ $poli['name'] }}</h5>
     </div>
     <div class="card-body">
-      <h5 class="card-title">Kode: {{ $poli['kode'] }}</h5>
+      <h5 class="card-title">Kode: {{ $poli['kode_poli'] }}</h5>
       <p class="card-text">{!! $poli['description'] !!}</p>
       <p class="card-text">Ruangan: {{ $poli['ruangan'] }}</p>
       <p class="card-text">Jadwal: {{ $poli['jadwal'] }}</p>

@@ -12,4 +12,9 @@ class ResepObat extends Model
     protected $guarded = [];
     protected $table = 'resep_obat';
     protected $primarykey = 'kode_resep_obat';
+
+    public function rekamMedis()
+    {
+        return $this->belongsTo(RekamMedis::class, 'kode', 'kode_rekamedis');
+    }
 }

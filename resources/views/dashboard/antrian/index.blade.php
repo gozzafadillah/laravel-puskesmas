@@ -13,7 +13,7 @@
           <p class="h3">{{ $poli->name }}</p>
           <br>
           @foreach ($antrian as $antrianItem)
-            @if ($poli->kode == $antrianItem->kode_poli)
+            @if ($poli->kode_poli == $antrianItem->kode_poli)
               @if ($antrianItem->kode_antrian)
                 <p class="fs-1">{{ $antrianItem->kode_antrian }}</p>
                 <p class="mb-0">&nbsp;</p>

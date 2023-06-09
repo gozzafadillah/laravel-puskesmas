@@ -24,4 +24,9 @@ class Antrian extends Model
     {
         return $this->belongsTo(User::class, "NIK", "NIK");
     }
+
+    public function rekamMedis()
+    {
+        return $this->hasOne(RekamMedis::class, 'antrian', 'kode_antrian');
+    }
 }

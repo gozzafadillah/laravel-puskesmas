@@ -37,6 +37,8 @@ class SuratRujukanController extends Controller
             $validatedData['kode_rekammedis'] = $request->kode_rekammedis;
         }
 
+        $validatedData['kode_rujukan'] = $this->geneateRujukanKode();
+
         SuratRujukan::create($validatedData);
 
         $this->changeStatusPasien($validatedData['kode_rekammedis']);
@@ -49,5 +51,11 @@ class SuratRujukanController extends Controller
         $dataRekamMedis = RekamMedis::where('kode', $kode)->first();
         $changeStatusAntrian = Antrian::where('kode_antrian', $dataRekamMedis['antrian'])->update(['status' => 1]);
         return $changeStatusAntrian;
+    }
+
+    function geneateRujukanKode()
+    {
+        $resepKode = 'rujukan-' . time();
+        return $resepKode;
     }
 }
