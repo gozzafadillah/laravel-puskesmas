@@ -122,7 +122,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard/listpasien/rekammedis/form/{kode}', [RekamMedisController::class, 'createRekamMedis'])->middleware('dokter');
     Route::post("/dashboard/rekammedis", [RekamMedisController::class, "storeRekamMedis"])->middleware('dokter');
     // surat rujukan
-    Route::get("/dashboard/suratrujukan/form/{kodeAntrian}", [SuratRujukanController::class, "createSuratRujukan"])->middleware('dokter');
+    Route::get("/dashboard/suratrujukan/form/{kodeRekamMedis}", [SuratRujukanController::class, "createSuratRujukan"])->middleware('dokter');
     Route::get('/dashboard/suratrujukan', [SuratRujukanController::class, "index"])->middleware('dokter');
     Route::post("/dashboard/suratrujukan/{kode}", [SuratRujukanController::class, "storeSuratRujukan"])->middleware('dokter');
     // resep obat

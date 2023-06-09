@@ -31,9 +31,10 @@ class ResepObatController extends Controller
 
     public function storeResepObat(Request $request)
     {
+        // memasukan data rekam medis dari parameter ke foreign key di table surat_rujukan
+        $kodeRekamMedis = $request->input('kode_rekammedis');
 
         $obatList = $request->input('obatList');
-        $kodeRekamMedis = $request->input('kode_rekammedis');
         $kode_resep_obat = $this->geneateResepKode();
         $errorMessages = [];
         foreach ($obatList as $obat) {
@@ -68,7 +69,7 @@ class ResepObatController extends Controller
             'kode_rekamedis' => $kodeRekamMedis,
         ]);
 
-        $rekamMedis = RekamMedis::where('kode', $kodeRekamMedis)->first();
+        $rekamMedis = RekamMedis::where('kode_rekammedis', $kodeRekamMedis)->first();
         $cek = DB::table('antrian')->where('kode_antrian', $rekamMedis['antrian'])->update(['status' => 1]);
 
         return response()->json(['success' => true]);

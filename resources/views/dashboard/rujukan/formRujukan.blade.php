@@ -9,7 +9,7 @@
       <form action="/dashboard/suratrujukan/{{ $kode }}" method="post" class="mb-3">
         @method('post')
         @csrf
-        <input type="hidden" name="kode_rekammedis" id="kode_rekammedis" value="{{ $kode }}">
+        <input type="hidden" name="kode_rekammedis" id="kode_rekammedis" value="{{ $kode_rekammedis }}">
         <div class="mb-3">
           <h5 for="antrian" class="form-label">Fasilitas perujuk dengan alasan :</h5>
           <div class="checkbox-btn my-3">

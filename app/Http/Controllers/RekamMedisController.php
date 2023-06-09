@@ -37,7 +37,7 @@ class RekamMedisController extends Controller
         ]);
 
 
-        $validatedData['kode'] = $this->generateKode($validatedData['antrian']);
+        $validatedData['kode_rekammedis'] = $this->generateKode($validatedData['antrian']);
 
         if ($request['bpjs']) {
             $validatedData['bpjs'] = $request['bpjs'];
@@ -47,9 +47,9 @@ class RekamMedisController extends Controller
         RekamMedis::create($validatedData);
 
         if ($validatedData['tindakan'] != "surat-rujukan") {
-            return redirect("/dashboard/resepobat/form/" . $validatedData['kode']);
+            return redirect("/dashboard/resepobat/form/" . $validatedData['kode_rekammedis']);
         } else {
-            return redirect("/dashboard/suratrujukan/form/" . $validatedData['kode']);
+            return redirect("/dashboard/suratrujukan/form/" . $validatedData['kode_rekammedis']);
         }
     }
 

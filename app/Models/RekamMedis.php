@@ -11,7 +11,8 @@ class RekamMedis extends Model
 
     protected $guarded = [];
     protected $table = 'rekam_medis';
-    protected $primaryKey = 'kode';
+    // TODO refactor this kode RekamMedis
+    protected $primaryKey = 'kode_rekammedis';
 
     public function antrian()
     {
@@ -25,7 +26,7 @@ class RekamMedis extends Model
 
     public function suratRujukan()
     {
-        return $this->hasOne(SuratRujukan::class, 'kode_rekammedis', 'kode');
+        return $this->hasOne(SuratRujukan::class, 'kode_rekammedis', 'kode_rekammedis');
     }
 
     public function resepObat()

@@ -18,10 +18,10 @@ class SuratRujukanController extends Controller
             ]
         );
     }
-    public function createSuratRujukan($kodeAntrian)
+    public function createSuratRujukan($kodeRekamMedis)
     {
         return view("dashboard.rujukan.formRujukan", [
-            'kode' => $kodeAntrian,
+            'kode_rekammedis' => $kodeRekamMedis,
         ]);
     }
 
@@ -34,6 +34,7 @@ class SuratRujukanController extends Controller
         ]);
 
         if ($request->kode_rekammedis) {
+            // memasukan data rekam medis dari parameter ke foreign key di table surat_rujukan
             $validatedData['kode_rekammedis'] = $request->kode_rekammedis;
         }
 
@@ -46,9 +47,10 @@ class SuratRujukanController extends Controller
         return redirect("/dashboard/listpasien");
     }
 
+    // $kode berdasarkan kode_rekammedis
     function changeStatusPasien($kode)
     {
-        $dataRekamMedis = RekamMedis::where('kode', $kode)->first();
+        $dataRekamMedis = RekamMedis::where('kode_rekammedis', $kode)->first();
         $changeStatusAntrian = Antrian::where('kode_antrian', $dataRekamMedis['antrian'])->update(['status' => 1]);
         return $changeStatusAntrian;
     }
