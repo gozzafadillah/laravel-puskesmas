@@ -115,6 +115,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     //administrasi
     Route::get('/dashboard/pembayaran/list', [PembayaranController::class, 'index'])->middleware('administrasi');
+    Route::get('/dashboard/pembayaran/form/{kode_rekammedis}', [PembayaranController::class, 'createPembayaran'])->middleware('administrasi');
 
     //dokter
     Route::get('/dashboard/listobat', [ListObatController::class, 'index'])->middleware('dokter');

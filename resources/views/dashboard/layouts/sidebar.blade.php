@@ -179,7 +179,19 @@
            Keuangan</p>
 
          <ul class="nav flex-column">
-           {{-- Isi Sidebar transaksi --}}
+           <li class="nav-item">
+             <a class="nav-link {{ Request::is('dashboard/pembayaran*') ? 'active' : '' }}"
+               href="/dashboard/pembayaran/list">
+               <span data-feather="mail" class="align-text-bottom"></span>
+               List Pasca Bayar
+             </a>
+           </li>
+           <li class="nav-item">
+             <a class="nav-link {{ Request::is('#*') ? 'active' : '' }}" href="#">
+               <span data-feather="mail" class="align-text-bottom"></span>
+               Transaksi
+             </a>
+           </li>
          </ul>
        @endcan
      @elseif(auth()->user()->is_admin == 4)

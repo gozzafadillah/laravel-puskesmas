@@ -11,8 +11,8 @@ class RekamMedis extends Model
 
     protected $guarded = [];
     protected $table = 'rekam_medis';
-    // TODO refactor this kode RekamMedis
     protected $primaryKey = 'kode_rekammedis';
+    protected $keyType = 'string';
 
     public function antrian()
     {

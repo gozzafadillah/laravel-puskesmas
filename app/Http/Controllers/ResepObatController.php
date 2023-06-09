@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Antrian;
 use App\Models\Dokter;
 use App\Models\Obat;
 use App\Models\ObatCategory;
 use App\Models\Poli;
 use App\Models\RekamMedis;
 use App\Models\ResepObat;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 

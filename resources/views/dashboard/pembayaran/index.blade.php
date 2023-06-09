@@ -39,17 +39,21 @@
           </tr>
         </thead>
         <tbody id="search-results">
-          @foreach ($resepObat as $key => $user)
-            <tr>
-              <td>{{ $key + 1 }}</td>
-              <td>{{ $user->NIK }}</td>
-              <td>{{ $user->name }}</td>
-              <td>
-                <div class="d-flex">
-                  <a class="badge bg-warning m-1 border-0" href="#"><span data-feather="dollar-sign"></span></a>
-                </div>
-              </td>
-            </tr>
+          @foreach ($pasien as $user)
+            @if ($user->rekamMedis)
+              <tr>
+                <td>{{ $user->rekamMedis->kode_rekammedis }}</td>
+                <td>{{ $user->NIK }}</td>
+                <td>{{ $user->name }}</td>
+                <td>
+                  <div class="d-flex">
+                    <a class="badge bg-warning m-1 border-0"
+                      href="/dashboard/pembayaran/form/{{ $user->rekamMedis->kode_rekammedis }}"><span
+                        data-feather="dollar-sign"></span></a>
+                  </div>
+                </td>
+              </tr>
+            @endif
           @endforeach
         </tbody>
       </table>
