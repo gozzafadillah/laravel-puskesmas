@@ -10,15 +10,20 @@
         </div>
         <!-- Poli-item -->
         @foreach ($polis as $poli)
-          <div class="col-lg-4 col-sm-6 mb-4">
+          <div class="col-lg-4 col-sm-6 my-2 mb-4">
             <div class="d-block match-height border-0 bg-white px-4 py-5 text-center shadow"
               style="width: 300px; height: 230px;">
               <p class="h3">{{ $poli->name }}</p>
               <br>
               @foreach ($antrian as $antrianItem)
                 @if ($poli->kode == $antrianItem->kode_poli)
-                  <p class="fs-1">{{ $antrianItem->kode_antrian }}</p>
-                  <p class="mb-0">&nbsp;</p>
+                  @if ($antrianItem->kode_antrian)
+                    <p class="fs-1">{{ $antrianItem->kode_antrian }}</p>
+                    <p class="mb-0">&nbsp;</p>
+                  @else
+                    <p class="fs-3">Tidak Ada Antrian</p>
+                    <p class="mb-0">&nbsp;</p>
+                  @endIf
                 @endif
               @endforeach
               <p class="mb-0">&nbsp;</p>

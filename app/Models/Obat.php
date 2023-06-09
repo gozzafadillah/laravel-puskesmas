@@ -21,6 +21,6 @@ class Obat extends Model
 
     public function category()
     {
-        return $this->belongsTo(ObatCategory::class, 'kategori_obat', 'id');
+        return $this->belongsTo(ObatCategory::class, 'kategori_obat', 'kode_obat');
     }
 }
