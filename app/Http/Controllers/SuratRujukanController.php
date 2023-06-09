@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Antrian;
+use App\Models\Dokter;
+use App\Models\Poli;
 use App\Models\RekamMedis;
 use App\Models\SuratRujukan;
 use Illuminate\Http\Request;
@@ -11,10 +13,14 @@ class SuratRujukanController extends Controller
 {
     public function index()
     {
+        $user = auth()->user()->id;
+        $dokter = Dokter::where('userid', $user)->value('id');
+        $poli = Poli::where('dokter', $dokter)->value('kode_poli');
+        $suratRujukan = SuratRujukan::where('kode_rekammedis', 'LIKE', $poli . '%')->latest()->get();
         return view(
             'dashboard.rujukan.index',
             [
-                'pasien' => SuratRujukan::latest()->get(),
+                'pasien' => $suratRujukan,
             ]
         );
     }
