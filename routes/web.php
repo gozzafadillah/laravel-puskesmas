@@ -17,7 +17,10 @@ use App\Http\Controllers\ListObatController;
 use App\Http\Controllers\PasienController;
 use App\Http\Controllers\PoliController;
 use App\Http\Controllers\ProfileEditController;
+use App\Http\Controllers\RekamMedisController;
+use App\Http\Controllers\ResepObatController;
 use App\Http\Controllers\RuanganController;
+use App\Http\Controllers\SuratRujukanController;
 use App\Http\Controllers\TambahObatCategoryController;
 use App\Http\Controllers\TambahObatController;
 use App\Models\ObatCategory;
@@ -113,7 +116,18 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     //dokter
-    Route::get('/dashboard/listobat', [ListObatController::class, 'index'])->middleware('dokter');;
+    Route::get('/dashboard/listobat', [ListObatController::class, 'index'])->middleware('dokter');
+    Route::get('/dashboard/listpasien', [RekamMedisController::class, 'showPasien'])->middleware('dokter');
+    Route::get('/dashboard/listpasien/rekammedis/form/{kode}', [RekamMedisController::class, 'createRekamMedis'])->middleware('dokter');
+    Route::post("/dashboard/rekammedis", [RekamMedisController::class, "storeRekamMedis"])->middleware('dokter');
+    // surat rujukan
+    Route::get("/dashboard/suratrujukan/form/{kodeAntrian}", [SuratRujukanController::class, "createSuratRujukan"])->middleware('dokter');
+    Route::get('/dashboard/suratrujukan', [SuratRujukanController::class, "index"])->middleware('dokter');
+    Route::post("/dashboard/suratrujukan/{kode}", [SuratRujukanController::class, "storeSuratRujukan"])->middleware('dokter');
+    // resep obat
+    Route::get('/dashboard/resepobat/form/{kodeRekamMedis}', [ResepObatController::class, 'createResepObat'])->middleware("dokter");
+    Route::get('/dashboard/resepobat', [ResepObatController::class, 'index'])->middleware('dokter');
+    Route::post("/dashboard/resepobat", [ResepObatController::class, 'storeResepObat'])->middleware("dokter");
 
 
     //farmasi

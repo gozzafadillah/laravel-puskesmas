@@ -147,19 +147,20 @@
 
          <ul class="nav flex-column">
            <li class="nav-item">
-             <a class="nav-link {{ Request::is('#*') ? 'active' : '' }}" href="#">
+             <a class="nav-link {{ Request::is('dashboard/listpasien*') ? 'active' : '' }}" href="/dashboard/listpasien">
                <span data-feather="mail" class="align-text-bottom"></span>
-               Rekam Medis Pasien
+               List Pasien
              </a>
            </li>
            <li class="nav-item">
-             <a class="nav-link {{ Request::is('#*') ? 'active' : '' }}" href="#">
+             <a class="nav-link {{ Request::is('dashboard/suratrujukan*') ? 'active' : '' }}"
+               href="/dashboard/suratrujukan">
                <span data-feather="package" class="align-text-bottom"></span>
                Surat Rujuk Pasien
              </a>
            </li>
            <li class="nav-item">
-             <a class="nav-link {{ Request::is('#*') ? 'active' : '' }}" href="#">
+             <a class="nav-link {{ Request::is('dashboard/resepobat*') ? 'active' : '' }}" href="/dashboard/resepobat">
                <span data-feather="package" class="align-text-bottom"></span>
                Resep Obat Pasien
              </a>
