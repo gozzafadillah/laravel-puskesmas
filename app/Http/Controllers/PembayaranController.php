@@ -32,7 +32,6 @@ class PembayaranController extends Controller
             'obats' => Obat::get(),
         ]);
     }
-    // TODO buat store pasca pembayaran & buat model NotaPembayaran
     public function storePascaPembayaran(Request $request)
     {
 

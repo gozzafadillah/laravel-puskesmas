@@ -15,6 +15,7 @@ class PasienController extends Controller
             ->where('status', 0)
             ->first();
         $status = $this->checkAntrianStatus($tiket);
+
         return view("dashboard.pasien.tiket", [
             'tiket' => $tiket,
             'status' => $status,

@@ -27,13 +27,23 @@
       </div>
     @endforeach
 
-    <div id="daftar-antrian" class="col-lg-12 col-sm-12 mb-5" style="cursor: pointer">
-      <div class="text-light d-block bg-primary match-height border-0 px-4 py-5 text-center shadow"
-        style="height: 150px;">
-        <p class="h3">Daftar Antrian</p>
+    @if ($antrianPasien !== null)
+      <div class="col-lg-12 col-sm-12 mb-5">
+        <a href="/dashboard/tiket" style="text-decoration: none">
+          <div class="text-light d-block bg-success match-height border-0 px-4 py-5 text-center shadow"
+            style="height: 150px;">
+            <p class="h3">Tiket Antrian Anda</p>
+          </div>
+        </a>
       </div>
-    </div>
-
+    @else
+      <div id="daftar-antrian" class="col-lg-12 col-sm-12 mb-5" style="cursor: pointer">
+        <div class="text-light d-block bg-primary match-height border-0 px-4 py-5 text-center shadow"
+          style="height: 150px;">
+          <p class="h3">Daftar Antrian</p>
+        </div>
+      </div>
+    @endif
     {{-- Data daftar antrian --}}
     <div id="form-data" class="row justify-content-center" style="display: none">
       @auth

@@ -29,11 +29,14 @@ class AntrianDashboardController extends Controller
                 "kode_poli" => $poli->kode_poli
             ];
             array_push($antrian, $data);
+
+            $checkAntrianPasien = Antrian::where('NIK', auth()->user()->NIK)->where('status', 0)->first();
         }
         return view('dashboard.antrian.index', [
             "antrian" => json_decode(json_encode($antrian), false),
             'polis' => Poli::where('isActive', 1)->latest()->get(),
             'active' => 'antrian',
+            'antrianPasien' => $checkAntrianPasien
         ]);
     }
 

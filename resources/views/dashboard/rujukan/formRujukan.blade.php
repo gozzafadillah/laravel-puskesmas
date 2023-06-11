@@ -6,7 +6,7 @@
   </div>
   <div class="row my-3 px-3">
     <div class="col-10">
-      <form action="/dashboard/suratrujukan/{{ $kode }}" method="post" class="mb-3">
+      <form action="/dashboard/suratrujukan/{{ $kode_rekammedis }}" method="post" class="mb-3">
         @method('post')
         @csrf
         <input type="hidden" name="kode_rekammedis" id="kode_rekammedis" value="{{ $kode_rekammedis }}">

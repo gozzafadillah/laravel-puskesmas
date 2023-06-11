@@ -11,6 +11,17 @@ use Illuminate\Http\Request;
 
 class RekamMedisController extends Controller
 {
+
+    public function getRekamMedis()
+    {
+        $NIKPasien = auth()->user()->NIK;
+        $dataRekammedis = Antrian::with('rekamMedis')->where('NIK', $NIKPasien)->get();
+
+        return view('dashboard.rekammedis.logRekammedis', [
+            'rekamMedis' => $dataRekammedis
+        ]);
+    }
+
     public function showPasien()
     {
         $session = auth()->user();

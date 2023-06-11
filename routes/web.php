@@ -88,8 +88,10 @@ Route::group(['middleware' => 'auth'], function () {
         return view('dashboard.index');
     })->middleware('auth');
 
-    Route::resource('dashboard/profile', ProfileEditController::class)->middleware('auth');
+    // logging
+    Route::get("/dashboard/log/rekammedis", [RekamMedisController::class, 'getRekamMedis']);
 
+    Route::resource('dashboard/profile', ProfileEditController::class)->middleware('auth');
 
     //admin
     Route::get('/dashboard/posts/checkSlug', [DashboardPostController::class, 'checkSlug'])->middleware('admin');
