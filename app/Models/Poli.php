@@ -12,7 +12,7 @@ class Poli extends Model
     protected $table = 'poli';
 
     public $incrementing = false;
-    protected $primaryKey = 'kode';
+    protected $primaryKey = 'kode_poli';
 
     public function getRouteKeyName()
     {

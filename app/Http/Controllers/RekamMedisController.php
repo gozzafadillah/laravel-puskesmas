@@ -11,12 +11,23 @@ use Illuminate\Http\Request;
 
 class RekamMedisController extends Controller
 {
+
+    public function getRekamMedis()
+    {
+        $NIKPasien = auth()->user()->NIK;
+        $dataRekammedis = Antrian::with('rekamMedis')->where('NIK', $NIKPasien)->get();
+
+        return view('dashboard.rekammedis.logRekammedis', [
+            'rekamMedis' => $dataRekammedis
+        ]);
+    }
+
     public function showPasien()
     {
         $session = auth()->user();
         $dokter = Dokter::where('userid', '=', $session->id)->value("id");
         $poli =  Poli::where('dokter', '=', $dokter)->first();
-        $pasien = Antrian::where('kode_poli', '=', $poli->kode)->orderBy("kode_antrian")->get();
+        $pasien = Antrian::where('kode_poli', '=', $poli->kode_poli)->orderBy("kode_antrian")->get();
 
         return view('dashboard.rekammedis.listpasien', [
             "pasien" => $pasien,
@@ -37,7 +48,7 @@ class RekamMedisController extends Controller
         ]);
 
 
-        $validatedData['kode'] = $this->generateKode($validatedData['antrian']);
+        $validatedData['kode_rekammedis'] = $this->generateKode($validatedData['antrian']);
 
         if ($request['bpjs']) {
             $validatedData['bpjs'] = $request['bpjs'];
@@ -47,9 +58,9 @@ class RekamMedisController extends Controller
         RekamMedis::create($validatedData);
 
         if ($validatedData['tindakan'] != "surat-rujukan") {
-            return redirect("/dashboard/resepobat/form/" . $validatedData['kode']);
+            return redirect("/dashboard/resepobat/form/" . $validatedData['kode_rekammedis']);
         } else {
-            return redirect("/dashboard/suratrujukan/form/" . $validatedData['kode']);
+            return redirect("/dashboard/suratrujukan/form/" . $validatedData['kode_rekammedis']);
         }
     }
 

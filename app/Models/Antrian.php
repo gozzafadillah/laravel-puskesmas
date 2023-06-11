@@ -14,6 +14,7 @@ class Antrian extends Model
     protected $table = 'antrian';
     public $incrementing = false;
     protected $primaryKey = 'kode_antrian';
+    protected $keyType = 'string';
 
     public function getRouteKeyName()
     {
@@ -23,5 +24,10 @@ class Antrian extends Model
     public function User()
     {
         return $this->belongsTo(User::class, "NIK", "NIK");
+    }
+
+    public function rekamMedis()
+    {
+        return $this->hasOne(RekamMedis::class, 'antrian', 'kode_antrian');
     }
 }

@@ -15,6 +15,7 @@ use App\Http\Controllers\CekAkunController;
 use App\Http\Controllers\DaftarAkunPasienController;
 use App\Http\Controllers\ListObatController;
 use App\Http\Controllers\PasienController;
+use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\PoliController;
 use App\Http\Controllers\ProfileEditController;
 use App\Http\Controllers\RekamMedisController;
@@ -87,8 +88,10 @@ Route::group(['middleware' => 'auth'], function () {
         return view('dashboard.index');
     })->middleware('auth');
 
-    Route::resource('dashboard/profile', ProfileEditController::class)->middleware('auth');
+    // logging
+    Route::get("/dashboard/log/rekammedis", [RekamMedisController::class, 'getRekamMedis']);
 
+    Route::resource('dashboard/profile', ProfileEditController::class)->middleware('auth');
 
     //admin
     Route::get('/dashboard/posts/checkSlug', [DashboardPostController::class, 'checkSlug'])->middleware('admin');
@@ -113,7 +116,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard/daftarpasien/{user:nik}', [DaftarAkunPasienController::class, 'showUser'])->middleware('admin');
 
     //administrasi
-
+    Route::get('/dashboard/pembayaran/list', [PembayaranController::class, 'index'])->middleware('administrasi');
+    Route::get('/dashboard/pembayaran/form/{kode_rekammedis}', [PembayaranController::class, 'createPembayaran'])->middleware('administrasi');
 
     //dokter
     Route::get('/dashboard/listobat', [ListObatController::class, 'index'])->middleware('dokter');
@@ -121,7 +125,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard/listpasien/rekammedis/form/{kode}', [RekamMedisController::class, 'createRekamMedis'])->middleware('dokter');
     Route::post("/dashboard/rekammedis", [RekamMedisController::class, "storeRekamMedis"])->middleware('dokter');
     // surat rujukan
-    Route::get("/dashboard/suratrujukan/form/{kodeAntrian}", [SuratRujukanController::class, "createSuratRujukan"])->middleware('dokter');
+    Route::get("/dashboard/suratrujukan/form/{kodeRekamMedis}", [SuratRujukanController::class, "createSuratRujukan"])->middleware('dokter');
     Route::get('/dashboard/suratrujukan', [SuratRujukanController::class, "index"])->middleware('dokter');
     Route::post("/dashboard/suratrujukan/{kode}", [SuratRujukanController::class, "storeSuratRujukan"])->middleware('dokter');
     // resep obat

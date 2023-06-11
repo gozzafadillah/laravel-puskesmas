@@ -11,14 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('polis', function (Blueprint $table) {
-            $table->string("kode_poli")->primary();
-            $table->string("name");
-            $table->string("description");
-            $table->string("dokter");
-            $table->string("ruangan");
-            $table->date('jadwal');
-            $table->boolean('isActive')->default(0);
+        Schema::create('pelayanan', function (Blueprint $table) {
+            $table->id();
+            $table->bigInteger('category');
+            $table->string('layanan');
+            $table->float('biaya');
             $table->timestamps();
         });
     }
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('polis');
+        //
     }
 };

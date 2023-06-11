@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Antrian;
+use App\Models\Dokter;
 use App\Models\Obat;
 use App\Models\ObatCategory;
+use App\Models\Poli;
 use App\Models\RekamMedis;
 use App\Models\ResepObat;
 use Illuminate\Http\Request;
@@ -14,8 +15,13 @@ class ResepObatController extends Controller
 {
     public function index()
     {
+        $user = auth()->user()->id;
+        $dokter = Dokter::where('userid', $user)->value('id');
+        $poli = Poli::where('dokter', $dokter)->value('kode_poli');
+        $resepKode = ResepObat::where('kode_rekamedis', 'LIKE', $poli . '%')->latest()->get();
+
         return view('dashboard.resepobat.index', [
-            'resepObat' => ResepObat::latest()->get(),
+            'resepObat' => $resepKode,
         ]);
     }
     public function createResepObat($kodeRekamMedis)
@@ -31,9 +37,10 @@ class ResepObatController extends Controller
 
     public function storeResepObat(Request $request)
     {
+        // memasukan data rekam medis dari parameter ke foreign key di table surat_rujukan
+        $kodeRekamMedis = $request->input('kode_rekammedis');
 
         $obatList = $request->input('obatList');
-        $kodeRekamMedis = $request->input('kode_rekammedis');
         $kode_resep_obat = $this->geneateResepKode();
         $errorMessages = [];
         foreach ($obatList as $obat) {
@@ -68,7 +75,7 @@ class ResepObatController extends Controller
             'kode_rekamedis' => $kodeRekamMedis,
         ]);
 
-        $rekamMedis = RekamMedis::where('kode', $kodeRekamMedis)->first();
+        $rekamMedis = RekamMedis::where('kode_rekammedis', $kodeRekamMedis)->first();
         $cek = DB::table('antrian')->where('kode_antrian', $rekamMedis['antrian'])->update(['status' => 1]);
 
         return response()->json(['success' => true]);

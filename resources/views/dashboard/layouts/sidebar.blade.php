@@ -179,7 +179,19 @@
            Keuangan</p>
 
          <ul class="nav flex-column">
-           {{-- Isi Sidebar transaksi --}}
+           <li class="nav-item">
+             <a class="nav-link {{ Request::is('dashboard/pembayaran*') ? 'active' : '' }}"
+               href="/dashboard/pembayaran/list">
+               <span data-feather="mail" class="align-text-bottom"></span>
+               List Pasca Bayar
+             </a>
+           </li>
+           <li class="nav-item">
+             <a class="nav-link {{ Request::is('#*') ? 'active' : '' }}" href="#">
+               <span data-feather="mail" class="align-text-bottom"></span>
+               Transaksi
+             </a>
+           </li>
          </ul>
        @endcan
      @elseif(auth()->user()->is_admin == 4)
@@ -201,15 +213,14 @@
 
        <ul class="nav flex-column">
          <li class="nav-item">
-           <a class="nav-link {{ Request::is('dashboard') ? 'active' : '' }}" aria-current="page"
-             href="/dashboard/antrian">
+           <a class="nav-link {{ Request::is('dashboard') ? 'active' : '' }}" aria-current="page" href="/dashboard">
              <span data-feather="home" class="align-text-bottom"></span>
              Dashboard
            </a>
          </li>
          <li class="nav-item">
-           <a class="nav-link {{ Request::is('antrian') ? 'active' : '' }}{{ auth()->user()->cek == 0 || auth()->user()->cek == 2 ? ' disabled' : '' }}"
-             href="/dashboard/tiket" @if (auth()->user()->cek == 0 || auth()->user()->cek == 2) style="color: gray" @endif>
+           <a class="nav-link {{ Request::is('dashboard/antrian*') ? 'active' : '' }}{{ auth()->user()->cek == 0 || auth()->user()->cek == 2 ? ' disabled' : '' }}"
+             href="/dashboard/antrian" @if (auth()->user()->cek == 0 || auth()->user()->cek == 2) style="color: gray" @endif>
              <span data-feather="grid" class="align-text-bottom"></span>
              Tiket Antrian
            </a>
@@ -236,15 +247,8 @@
            </a>
          </li>
          <li class="nav-item">
-           <a class="nav-link {{ Request::is('#*') ? 'active' : '' }}{{ auth()->user()->cek == 0 || auth()->user()->cek == 2 ? ' disabled' : '' }}"
-             href="#" @if (auth()->user()->cek == 0 || auth()->user()->cek == 2) style="color: gray" @endif>
-             <span data-feather="grid" class="align-text-bottom"></span>
-             Log Surat Rujukan
-           </a>
-         </li>
-         <li class="nav-item">
-           <a class="nav-link {{ Request::is('#*') ? 'active' : '' }}{{ auth()->user()->cek == 0 || auth()->user()->cek == 2 ? ' disabled' : '' }}"
-             href="#" @if (auth()->user()->cek == 0 || auth()->user()->cek == 2) style="color: gray" @endif>
+           <a class="nav-link {{ Request::is('dashboard/log/rekammedis*') ? 'active' : '' }}{{ auth()->user()->cek == 0 || auth()->user()->cek == 2 ? ' disabled' : '' }}"
+             href="/dashboard/log/rekammedis" @if (auth()->user()->cek == 0 || auth()->user()->cek == 2) style="color: gray" @endif>
              <span data-feather="grid" class="align-text-bottom"></span>
              Log Rekam Medis
            </a>

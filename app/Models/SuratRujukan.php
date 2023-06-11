@@ -11,4 +11,11 @@ class SuratRujukan extends Model
 
     protected $guarded = [];
     protected $table = 'surat_rujukan';
+    protected $primaryKey = 'kode_rujukan';
+    protected $keyType = 'string';
+
+    public function rekamMedis()
+    {
+        return $this->belongsTo(RekamMedis::class, 'kode', 'kode_rekammedis');
+    }
 }

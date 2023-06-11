@@ -13,6 +13,7 @@ class Ruangan extends Model
     protected $table = "ruangan";
 
     public $incrementing = false;
+    // TODO refactor this kode Ruangan
     protected $primaryKey = 'kode';
 
     public function getRouteKeyName()

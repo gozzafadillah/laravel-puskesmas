@@ -6,10 +6,10 @@
   </div>
   <div class="row my-3 px-3">
     <div class="col-10">
-      <form action="/dashboard/suratrujukan/{{ $kode }}" method="post" class="mb-3">
+      <form action="/dashboard/suratrujukan/{{ $kode_rekammedis }}" method="post" class="mb-3">
         @method('post')
         @csrf
-        <input type="hidden" name="kode_rekammedis" id="kode_rekammedis" value="{{ $kode }}">
+        <input type="hidden" name="kode_rekammedis" id="kode_rekammedis" value="{{ $kode_rekammedis }}">
         <div class="mb-3">
           <h5 for="antrian" class="form-label">Fasilitas perujuk dengan alasan :</h5>
           <div class="checkbox-btn my-3">

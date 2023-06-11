@@ -19,14 +19,14 @@ class AntrianController extends Controller
 
         foreach ($poli as $poli) {
             $query = DB::table('antrian')
-                ->where('kode_poli', $poli->kode)
+                ->where('kode_poli', $poli->kode_poli)
                 ->where('status', 0)
                 ->orderByRaw("SUBSTRING_INDEX(kode_antrian, '-', -1) ASC")
                 ->value('kode_antrian');
 
             $data = [
                 "kode_antrian" => $query,
-                "kode_poli" => $poli->kode
+                "kode_poli" => $poli->kode_poli
             ];
             array_push($antrian, $data);
         }

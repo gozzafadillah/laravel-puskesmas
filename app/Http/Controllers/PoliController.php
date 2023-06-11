@@ -48,7 +48,7 @@ class PoliController extends Controller
 
         $validateData['jadwal'] = $request->jadwalStart . " s/d " . $request->jadwalEnd;
 
-        $validateData['kode'] = $this->generatePoliCode($validateData['name']);
+        $validateData['kode_poli'] = $this->generatePoliCode($validateData['name']);
 
         $poli = Poli::create($validateData);
 
