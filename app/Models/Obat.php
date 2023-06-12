@@ -13,6 +13,7 @@ class Obat extends Model
 
     public $incrementing = false;
     protected $primaryKey = 'kode_obat';
+    protected $keyType = 'string';
 
     public function getRouteKeyName()
     {
@@ -21,6 +22,6 @@ class Obat extends Model
 
     public function category()
     {
-        return $this->belongsTo(ObatCategory::class, 'kategori_obat', 'kode_obat');
+        return $this->belongsTo(ObatCategory::class, 'kategori_obat', 'id');
     }
 }

@@ -85,7 +85,7 @@ class PoliController extends Controller
         }
 
         // Mengambil nomor urut dari jumlah data poli dengan prefix yang sama
-        $num = str_pad(Poli::where('kode', 'like', $prefix . '%')->count() + 1, 3, '0', STR_PAD_LEFT);
+        $num = str_pad(Poli::where('kode_poli', 'like', $prefix . '%')->count() + 1, 3, '0', STR_PAD_LEFT);
 
         // Menggabungkan prefix dan nomor urut menjadi kode poli
         $code = $prefix . $num;
