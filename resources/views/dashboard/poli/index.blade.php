@@ -35,9 +35,24 @@
             <td>{{ $poli->Dokter->name }}</td>
             <td>{{ $poli->ruangan }}</td>
             <td>{{ $poli->jadwal . ' WIB' }}</td>
-            <td>{!! $poli->isActive
-                ? "<span class='badge bg-success border-0'>active</span>"
-                : "<span class='badge bg-danger border-0'>non active</span>" !!}</td>
+            <td>
+              @if ($poli->isActive == 1)
+                <form action="/dashboard/poli/status/{{ $poli->kode_poli }}" method="POST">
+                  @csrf
+                  @method('put')
+                  <button type="submit" class="badge bg-success border-0"
+                    onclick="return confirm('Apakah Kamu akan Non Aktifkan Poli Ini?')">active</button>
+                </form>
+              @else
+                <form action="/dashboard/poli/status/{{ $poli->kode_poli }}" method="POST">
+                  @csrf
+                  @method('put')
+                  <button type="submit" class="badge bg-danger border-0"
+                    onclick="return confirm('Apakah Kamu akan Aktifkan Poli Ini?')">non active</button>
+                </form>
+              @endif
+            </td>
+
             <td>
               <div class="d-flex gap-2">
                 <form action="/dashboard/poli/{{ $poli->kode_poli }}" method="POST">

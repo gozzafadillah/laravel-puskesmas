@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Antrian;
 use App\Models\Dokter;
+use App\Models\P_Pelayanan;
 use App\Models\Poli;
 use App\Models\RekamMedis;
 use App\Models\User;
@@ -35,6 +36,20 @@ class RekamMedisController extends Controller
         ]);
     }
 
+    public function getRekamMedisByKode($kodeAntrian)
+    {
+        $dataRekammedis = RekamMedis::with('resepObat')->where('antrian', $kodeAntrian)->first();
+        if ($dataRekammedis == null) {
+            $dataRekammedis = RekamMedis::with('resepObat')->where('antrian', $kodeAntrian)->first();
+        }
+        $p_pelayanan = P_Pelayanan::latest()->get();
+
+        return view('dashboard.dokter.showPasien', [
+            'data' => $dataRekammedis,
+            'p_pelayanan' => $p_pelayanan
+        ]);
+    }
+
     public function storeRekamMedis(Request $request)
     {
 
@@ -57,11 +72,7 @@ class RekamMedisController extends Controller
 
         RekamMedis::create($validatedData);
 
-        if ($validatedData['tindakan'] != "surat-rujukan") {
-            return redirect("/dashboard/resepobat/form/" . $validatedData['kode_rekammedis']);
-        } else {
-            return redirect("/dashboard/suratrujukan/form/" . $validatedData['kode_rekammedis']);
-        }
+        return redirect("/dashboard/pelayanan/form/" . $validatedData['kode_rekammedis'] . "?tindakan=" . $validatedData['tindakan']);
     }
 
     public function createRekamMedis($kode)

@@ -72,6 +72,15 @@ class PoliController extends Controller
         // 
     }
 
+    public function changeStatusPoli($kodePoli)
+    {
+        $poliOld = Poli::where('kode_poli', $kodePoli)->first();
+
+        Poli::where('kode_poli', $kodePoli)->update(['isActive' => (!$poliOld->isActive)]);
+
+        return redirect('/dashboard/poli');
+    }
+
     function generatePoliCode($name)
     {
         // Menghilangkan kata "Poli" dari nama poli dan spasi di awal dan akhir

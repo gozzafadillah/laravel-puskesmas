@@ -15,7 +15,7 @@
       <form id="tambahObatForm" action="/dashboard/resepobat" method="POST">
         @csrf
         <!-- Konten formulir lainnya -->
-        @foreach ($obat as $item)
+        @foreach ($obatCategory as $item)
           <h5>{{ $item->name }}</h5>
           <table class="table-striped table">
             <thead>
@@ -26,17 +26,19 @@
               </tr>
             </thead>
             <tbody>
-              @foreach ($item->obat as $obat)
-                <tr>
-                  <td>
-                    <input type="checkbox" class="item_obat" name="item_obat[]" value="{{ $obat->kode_obat }}">
-                    <label>{{ $obat->nama_obat }}</label>
-                  </td>
-                  <td>{{ $obat->stok }}</td>
-                  <td>
-                    <input type="number" class="dosis" name="dosis[{{ $obat->kode_obat }}]" value="0">
-                  </td>
-                </tr>
+              @foreach ($obat as $data)
+                @if ($item->id == $data->kategori_obat)
+                  <tr>
+                    <td>
+                      <input type="checkbox" class="item_obat" name="item_obat[]" value="{{ $data->kode_obat }}">
+                      <label>{{ $data->nama_obat }}</label>
+                    </td>
+                    <td>{{ $data->stok }}</td>
+                    <td>
+                      <input type="number" class="dosis" name="dosis[{{ $data->kode_obat }}]" value="0">
+                    </td>
+                  </tr>
+                @endif
               @endforeach
             </tbody>
           </table>

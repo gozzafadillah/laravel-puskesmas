@@ -20,17 +20,22 @@ class ResepObatController extends Controller
         $poli = Poli::where('dokter', $dokter)->value('kode_poli');
         $resepKode = ResepObat::where('kode_rekamedis', 'LIKE', $poli . '%')->latest()->get();
 
+
         return view('dashboard.resepobat.index', [
             'resepObat' => $resepKode,
         ]);
     }
     public function createResepObat($kodeRekamMedis)
     {
+        $obat = Obat::latest()->get();
+        $obatCategory = ObatCategory::latest()->get();
+
         return view(
             "dashboard.resepobat.formResepObat",
             [
                 'kode_rekamedis' => $kodeRekamMedis,
-                'obat' => ObatCategory::with('obat')->latest()->get(),
+                'obat' => $obat,
+                'obatCategory' => $obatCategory,
             ]
         );
     }
@@ -43,6 +48,7 @@ class ResepObatController extends Controller
         $obatList = $request->input('obatList');
         $kode_resep_obat = $this->geneateResepKode();
         $errorMessages = [];
+        // pengencekan stok obat
         foreach ($obatList as $obat) {
             $obatId = $obat['id'];
             $dosis = $obat['dosis'];
@@ -55,6 +61,8 @@ class ResepObatController extends Controller
                 return response()->json(['errors' => $errorMessages], 422);
             }
         }
+
+        // input ke database
         foreach ($obatList as $obat) {
             $obatId = $obat['id'];
             $dosis = $obat['dosis'];

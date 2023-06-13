@@ -19,7 +19,7 @@ class AntrianDashboardController extends Controller
 
         foreach ($poli as $poli) {
             $query = DB::table('antrian')
-                ->where('kode_poli', $poli->kode)
+                ->where('kode_poli', $poli->kode_poli)
                 ->where('status', 0)
                 ->orderByRaw("SUBSTRING_INDEX(kode_antrian, '-', -1) ASC")
                 ->value('kode_antrian');
@@ -32,6 +32,7 @@ class AntrianDashboardController extends Controller
 
             $checkAntrianPasien = Antrian::where('NIK', auth()->user()->NIK)->where('status', 0)->first();
         }
+
         return view('dashboard.antrian.index', [
             "antrian" => json_decode(json_encode($antrian), false),
             'polis' => Poli::where('isActive', 1)->latest()->get(),

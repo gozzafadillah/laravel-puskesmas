@@ -27,7 +27,7 @@
       <h1 class="h2">Form Pembayaran Pasien</h1>
     </div>
     <div class="table-responsive">
-      <form id="tambahNotaPembayaran" action="/dashboard/resepobat" method="POST">
+      <form id="tambahNotaPembayaran" action="/dashboard/pelayanan" method="POST">
         @csrf
         <!-- Konten formulir lainnya -->
         @foreach ($categoryPelayanan as $category)
@@ -47,40 +47,16 @@
                       <input type="checkbox" class="item_layanan" name="item_layanan[]" value="{{ $layanan->id }}">
                       <label>{{ $layanan->layanan }}</label>
                     </td>
-                    <td class="text-center">{{ 'Rp' . number_format($layanan->biaya, 0, ',', '.') }}</td>
+                    <td class="text-center">Rp{{ number_format($layanan->biaya, 0, ',', '.') }}</td>
                   </tr>
                 @endif
               @endforeach
             </tbody>
           </table>
         @endforeach
-        <div class="card mt-4">
-          <div class="card-header">
-            History Resep Obat
-          </div>
-          <div class="card-body">
-            @foreach ($dataResepObat as $resepObat)
-              <div class="card mb-3">
-                <div class="card-body">
-                  <h5 class="card-title">{{ $resepObat->kode_obat }}</h5>
-                  @foreach ($obats as $obat)
-                    @if ($obat->kode_obat == $resepObat->kode_obat)
-                      <p>Nama Obat: {{ $obat->nama_obat }}</p>
-                      <p>Biaya: {{ $obat->harga }}</p>
-                    @endif
-                  @endforeach
-                  <p class="card-text">Dosis: {{ $resepObat->dosis }}</p>
-                </div>
-              </div>
-            @endforeach
-          </div>
-        </div>
-        @if ($resepObat->kode_obat)
-          <input type="hidden" id="kode_pasien" name="kode_pasien" value="{{ $resepObat->kode_resep_obat }}">
-        @else
-          <input type="hidden" id="kode_pasien" name="kode_pasien" value="{{ $rujukan->kode_rujukan }}">
-        @endif
-        <button type="submit" id="submitBtn">Tambah Nota</button>
+        <input type="hidden" name="kode_rekammedis" class="kode_rekammedis" id="kode_rekammedis"
+          value="{{ $kodeRekammedis }}">
+        <button type="submit" id="submitBtn">Tambah Pelayanan</button>
       </form>
     </div>
   </div>
@@ -92,28 +68,36 @@
         e.preventDefault();
 
         let layananList = [];
-        let kode_pasien = '';
+        let kodeRekammedis = '';
+        // get param tindakan
+        var urlParams = new URLSearchParams(window.location.search);
+        var tindakan = urlParams.get('tindakan');
+
         $('.item_layanan:checked').each(function() {
           let layananID = $(this).val();
           let harga = $(this).closest('tr').find('td:last-child').text();
-          let kode_pasien = document.getElementById('kode_pasien').value;
+          kodeRekammedis = document.getElementById('kode_rekammedis').value;
+
+          // Menghapus karakter non-digit dari string
+          let hargaNumerik = parseFloat(harga.replace(/[^0-9.-]+/g, ""));
 
           let layananData = {
             id: layananID,
-            biaya: harga
+            biaya: hargaNumerik,
           };
 
           layananList.push(layananData);
         });
 
 
-
         let csrfToken = $('meta[name="csrf-token"]').attr('content');
 
         let payload = {
           layananList: layananList,
-          kode_pasien: kode_pasien
+          kodeRekammedis: kodeRekammedis
         };
+
+        console.log(payload)
 
         $.ajax({
           url: $(this).attr('action'),
@@ -124,8 +108,11 @@
           data: payload,
           success: function(response) {
             alert('Obat berhasil ditambahkan!');
-            // Lakukan tindakan lain setelah obat berhasil ditambahkan
-            window.location.href = "/dashboard/resepobat";
+            if (tindakan != "surat-rujukan") {
+              window.location.href = "/dashboard/resepobat/form/" + kodeRekammedis;
+            } else {
+              window.location.href = "/dashboard/suratrujukan/form/" + kodeRekammedis;
+            }
           },
           error: function(xhr, status, error) {
             // Respon error dari server
