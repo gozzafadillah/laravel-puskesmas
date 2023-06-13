@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 13, 2023 at 03:33 PM
+-- Generation Time: Jun 13, 2023 at 03:52 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -36,21 +36,7 @@ CREATE TABLE `antrian` (
   `status` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `antrian`
---
-
-INSERT INTO `antrian` (`kode_antrian`, `name`, `NIK`, `tgllahir`, `kode_poli`, `status`, `created_at`, `updated_at`) VALUES
-('K001-0001', 'Muhammad Fadillah Abdul Aziz', '101212120120120212', '2000-03-09', 'K001', 1, '2023-05-23 03:28:29', '2023-05-23 03:28:29'),
-('U001-0001', 'Muhammad Fadillah Abdul Aziz', '101212120120120212', '2000-03-09', 'U001', 1, '2023-05-23 03:28:59', '2023-05-23 03:28:59'),
-('A002-0002', 'Muhammad Fadillah Abdul Aziz', '101212120120120212', '2000-03-09', 'A002', 1, '2023-05-23 03:29:14', '2023-06-09 02:06:04'),
-('K001-0002', 'Dea Belinda', '101212120120120192', '2000-03-09', 'K001', 1, '2023-05-23 03:30:14', '2023-05-23 03:30:14'),
-('A002-0001', 'Dea Belinda', '101212120120120192', '2000-03-09', 'A002', 1, '2023-05-23 03:30:38', '2023-05-23 03:30:38'),
-('U001-0002', 'Idris Mardefi', '101212120120120220', '2000-03-09', 'U001', 1, '2023-06-10 08:06:49', '2023-06-10 08:25:44'),
-('A002-0003', 'Idris Mardefi', '101212120120120220', '2000-03-09', 'A002', 1, '2023-06-12 13:39:53', '2023-06-13 07:48:21'),
-('U001-0003', 'Idris Mardefi', '101212120120120220', '2000-03-09', 'U001', 0, '2023-06-13 08:29:27', '2023-06-13 08:29:27');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 -- --------------------------------------------------------
 
@@ -65,7 +51,7 @@ CREATE TABLE `categories` (
   `image` varchar(255)  DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 --
 -- Dumping data for table `categories`
@@ -85,7 +71,7 @@ CREATE TABLE `category_pelayanan` (
   `nama_category` varchar(255)  NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 --
 -- Dumping data for table `category_pelayanan`
@@ -111,7 +97,7 @@ CREATE TABLE `dokter` (
   `userid` bigint NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 --
 -- Dumping data for table `dokter`
@@ -135,7 +121,7 @@ CREATE TABLE `failed_jobs` (
   `payload` longtext  NOT NULL,
   `exception` longtext  NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 -- --------------------------------------------------------
 
@@ -147,7 +133,7 @@ CREATE TABLE `migrations` (
   `id` int UNSIGNED NOT NULL,
   `migration` varchar(255)  NOT NULL,
   `batch` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 --
 -- Dumping data for table `migrations`
@@ -190,7 +176,7 @@ CREATE TABLE `obats` (
   `harga` int NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 --
 -- Dumping data for table `obats`
@@ -214,7 +200,7 @@ CREATE TABLE `obat_categories` (
   `image` varchar(255)  NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 --
 -- Dumping data for table `obat_categories`
@@ -234,7 +220,7 @@ CREATE TABLE `password_reset_tokens` (
   `email` varchar(255)  NOT NULL,
   `token` varchar(255)  NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 -- --------------------------------------------------------
 
@@ -249,7 +235,7 @@ CREATE TABLE `pelayanan` (
   `biaya` double(8,2) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 --
 -- Dumping data for table `pelayanan`
@@ -308,7 +294,7 @@ CREATE TABLE `personal_access_tokens` (
   `expires_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 -- --------------------------------------------------------
 
@@ -317,7 +303,7 @@ CREATE TABLE `personal_access_tokens` (
 --
 
 CREATE TABLE `poli` (
-  `kode_poli` varchar(255)   NOT NULL,
+  `kode_poli` varchar(255) CHARACTER SET utf8mb4  NOT NULL,
   `name` varchar(255)  NOT NULL,
   `description` varchar(255)  NOT NULL,
   `dokter` int NOT NULL,
@@ -326,7 +312,7 @@ CREATE TABLE `poli` (
   `isActive` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 --
 -- Dumping data for table `poli`
@@ -355,7 +341,7 @@ CREATE TABLE `posts` (
   `published_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 --
 -- Dumping data for table `posts`
@@ -376,26 +362,7 @@ CREATE TABLE `p_pelayanan` (
   `biaya` float DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `p_pelayanan`
---
-
-INSERT INTO `p_pelayanan` (`pelayanan_id`, `kode_rekammedis`, `biaya`, `created_at`, `updated_at`) VALUES
-(26, 'A002-0003-1686660966', 43, '2023-06-13 13:10:26', '2023-06-13 13:10:28'),
-(27, 'A002-0003-1686660966', 14, NULL, NULL),
-(7, 'A002-0003-1686667562', 50, NULL, NULL),
-(8, 'A002-0003-1686667562', 50, NULL, NULL),
-(13, 'A002-0003-1686667562', 30, NULL, NULL),
-(1, 'A002-0003-1686667685', 14, NULL, NULL),
-(2, 'A002-0003-1686667685', 75, NULL, NULL),
-(12, 'A002-0003-1686667685', 70, NULL, NULL),
-(1, 'A002-0003-1686667919', 14, NULL, NULL),
-(2, 'A002-0003-1686667919', 75, NULL, NULL),
-(11, 'A002-0003-1686667919', 150, NULL, NULL),
-(3, 'A002-0003-1686668391', 75, NULL, NULL),
-(4, 'A002-0003-1686668391', 150, NULL, NULL);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 -- --------------------------------------------------------
 
@@ -405,26 +372,9 @@ INSERT INTO `p_pelayanan` (`pelayanan_id`, `kode_rekammedis`, `biaya`, `created_
 
 CREATE TABLE `p_resep_obat` (
   `kode_resep_obat` varchar(255) NOT NULL,
-  `kode_obat` varchar(255) NOT NULL,
+  `kode_obat` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
   `dosis` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `p_resep_obat`
---
-
-INSERT INTO `p_resep_obat` (`kode_resep_obat`, `kode_obat`, `dosis`) VALUES
-('resep-1686284008', 'Vaksin-SH001', 5),
-('resep-1686284050', 'Vaksin-SH001', 5),
-('resep-1686284116', 'Vaksin-SH001', 5),
-('resep-1686284274', 'Vaksin-SH001', 5),
-('resep-1686284344', 'Vaksin-SB001', 2),
-('resep-1686284344', 'Kapsul-IN001', 3),
-('resep-1686313224', 'Vaksin-SB001', 3),
-('resep-1686313224', 'Vaksin-SH001', 4),
-('resep-1686410029', 'Vaksin-SB001', 2),
-('resep-1686668640', 'Vaksin-SB001', 5),
-('resep-1686668640', 'Kapsul-IN001', 5);
 
 -- --------------------------------------------------------
 
@@ -433,9 +383,9 @@ INSERT INTO `p_resep_obat` (`kode_resep_obat`, `kode_obat`, `dosis`) VALUES
 --
 
 CREATE TABLE `rekam_medis` (
-  `kode_rekammedis` varchar(255)   NOT NULL,
-  `antrian` varchar(255)   NOT NULL,
-  `bpjs` varchar(255)  DEFAULT NULL,
+  `kode_rekammedis` varchar(255) CHARACTER SET utf8mb4  NOT NULL,
+  `antrian` varchar(255) CHARACTER SET utf8mb4  NOT NULL,
+  `bpjs` varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL,
   `anamnesa` text  NOT NULL,
   `pemeriksaan_fisik` text  NOT NULL,
   `diagnosa` varchar(255)  NOT NULL,
@@ -443,21 +393,7 @@ CREATE TABLE `rekam_medis` (
   `giz` varchar(255)  NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `rekam_medis`
---
-
-INSERT INTO `rekam_medis` (`kode_rekammedis`, `antrian`, `bpjs`, `anamnesa`, `pemeriksaan_fisik`, `diagnosa`, `tindakan`, `giz`, `created_at`, `updated_at`) VALUES
-('A002-0001-1686284334', 'A002-0001', NULL, 'cek', 'cek', 'cek', 'obat-resep', 'gzi', '2023-06-08 21:18:54', '2023-06-08 21:18:54'),
-('A002-0002-1686301222', 'A002-0002', '1011931212121', 'cek 2', 'cek fisik 2', 'Cek diagnosa 2', 'surat-rujukan', 'Giz', '2023-06-09 02:00:22', '2023-06-09 02:00:22'),
-('U001-0001-1686313211', 'U001-0001', '1011931212121', 'cek', 'cek', 'cek', 'obat-resep', 'cek', '2023-06-09 05:20:11', '2023-06-09 05:20:11'),
-('U001-0002-1686410416', 'U001-0002', '1011931212130', 'cek', 'cek', 'cek diagnosa', 'surat-rujukan', 'cek', '2023-06-10 08:20:16', '2023-06-10 08:20:16'),
-('A002-0003-1686660966', 'A002-0003', '1011931212130', 'cek', 'cek', 'cek diagnosa', 'surat-rujukan', 'gzi', '2023-06-13 05:56:06', '2023-06-13 05:56:06'),
-('A002-0003-1686667685', 'A002-0003', '1011931212130', 'cek', 'cek', 'cek diagnosa', 'surat-rujukan', 'cek', '2023-06-13 07:48:05', '2023-06-13 07:48:05'),
-('A002-0003-1686667919', 'A002-0003', '1011931212130', 'cej', 'cek', 'cek diagnosa', 'obat-resep', 'cek', '2023-06-13 07:51:59', '2023-06-13 07:51:59'),
-('A002-0003-1686668391', 'A002-0003', '1011931212130', 'cek', 'cek', 'cek', 'obat-resep', 'cek', '2023-06-13 07:59:51', '2023-06-13 07:59:51');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 -- --------------------------------------------------------
 
@@ -467,18 +403,10 @@ INSERT INTO `rekam_medis` (`kode_rekammedis`, `antrian`, `bpjs`, `anamnesa`, `pe
 
 CREATE TABLE `resep_obat` (
   `kode_resep_obat` varchar(255)  NOT NULL,
-  `kode_rekamedis` varchar(255)   NOT NULL,
+  `kode_rekamedis` varchar(255) CHARACTER SET utf8mb4  NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `resep_obat`
---
-
-INSERT INTO `resep_obat` (`kode_resep_obat`, `kode_rekamedis`, `created_at`, `updated_at`) VALUES
-('resep-1686284344', 'A002-0001-1686284334', '2023-06-08 21:19:04', '2023-06-08 21:19:04'),
-('resep-1686668640', 'A002-0003-1686668391', '2023-06-13 08:04:00', '2023-06-13 08:04:00');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 -- --------------------------------------------------------
 
@@ -492,7 +420,7 @@ CREATE TABLE `ruangan` (
   `status` tinyint(1) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 --
 -- Dumping data for table `ruangan`
@@ -515,17 +443,7 @@ CREATE TABLE `surat_rujukan` (
   `rencana_tindak_lanjut` varchar(255)  NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `surat_rujukan`
---
-
-INSERT INTO `surat_rujukan` (`kode_rujukan`, `kode_rekammedis`, `fasilitas`, `rencana_tindak_lanjut`, `created_at`, `updated_at`) VALUES
-('rujukan-1686301564', 'A002-0002-1686301222', 'Perlu Pemeriksaan Penunjang,Masih membutuhkan terapi lanjut', 'Perlu Pemeriksaan Penunjang,Melihat efek Therapy sebelumnya', '2023-06-09 02:06:04', '2023-06-09 02:06:04'),
-('rujukan-1686410744', 'U001-0002-1686410416', 'Perlu Pemeriksaan Penunjang,Masih membutuhkan terapi lanjut,cek', 'Perlu Pemeriksaan Penunjang,Melihat efek Therapy sebelumnya', '2023-06-10 08:25:44', '2023-06-10 08:25:44'),
-('rujukan-1686661808', 'A002-0003-1686660966', 'Followup terapi sebelummnya', 'Perlu Pemeriksaan Penunjang', '2023-06-13 06:10:08', '2023-06-13 06:10:08'),
-('rujukan-1686667701', 'A002-0003-1686667685', 'Perlu Pemeriksaan Penunjang', 'Perlu Pemeriksaan Penunjang', '2023-06-13 07:48:21', '2023-06-13 07:48:21');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 -- --------------------------------------------------------
 
@@ -552,7 +470,7 @@ CREATE TABLE `users` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `is_admin` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 --
 -- Dumping data for table `users`
