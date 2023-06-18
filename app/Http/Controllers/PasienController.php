@@ -24,15 +24,25 @@ class PasienController extends Controller
 
     function checkAntrianStatus($tiket)
     {
-        $previousAntrian = DB::table('antrian')
+        $cekAdaAntrian = DB::table('antrian')
             ->where('kode_poli', $tiket->kode_poli)
             ->where('kode_antrian', "!=", $tiket->kode_antrian)
+            ->whereRaw("SUBSTRING_INDEX(kode_antrian, '-', -1) < SUBSTRING_INDEX(?, '-', -1)", [$tiket->kode_antrian])
             ->orderByRaw("SUBSTRING_INDEX(kode_antrian, '-', -1) DESC")
-            ->value('status');
-        if ($previousAntrian !== 1) {
-            return false;
-        } else {
+            ->first();
+        if ($cekAdaAntrian === null) {
             return true;
+        } else {
+            $previousAntrian = DB::table('antrian')
+                ->where('kode_poli', $tiket->kode_poli)
+                ->where('kode_antrian', "!=", $tiket->kode_antrian)
+                ->orderByRaw("SUBSTRING_INDEX(kode_antrian, '-', -1) DESC")
+                ->value('status');
+            if ($previousAntrian === 1) {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 }
