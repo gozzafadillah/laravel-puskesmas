@@ -27,7 +27,7 @@
       <h1 class="h2">Form Pembayaran Pasien</h1>
     </div>
     <div class="table-responsive">
-      <form id="tambahNotaPembayaran" action="/dashboard/resepobat" method="POST">
+      <form action="/dashboard/pembayaran/notapembayaran" method="POST">
         @csrf
         <!-- card pelayanan -->
         <div class="card mt-4">
@@ -35,6 +35,7 @@
             History Pelayanan
           </div>
           <div class="card-body">
+            <?php $total = 0; ?>
             @foreach ($pelayananUser as $userItem)
               <div class="card mb-3">
                 <div class="card-body">
@@ -44,6 +45,7 @@
                     @endif
                   @endforeach
                   <p>Biaya: {{ $userItem->biaya }}</p>
+                  <?php $total += $userItem->biaya; ?>
                 </div>
               </div>
             @endforeach
@@ -63,6 +65,9 @@
                     @if ($obat->kode_obat == $resepObat->kode_obat)
                       <p>Nama Obat: {{ $obat->nama_obat }}</p>
                       <p>Biaya: {{ $obat->harga * $resepObat->qty }}</p>
+                      <?php
+                      $total += $obat->harga * $resepObat->qty;
+                      ?>
                     @endif
                   @endforeach
                   <p class="card-text">Kuantitas: {{ $resepObat->qty }}</p>
@@ -71,73 +76,19 @@
               </div>
             @endforeach
           </div>
+          <div class="container my-3 px-3 py-2">
+            <h3>Total : {{ $total }}</h3>
+          </div>
+
         </div>
         @if ($resepObat->kode_obat)
-          <input type="hidden" id="kode_pasien" name="kode_pasien" value="{{ $resepObat->kode_resep_obat }}">
+          <input type="hidden" name="kode_resepobat" value="{{ $resepObat->kode_resep_obat }}">
         @else
-          <input type="hidden" id="kode_pasien" name="kode_pasien" value="{{ $rujukan->kode_rujukan }}">
+          <input type="hidden" name="kode_rujukan" value="{{ $rujukan->kode_rujukan }}">
         @endif
+        <input type="hidden" name="total" value="{{ $total }}">
         <button type="submit" class="btn btn-primary mt-3" id="submitBtn">Tambah Nota</button>
       </form>
     </div>
   </div>
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-  <script>
-    $(document).ready(function() {
-      $('#tambahNotaPembayaran').on('submit', function(e) {
-        e.preventDefault();
-
-        let layananList = [];
-        let kode_pasien = '';
-        $('.item_layanan:checked').each(function() {
-          let layananID = $(this).val();
-          let harga = $(this).closest('tr').find('td:last-child').text();
-          let kode_pasien = document.getElementById('kode_pasien').value;
-
-          let layananData = {
-            id: layananID,
-            biaya: harga
-          };
-
-          layananList.push(layananData);
-        });
-
-
-
-        let csrfToken = $('meta[name="csrf-token"]').attr('content');
-
-        let payload = {
-          layananList: layananList,
-          kode_pasien: kode_pasien
-        };
-
-        $.ajax({
-          url: $(this).attr('action'),
-          method: 'POST',
-          headers: {
-            'X-CSRF-TOKEN': csrfToken
-          },
-          data: payload,
-          success: function(response) {
-            alert('Obat berhasil ditambahkan!');
-            // Lakukan tindakan lain setelah obat berhasil ditambahkan
-            window.location.href = "/dashboard/resepobat";
-          },
-          error: function(xhr, status, error) {
-            // Respon error dari server
-            if (xhr.responseJSON && xhr.responseJSON.errors) {
-              // Terdapat pesan kesalahan yang dikirimkan oleh server
-              var errorMessages = xhr.responseJSON.errors;
-              alert('Terjadi kesalahan: ' + errorMessages.join('\n'));
-            } else {
-              // Pesan kesalahan umum
-              alert('Terjadi kesalahan. Silakan coba lagi!');
-            }
-            console.log(xhr.responseText);
-          }
-        });
-      });
-    });
-  </script>
 @endsection

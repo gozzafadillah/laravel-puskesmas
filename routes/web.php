@@ -111,8 +111,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/dashboard/poli/status/{kodePoli}', [PoliController::class, 'changeStatusPoli'])->middleware('admin');
 
     //administrasi
-    Route::get('/dashboard/pembayaran/list', [PembayaranController::class, 'index'])->middleware('administrasi');
+    Route::get('/dashboard/pembayaran/list', [PembayaranController::class, 'listAntrianPembayaran'])->middleware('administrasi');
     Route::get('/dashboard/pembayaran/form/{kode_rekammedis}', [PembayaranController::class, 'createPembayaran'])->middleware('administrasi');
+    Route::post('/dashboard/pembayaran/notapembayaran', [PembayaranController::class, 'storeNotaPembayaran'])->middleware('administrasi');
+    Route::get('/dashboard/transaksi', [PembayaranController::class, 'listTransaksi'])->middleware('administrasi');
+
 
     //dokter
     Route::get('/dashboard/listobat', [ListObatController::class, 'index'])->middleware('dokter');
