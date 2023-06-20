@@ -82,18 +82,6 @@
           @enderror
         </div>
 
-        <div class="mb-3">
-          <label for="giz" class="form-label">Giz</label>
-          <input type="text" class="form-control @error('giz') is-invalid @enderror" id="giz" name="giz"
-            placeholder="Masukan giz" value="{{ old('giz') }}" autofocus>
-          @error('giz')
-            <div class="invalid-feedback">
-              {{ $message }}
-            </div>
-          @enderror
-        </div>
-
-
         <button type="submit" class="btn btn-primary"><span data-feather="plus-circle"></span>Submit</button>
       </form>
     </div>

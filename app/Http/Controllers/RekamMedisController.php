@@ -58,7 +58,6 @@ class RekamMedisController extends Controller
             'pemeriksaan_Fisik' => 'required',
             'diagnosa' => 'required',
             'tindakan' => 'required',
-            'giz' => 'required'
         ]);
 
         $validatedData['antrian'] = $request->kode_antrian;
