@@ -14,7 +14,7 @@ class RekamMedis extends Model
     protected $primaryKey = 'kode_rekammedis';
     protected $keyType = 'string';
 
-    public function antrian()
+    public function dataAntrian()
     {
         return $this->hasOne(Antrian::class, 'kode_antrian', 'antrian');
     }

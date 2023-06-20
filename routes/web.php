@@ -39,7 +39,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::redirect('/', '/posts');
+Route::redirect('/', '/home');
 
 Route::get('/about', function () {
     return view('about', [
@@ -49,18 +49,11 @@ Route::get('/about', function () {
         "About" => "Dongeng Rakyat Indonesia",
         "image" => "roro.jpg"
     ]);
-});
-
-Route::get('/posts', function () {
-    return view('posts', [
-        'active' => 'posts',
-        "title" => "Post"
-    ]);
-});
+});;
 
 Route::get("/search/post", [PostController::class, 'search'])->name('searchPost');
 
-Route::get('/posts', [PostController::class, 'index']);
+Route::get('/home', [PostController::class, 'index']);
 Route::get('posts/{post:slug}', [PostController::class, 'show']);
 
 Route::get('/categories', function () {
@@ -178,4 +171,5 @@ Route::group(['middleware' => 'auth'], function () {
     // pasien dashboard
     Route::resource("/dashboard/antrian", AntrianDashboardController::class);
     Route::get("/dashboard/tiket", [PasienController::class, "getTIket"]);
+    Route::delete('/dashboard/tiket/{kodeAntrian}', [PasienController::class, 'cancelAntrian']);
 });

@@ -21,11 +21,11 @@ class AntrianDashboardController extends Controller
             $query = DB::table('antrian')
                 ->where('kode_poli', $poli->kode_poli)
                 ->where('status', 0)
-                ->orderByRaw("SUBSTRING_INDEX(kode_antrian, '-', -1) ASC")
-                ->value('kode_antrian');
+                ->orderByRaw("SUBSTRING_INDEX(antrian, '-', -1) ASC")
+                ->value('antrian');
 
             $data = [
-                "kode_antrian" => $query,
+                "antrian" => $query,
                 "kode_poli" => $poli->kode_poli
             ];
             array_push($antrian, $data);
@@ -79,8 +79,8 @@ class AntrianDashboardController extends Controller
         // Ambil nomor urut terakhir dari kode antrian untuk poli ini
         $lastKodeAntrian = DB::table('antrian')
             ->where('kode_poli', $poliKode)
-            ->orderByRaw("SUBSTRING_INDEX(kode_antrian, '-', -1) DESC")
-            ->value('kode_antrian');
+            ->orderByRaw("SUBSTRING_INDEX(antrian, '-', -1) DESC")
+            ->value('antrian');
 
 
         // Periksa apakah berhasil mendapatkan nomor urut terakhir
@@ -91,7 +91,8 @@ class AntrianDashboardController extends Controller
             $urutan = 1;
         }
 
-        $validateData['kode_antrian'] = $poliKode . '-' . str_pad($urutan, 4, '0', STR_PAD_LEFT);
+        $validateData['kode_antrian'] = $poliKode . '-' . str_pad($urutan, 4, '0', STR_PAD_LEFT) . '-' . time();
+        $validateData['antrian'] = $poliKode . '-' . str_pad($urutan, 4, '0', STR_PAD_LEFT);
 
         // Simpan data antrian ke dalam database
         Antrian::create($validateData);

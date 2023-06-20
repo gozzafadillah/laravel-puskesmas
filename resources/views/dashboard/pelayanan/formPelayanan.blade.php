@@ -83,7 +83,7 @@
 
           let layananData = {
             id: layananID,
-            biaya: hargaNumerik,
+            biaya: hargaNumerik * 1000,
           };
 
           layananList.push(layananData);

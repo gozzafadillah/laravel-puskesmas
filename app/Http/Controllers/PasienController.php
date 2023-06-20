@@ -22,6 +22,13 @@ class PasienController extends Controller
         ]);
     }
 
+    public function cancelAntrian($kodeAntrian)
+    {
+        Antrian::where('kode_antrian', $kodeAntrian)->delete();
+
+        return redirect('/dashboard/antrian');
+    }
+
     function checkAntrianStatus($tiket)
     {
         $cekAdaAntrian = DB::table('antrian')

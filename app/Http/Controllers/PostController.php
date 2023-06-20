@@ -32,11 +32,11 @@ class PostController extends Controller
             $query = DB::table('antrian')
                 ->where('kode_poli', $poli->kode_poli)
                 ->where('status', 0)
-                ->orderByRaw("SUBSTRING_INDEX(kode_antrian, '-', -1) ASC")
-                ->value('kode_antrian');
+                ->orderByRaw("SUBSTRING_INDEX(antrian, '-', -1) ASC")
+                ->value('antrian');
 
             $data = [
-                "kode_antrian" => $query,
+                "antrian" => $query,
                 "kode_poli" => $poli->kode_poli
             ];
             array_push($antrian, $data);

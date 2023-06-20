@@ -33,22 +33,22 @@
         <thead>
           <tr>
             <th scope="col">Nomer</th>
-            <th scope="col">NIK</th>
+            <th scope="col">Date</th>
             <th scope="col">Nama </th>
             <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody id="search-results">
           @foreach ($pasien as $user)
-            @if ($user->rekamMedis)
+            @if ($user->antrian)
               <tr>
-                <td>{{ $user->rekamMedis->kode_rekammedis }}</td>
-                <td>{{ $user->NIK }}</td>
-                <td>{{ $user->name }}</td>
+                <td>{{ $user->dataAntrian->antrian }}</td>
+                <td>{{ date('d/m/Y', strtotime($user->created_at)) }}</td>
+                <td>{{ $user->dataAntrian->name }}</td>
                 <td>
                   <div class="d-flex">
                     <a class="badge bg-warning m-1 border-0"
-                      href="/dashboard/pembayaran/form/{{ $user->rekamMedis->kode_rekammedis }}"><span
+                      href="/dashboard/pembayaran/form/{{ $user->kode_rekammedis }}"><span
                         data-feather="dollar-sign"></span></a>
                   </div>
                 </td>

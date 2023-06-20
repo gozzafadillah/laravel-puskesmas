@@ -28,6 +28,6 @@ class Antrian extends Model
 
     public function rekamMedis()
     {
-        return $this->hasOne(RekamMedis::class, 'antrian', 'kode_antrian');
+        return $this->belongsTo(RekamMedis::class, 'kode_antrian', 'antrian');
     }
 }

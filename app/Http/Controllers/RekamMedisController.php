@@ -54,7 +54,6 @@ class RekamMedisController extends Controller
     {
 
         $validatedData = $request->validate([
-            'antrian' => 'required',
             'anamnesa' => 'required',
             'pemeriksaan_Fisik' => 'required',
             'diagnosa' => 'required',
@@ -62,8 +61,8 @@ class RekamMedisController extends Controller
             'giz' => 'required'
         ]);
 
-
-        $validatedData['kode_rekammedis'] = $this->generateKode($validatedData['antrian']);
+        $validatedData['antrian'] = $request->kode_antrian;
+        $validatedData['kode_rekammedis'] = $this->generateKode($request->kode_antrian);
 
         if ($request['bpjs']) {
             $validatedData['bpjs'] = $request['bpjs'];

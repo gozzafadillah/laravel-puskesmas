@@ -11,10 +11,11 @@
         @csrf
 
         <div class="mb-3">
-          <label for="antrian" class="form-label">Kode Antrian</label>
-          <input type="text" class="form-control @error('antrian') is-invalid @enderror" id="antrian" name="antrian"
-            placeholder="Masukan Kode Obat" value="{{ $antrian['kode_antrian'] }}" autofocus>
-          @error('antrian')
+          <label for="kode_antrian" class="form-label">Kode Antrian</label>
+          <input type="text" class="form-control" value="{{ $antrian['kode_antrian'] }}" disabled>
+          <input type="hidden" class="@error('kode_antrian') is-invalid @enderror" id="kode_antrian" name="kode_antrian"
+            value="{{ $antrian['kode_antrian'] }}">
+          @error('kode_antrian')
             <div class="invalid-feedback">
               {{ $message }}
             </div>

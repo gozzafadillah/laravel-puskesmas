@@ -14,8 +14,8 @@
           <br>
           @foreach ($antrian as $antrianItem)
             @if ($poli->kode_poli === $antrianItem->kode_poli)
-              @if ($antrianItem->kode_antrian)
-                <p class="fs-1">{{ $antrianItem->kode_antrian }}</p>
+              @if ($antrianItem->antrian)
+                <p class="fs-1">{{ $antrianItem->antrian }}</p>
                 <p class="mb-0">&nbsp;</p>
               @else
                 <p class="fs-3">Tidak Ada Antrian</p>
@@ -27,12 +27,21 @@
       </div>
     @endforeach
 
-    <div id="daftar-antrian" class="col-lg-12 col-sm-12 mb-5" style="cursor: pointer">
-      <div class="text-light d-block bg-primary match-height border-0 px-4 py-5 text-center shadow"
-        style="height: 150px;">
-        <p class="h3">Daftar Antrian</p>
+    @if ($checkUserAntrian === true)
+      <div id="daftar-antrian" class="col-lg-12 col-sm-12 mb-5" style="cursor: pointer">
+        <div class="text-light d-block bg-primary match-height border-0 px-4 py-5 text-center shadow"
+          style="height: 150px;">
+          <p class="h3">Daftar Antrian</p>
+        </div>
       </div>
-    </div>
+    @else
+      <a href="/dashboard/tiket" class="col-lg-12 col-sm-12 mb-5" style="cursor: pointer; text-decoration: none">
+        <div class="text-light d-block bg-success match-height border-0 px-4 py-5 text-center shadow"
+          style="height: 150px;">
+          <p class="h3">Tiket Anda</p>
+        </div>
+      </a>
+    @endif
 
     {{-- Data daftar antrian --}}
     <div id="form-data" class="row justify-content-center" style="display: none">
@@ -43,7 +52,6 @@
         <div class="col-lg-6 col-sm-6">
           @include('antrian/formAntrian')
           <button id="tombol-close" class="btn btn-success mb-5">Close</button>
-
         </div>
       @else
         <div class="col-12 text-center">

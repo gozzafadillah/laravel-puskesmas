@@ -50,11 +50,11 @@ class ResepObatController extends Controller
         $errorMessages = [];
         // pengencekan stok obat
         foreach ($obatList as $obat) {
-            $obatId = $obat['id'];
-            $dosis = $obat['dosis'];
+            $obatId = $obat['obatId'];
+            $qty = $obat['qty'];
             $obat = Obat::where('kode_obat', $obatId)->first();
-            if ($obat['stok'] <= $dosis) {
-                $errorMessages[] = 'Dosis obat ' . $obat->nama_obat . ' melebihi stok yang tersedia.';
+            if ($obat['stok'] <= $qty) {
+                $errorMessages[] = 'Qty obat ' . $obat->nama_obat . ' melebihi stok yang tersedia.';
             };
             // Jika terdapat pesan kesalahan, kirimkan respons error
             if (!empty($errorMessages)) {
@@ -64,18 +64,17 @@ class ResepObatController extends Controller
 
         // input ke database
         foreach ($obatList as $obat) {
-            $obatId = $obat['id'];
+            $obatId = $obat['obatId'];
             $dosis = $obat['dosis'];
+            $qty = $obat['qty'];
             $obat = Obat::where('kode_obat', $obatId)->first();
-            $obatNew = $obat['stok'] - $dosis;
 
             DB::table('p_resep_obat')->insert([
                 'kode_resep_obat' => $kode_resep_obat,
                 'kode_obat' => $obatId,
+                'qty' => $qty,
                 'dosis' => $dosis,
             ]);
-
-            Obat::where('kode_obat', $obatId)->update(['stok' => $obatNew]);
         }
 
         ResepObat::create([
@@ -84,7 +83,7 @@ class ResepObatController extends Controller
         ]);
 
         $rekamMedis = RekamMedis::where('kode_rekammedis', $kodeRekamMedis)->first();
-        $cek = DB::table('antrian')->where('kode_antrian', $rekamMedis['antrian'])->update(['status' => 1]);
+        DB::table('antrian')->where('kode_antrian', $rekamMedis['antrian'])->update(['status' => 1]);
 
         return response()->json(['success' => true]);
     }

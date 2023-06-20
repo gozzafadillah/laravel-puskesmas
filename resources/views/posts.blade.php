@@ -17,8 +17,8 @@
               <br>
               @foreach ($antrian as $antrianItem)
                 @if ($poli->kode_poli === $antrianItem->kode_poli)
-                  @if ($antrianItem->kode_antrian)
-                    <p class="fs-1">{{ $antrianItem->kode_antrian }}</p>
+                  @if ($antrianItem->antrian)
+                    <p class="fs-1">{{ $antrianItem->antrian }}</p>
                     <p class="mb-0">&nbsp;</p>
                   @else
                     <p class="fs-3">Tidak Ada Antrian</p>

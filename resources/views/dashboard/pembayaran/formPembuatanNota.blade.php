@@ -29,31 +29,27 @@
     <div class="table-responsive">
       <form id="tambahNotaPembayaran" action="/dashboard/resepobat" method="POST">
         @csrf
-        <!-- Konten formulir lainnya -->
-        @foreach ($categoryPelayanan as $category)
-          <h5>{{ $category->nama_category }}</h5>
-          <table class="table-striped table-custom table">
-            <thead>
-              <tr>
-                <th>Nama</th>
-                <th class="text-center">Stok</th>
-              </tr>
-            </thead>
-            <tbody>
-              @foreach ($pelayanan as $layanan)
-                @if ($layanan->category == $category->id)
-                  <tr>
-                    <td>
-                      <input type="checkbox" class="item_layanan" name="item_layanan[]" value="{{ $layanan->id }}">
-                      <label>{{ $layanan->layanan }}</label>
-                    </td>
-                    <td class="text-center">{{ 'Rp' . number_format($layanan->biaya, 0, ',', '.') }}</td>
-                  </tr>
-                @endif
-              @endforeach
-            </tbody>
-          </table>
-        @endforeach
+        <!-- card pelayanan -->
+        <div class="card mt-4">
+          <div class="card-header">
+            History Pelayanan
+          </div>
+          <div class="card-body">
+            @foreach ($pelayananUser as $userItem)
+              <div class="card mb-3">
+                <div class="card-body">
+                  @foreach ($pelayanan as $layanan)
+                    @if ($layanan->id == $userItem->pelayanan_id)
+                      <h5 class="card-title">{{ $layanan->layanan }}</h5>
+                    @endif
+                  @endforeach
+                  <p>Biaya: {{ $userItem->biaya }}</p>
+                </div>
+              </div>
+            @endforeach
+          </div>
+        </div>
+        <!-- card obat -->
         <div class="card mt-4">
           <div class="card-header">
             History Resep Obat
@@ -66,9 +62,10 @@
                   @foreach ($obats as $obat)
                     @if ($obat->kode_obat == $resepObat->kode_obat)
                       <p>Nama Obat: {{ $obat->nama_obat }}</p>
-                      <p>Biaya: {{ $obat->harga }}</p>
+                      <p>Biaya: {{ $obat->harga * $resepObat->qty }}</p>
                     @endif
                   @endforeach
+                  <p class="card-text">Kuantitas: {{ $resepObat->qty }}</p>
                   <p class="card-text">Dosis: {{ $resepObat->dosis }}</p>
                 </div>
               </div>
@@ -80,7 +77,7 @@
         @else
           <input type="hidden" id="kode_pasien" name="kode_pasien" value="{{ $rujukan->kode_rujukan }}">
         @endif
-        <button type="submit" id="submitBtn">Tambah Nota</button>
+        <button type="submit" class="btn btn-primary mt-3" id="submitBtn">Tambah Nota</button>
       </form>
     </div>
   </div>

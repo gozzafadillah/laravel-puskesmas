@@ -16,27 +16,41 @@ class AntrianController extends Controller
     {
         $poli = Poli::where('isActive', 1)->latest()->get();
         $antrian = [];
+        $user = auth()->user();
 
         foreach ($poli as $poli) {
             $query = DB::table('antrian')
                 ->where('kode_poli', $poli->kode_poli)
                 ->where('status', 0)
-                ->orderByRaw("SUBSTRING_INDEX(kode_antrian, '-', -1) ASC")
-                ->value('kode_antrian');
+                ->orderByRaw("SUBSTRING_INDEX(antrian, '-', -1) ASC")
+                ->value('antrian');
 
             $data = [
-                "kode_antrian" => $query,
+                "antrian" => $query,
                 "kode_poli" => $poli->kode_poli
             ];
             array_push($antrian, $data);
         }
 
+        $checkUserAntrian = $this->checkUserAntrian($user->NIK);
+
+
         return view("antrian.show", [
             'polis' => Poli::where('isActive', 1)->latest()->get(),
             'title' => 'Nomor Antrian',
             'active' => 'antrian',
-            "antrian" => json_decode(json_encode($antrian), false)
+            "antrian" => json_decode(json_encode($antrian), false),
+            'checkUserAntrian' => $checkUserAntrian
         ]);
+    }
+
+    function checkUserAntrian($nik)
+    {
+        $antrian = Antrian::where('NIK', $nik)->where('status', 0)->first();
+        if ($antrian === null) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -77,8 +91,8 @@ class AntrianController extends Controller
         // Ambil nomor urut terakhir dari kode antrian untuk poli ini
         $lastKodeAntrian = DB::table('antrian')
             ->where('kode_poli', $poliKode)
-            ->orderByRaw("SUBSTRING_INDEX(kode_antrian, '-', -1) DESC")
-            ->value('kode_antrian');
+            ->orderByRaw("SUBSTRING_INDEX(antrian, '-', -1) DESC")
+            ->value('antrian');
 
 
         // Periksa apakah berhasil mendapatkan nomor urut terakhir
@@ -89,7 +103,8 @@ class AntrianController extends Controller
             $urutan = 1;
         }
 
-        $validateData['kode_antrian'] = $poliKode . '-' . str_pad($urutan, 4, '0', STR_PAD_LEFT);
+        $validateData['antrian'] = $poliKode . '-' . str_pad($urutan, 4, '0', STR_PAD_LEFT);
+        $validateData['kode_antrian'] = $poliKode . '-' . str_pad($urutan, 4, '0', STR_PAD_LEFT) . '-' . time();
 
         // Simpan data antrian ke dalam database
         Antrian::create($validateData);

@@ -8,7 +8,7 @@
     <div class="card-body">
       <h5 class="card-title">Informasi Tiket</h5>
       <ul class="list-group">
-        <li class="list-group-item"><strong>Kode Antrian:</strong> {{ $tiket->kode_antrian }}</li>
+        <li class="list-group-item"><strong>Kode Antrian:</strong> {{ $tiket->antrian }}</li>
         <li class="list-group-item"><strong>Kode Poli:</strong> {{ $tiket->kode_poli }}</li>
         <li class="list-group-item"><strong>Nama Pasien:</strong> {{ $tiket->name }}</li>
       </ul>

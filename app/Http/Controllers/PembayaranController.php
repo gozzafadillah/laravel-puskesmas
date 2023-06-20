@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Antrian;
 use App\Models\Obat;
+use App\Models\P_Pelayanan;
+use App\Models\Pelayanan;
+use App\Models\RekamMedis;
 use App\Models\ResepObat;
 use App\Models\SuratRujukan;
 use Illuminate\Http\Request;
@@ -13,8 +15,9 @@ class PembayaranController extends Controller
 {
     public function index()
     {
+        // ddd(RekamMedis::with('antrian')->get());
         return view('dashboard.pembayaran.index', [
-            'pasien' => Antrian::with('rekamMedis')->get(),
+            'pasien' => RekamMedis::with('dataAntrian')->get(),
         ]);
     }
     public function createPembayaran($kode_rekammedis)
@@ -24,32 +27,16 @@ class PembayaranController extends Controller
         $dataResepObat = DB::table('p_resep_obat')->where('kode_resep_obat', $resepObat->kode_resep_obat)->get();
 
         return view('dashboard.pembayaran.formPembuatanNota', [
-            'pelayanan' => DB::table('pelayanan')->get(),
-            'categoryPelayanan' => DB::table('category_pelayanan')->get(),
+            'pelayanan' => Pelayanan::latest()->get(),
             'resepObat' => $resepObat,
             'rujukan' => $rujukan,
             'dataResepObat' => $dataResepObat,
             'obats' => Obat::get(),
+            'pelayananUser' => P_Pelayanan::where('kode_rekammedis', $kode_rekammedis)->get()
         ]);
     }
     public function storePascaPembayaran(Request $request)
     {
-
-        $layananList = $request->input('layananList');
-        $kode_pasien = $request->input('kode_pasien');
-
-        foreach ($layananList as $layanan) {
-            $obatId = $layanan['id'];
-            $dosis = $layanan['dosis'];
-            $layanan = Obat::where('kode_obat', $obatId)->first();
-
-            // DB::table('p_resep_obat')->insert([
-            //     'kode_resep_obat' => $kode_resep_obat,
-            //     'kode_obat' => $obatId,
-            //     'dosis' => $dosis,
-            // ]);
-
-            // Obat::where('kode_obat', $obatId)->update(['stok' => $obatNew]);
-        }
+        //    
     }
 }

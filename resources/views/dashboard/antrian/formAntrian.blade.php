@@ -2,9 +2,7 @@
   @csrf
 
   <div class="mb-3">
-    <label for="name" class="form-label">Nama</label>
-    <input type="text" class="form-control" name="name" id="name" value="{{ auth()->user()->name }}"
-      autocomplete="off" placeholder="isikan nama ...">
+    <input type="hidden" class="form-control" name="name" id="name" value="{{ auth()->user()->name }}">
   </div>
   <input id="NIK" value="{{ auth()->user()->NIK }}" name="NIK" type="hidden">
   <input name="tgllahir" value="{{ auth()->user()->tgllahir }}" id="tgllahir" type="hidden">

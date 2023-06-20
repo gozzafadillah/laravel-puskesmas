@@ -18,7 +18,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
-    <a class="navbar-brand fs-3 font-weight-bold" href="/posts">Puskesmas Binong</a>
+    <a class="navbar-brand fs-3 font-weight-bold" href="/home">Puskesmas Binong</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -26,7 +26,7 @@
     <div class="navbar-collapse collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link {{ $active === 'posts' ? 'active' : '' }}" href="/posts">Home</a>
+          <a class="nav-link {{ $active === 'posts' ? 'active' : '' }}" href="/home">Home</a>
         </li>
 
 
@@ -114,18 +114,6 @@
               </form>
 
               <div id="result-post"></div>
-
-              {{-- <a style="text-decoration: none" class="text-dark" href="#">
-                                <h5>Hello</h5>
-                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nemo omnis assumenda ad,
-                                    numquam distinctio commodi nam esse fugit modi praesentium.</p>
-                            </a>
-                            <a style="text-decoration: none" class="text-dark" href="#">
-                                <h5>Hello</h5>
-                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nemo omnis assumenda ad,
-                                    numquam distinctio commodi nam esse fugit modi praesentium.</p>
-                            </a> --}}
-
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>

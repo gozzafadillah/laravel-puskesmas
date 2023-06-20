@@ -22,6 +22,7 @@
               <tr>
                 <th>Nama</th>
                 <th>Stok</th>
+                <th>Kuantitas</th>
                 <th>Dosis</th>
               </tr>
             </thead>
@@ -35,7 +36,10 @@
                     </td>
                     <td>{{ $data->stok }}</td>
                     <td>
-                      <input type="number" class="dosis" name="dosis[{{ $data->kode_obat }}]" value="0">
+                      <input type="number" class="qty" name="qty[{{ $data->kode_obat }}]" value="0">
+                    </td>
+                    <td>
+                      <input type="text" class="dosis" name="dosis[{{ $data->kode_obat }}]" value="dosis ...">
                     </td>
                   </tr>
                 @endif
@@ -56,16 +60,18 @@
         e.preventDefault();
 
         var obatList = [];
-        var kode_rekammedis = document.getElementById('kodeRekamMedis').value;
+        var kode_rekammedis = $('#kodeRekamMedis').val();
         $('.item_obat:checked').each(function() {
           var obatId = $(this).val();
           var dosis = $('.dosis[name="dosis[' + obatId + ']"]').val();
+          var qty = $('.qty[name="qty[' + obatId + ']"]').val();
 
           var obatData = {
-            id: obatId,
-            dosis: dosis
+            obatId: obatId,
+            dosis: dosis,
+            qty: qty
           };
-
+          console.log(obatData);
           obatList.push(obatData);
         });
 
