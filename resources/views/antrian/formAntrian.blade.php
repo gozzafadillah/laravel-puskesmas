@@ -7,6 +7,7 @@
   <input id="NIK" value="{{ auth()->user()->NIK }}" name="NIK" type="hidden">
   <input name="tgllahir" value="{{ auth()->user()->tgllahir }}" id="tgllahir" type="hidden">
 
+  <p>Selasa, Juli 2023</p>
   <div class="mb-3">
     <label for="kode_poli" class="form-label">Pilih Poli</label>
     <select class="form-control" name="kode_poli" id="kode_poli">
@@ -14,6 +15,7 @@
         <option value="{{ $poli->kode_poli }}">{{ $poli->name }}</option>
       @endforeach
     </select>
+
   </div>
 
   <div class="mb-3">

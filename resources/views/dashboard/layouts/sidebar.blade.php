@@ -1,101 +1,5 @@
  <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
    <div class="position-sticky sidebar-sticky pt-3">
-     {{-- <ul class="nav flex-column"> --}}
-     {{-- <li class="nav-item">
-            <a class="nav-link {{ Request::is('dashboard') ? 'active' : ''}}" aria-current="page" href="/dashboard">
-              <span data-feather="home" class="align-text-bottom"></span>
-              Dashboard
-            </a>
-          </li>
-           <li class="nav-item">
-            <a class="nav-link {{ Request::is('#') ? 'active' : ''}}" aria-current="page" href="#">
-              <span data-feather="mail" class="align-text-bottom"></span>
-              #
-            </a>
-          </li>
-           <li class="nav-item">
-            <a class="nav-link {{ Request::is('#') ? 'active' : ''}}" aria-current="page" href="#">
-              <span data-feather="package" class="align-text-bottom"></span>
-             #
-            </a>
-          </li>
-           <li class="nav-item">
-              <a class="nav-link {{ Request::is('dashboard/listobat*') ? 'active' : ''}}{{ auth()->user()->cek == 0 || auth()->user()->cek == 2 ? ' disabled' : ''}}" href="/dashboard/listobat"
-              @if (auth()->user()->cek == 0 || auth()->user()->cek == 2)
-                  style="color: gray"
-              @endif>
-              <span data-feather="activity" class="align-text-bottom"></span>
-              List Obat
-            </a>
-          </li>
-           <li class="nav-item">
-            <a class="nav-link {{ Request::is('#*') ? 'active' : ''}}" href="#">
-              <span data-feather="shopping-cart" class="align-text-bottom"></span>
-              #
-            </a>
-          </li>
-        </ul>  --}}
-
-
-     {{-- <hr>
-        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1">
-          <span>Administrator</span>
-        </h6>
-        <ul class="nav flex-column">
-          <li class="nav-item">
-              <a class="nav-link {{ Request::is('dashboard/categories*') ? 'active' : ''}}{{ auth()->user()->cek == 0 || auth()->user()->cek == 2 ? ' disabled' : ''}}" href="/dashboard/categories"
-              @if (auth()->user()->cek == 0 || auth()->user()->cek == 2)
-                  style="color: gray"
-              @endif>
-              <span data-feather="grid" class="align-text-bottom"></span>
-               Kategori  
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link {{ Request::is('dashboard/posts*') ? 'active' : ''}}" href="/dashboard/posts">
-              <span data-feather="file-text" class="align-text-bottom"></span>
-              Postingan
-            </a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link {{ Request::is('dashboard/verifikasi*') ? 'active' : ''}}" href="/dashboard/verifikasi">
-                <span data-feather="user" class="align-text-bottom"></span>
-                Verifikasi Akun
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link {{ Request::is('dashboard/daftarpasien*') ? 'active' : ''}}" href="/dashboard/daftarpasien">
-                <span data-feather="user" class="align-text-bottom"></span>
-                Daftar Pasien
-              </a>
-            </li>
-        </ul>
-       
-
-        <hr>
-           <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1">
-          <span>Dokter</span>
-        </h6>
-        <ul class="nav flex-column">
-          <li class="nav-item">
-            <a class="nav-link {{ Request::is('#*') ? 'active' : ''}}" href="#">
-              <span data-feather="mail" class="align-text-bottom"></span>
-             #
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link {{ Request::is('#*') ? 'active' : ''}}" href="#">
-              <span data-feather="package" class="align-text-bottom"></span>
-              #
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link {{ Request::is('dashboard/tambahobat*') ? 'active' : ''}}" href="/dashboard/tambahobat">
-              <span data-feather="activity" class="align-text-bottom"></span>
-              Tambah Daftar Obat
-            </a>
-          </li>
-        </ul>  --}}
 
      @if (auth()->user()->is_admin == 1)
        @can('admin')
@@ -187,7 +91,7 @@
              </a>
            </li>
            <li class="nav-item">
-             <a class="nav-link {{ Request::is('#*') ? 'active' : '' }}" href="#">
+             <a class="nav-link {{ Request::is('dashboard/transaksi*') ? 'active' : '' }}" href="/dashboard/transaksi">
                <span data-feather="mail" class="align-text-bottom"></span>
                Transaksi
              </a>
