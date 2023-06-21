@@ -34,24 +34,46 @@
           <tr>
             <th scope="col">Nomer</th>
             <th scope="col">Date</th>
-            {{-- <th scope="col">Nama </th> --}}
+            <th scope="col">status </th>
             <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody id="search-results">
-          @foreach ($notaPembayaran as $user)
-            <tr>
-              <td>{{ $user->kode_notapembayaran }}</td>
-              <td>{{ $user->created_at }}</td>
-              {{-- <td>{{ $user->created_at }}</td> --}}
-              {{-- <td>{{ date('d/m/Y', strtotime($user->created_at)) }}</td>
+          @foreach ($listTransaksi as $transaksi)
+            @foreach ($notaPembayaran as $user)
+              @if ($transaksi->kode_notapembayaran == $user->kode_notapembayaran)
+                <tr>
+                  <td>{{ $user->kode_notapembayaran }}</td>
+                  <td>{{ $user->created_at }}</td>
+                  <td>
+                    @if ($transaksi->status == 'Pending')
+                      <a style="text-decoration: none" class="badge bg-primary border-0">Pending</a>
+                    @endif
+                    @if ($transaksi->status == 'Settled')
+                      <a style="text-decoration: none" class="badge bg-success border-0">Settled</a>
+                    @endif
+                    @if ($transaksi->status == 'Failed')
+                      <a style="text-decoration: none" class="badge bg-danger border-0">Failed</a>
+                    @endif
+                  </td>
+                  {{-- <td>{{ $user->created_at }}</td> --}}
+                  {{-- <td>{{ date('d/m/Y', strtotime($user->created_at)) }}</td>
               <td>{{ $user->dataAntrian->name }}</td> --}}
-              <td>
-                <div class="d-flex">
-                  <a class="badge bg-primary m-1 border-0" href="#"><span data-feather="user"></span></a>
-                </div>
-              </td>
-            </tr>
+                  <td>
+                    <div class="d-flex gap-2">
+                      <form action="/dashboard/transaksi/{{ $transaksi->invoice }}" method="post">
+                        @csrf
+                        @method('put')
+                        <button type="submit" style="text-decoration: none"
+                          class="badge bg-success border-0">Bayar</button>
+                      </form>
+                      <a class="badge bg-primary border-0" style="text-decoration: none"
+                        href="/dashboard/transaksi/{{ $user->kode_notapembayaran }}"><span data-feather="eye"></span></a>
+                    </div>
+                  </td>
+                </tr>
+              @endif
+            @endforeach
           @endforeach
         </tbody>
       </table>

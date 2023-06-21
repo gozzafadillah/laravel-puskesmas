@@ -79,13 +79,16 @@ Route::post("/antrian", [AntrianController::class, "store"]);
 // Middleware auth
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard', function () {
+        if (auth()->user()->cek == 0) {
+            return redirect("/dashboard/profile")->with('error', 'Kamu harus Perbaiki dan Cek Lagi Nomer BPJS Kamu, Jika Masalah berlanjut silahkan Hubungi Petugas!');
+        }
         return view('dashboard.index');
     })->middleware('auth');
 
     // logging
     Route::get("/dashboard/log/rekammedis", [RekamMedisController::class, 'getRekamMedis']);
 
-    Route::resource('dashboard/profile', ProfileEditController::class)->middleware('auth');
+    Route::resource('/dashboard/profile', ProfileEditController::class)->middleware('auth');
 
     //admin
     Route::get('/dashboard/posts/checkSlug', [DashboardPostController::class, 'checkSlug'])->middleware('admin');
@@ -115,6 +118,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard/pembayaran/form/{kode_rekammedis}', [PembayaranController::class, 'createPembayaran'])->middleware('administrasi');
     Route::post('/dashboard/pembayaran/notapembayaran', [PembayaranController::class, 'storeNotaPembayaran'])->middleware('administrasi');
     Route::get('/dashboard/transaksi', [PembayaranController::class, 'listTransaksi'])->middleware('administrasi');
+    Route::put('/dashboard/transaksi/{kodeInvoice}', [PembayaranController::class, 'successTransaction'])->middleware('administrasi');
+    Route::get('/dashboard/transaksi/{kodeNotaPembayaran}', [PembayaranController::class, 'getTransaction'])->middleware('administrasi');
 
 
     //dokter

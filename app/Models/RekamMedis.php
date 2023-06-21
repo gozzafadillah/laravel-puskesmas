@@ -31,6 +31,6 @@ class RekamMedis extends Model
 
     public function resepObat()
     {
-        return $this->belongsTo(ResepObat::class, 'kode_rekamedis', 'kode');
+        return $this->belongsTo(ResepObat::class, 'kode_rekammedis', 'kode_rekamedis');
     }
 }
