@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 13, 2023 at 03:52 PM
+-- Generation Time: Jun 21, 2023 at 03:08 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -29,6 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `antrian` (
   `kode_antrian` varchar(255)  NOT NULL,
+  `antrian` varchar(255)  DEFAULT NULL,
   `name` varchar(255)  NOT NULL,
   `NIK` varchar(255)  NOT NULL,
   `tgllahir` varchar(255)  NOT NULL,
@@ -37,6 +38,13 @@ CREATE TABLE `antrian` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
+
+--
+-- Dumping data for table `antrian`
+--
+
+INSERT INTO `antrian` (`kode_antrian`, `antrian`, `name`, `NIK`, `tgllahir`, `kode_poli`, `status`, `created_at`, `updated_at`) VALUES
+('U001-0001-1687331248', 'U001-0001', 'Idris Mardefi', '101212120120120220', '2000-03-09', 'U001', 1, '2023-06-21 00:07:28', '2023-06-21 00:07:28');
 
 -- --------------------------------------------------------
 
@@ -95,6 +103,7 @@ CREATE TABLE `dokter` (
   `id` bigint UNSIGNED NOT NULL,
   `name` varchar(255)  NOT NULL,
   `userid` bigint NOT NULL,
+  `status` tinyint(1) DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
@@ -103,9 +112,10 @@ CREATE TABLE `dokter` (
 -- Dumping data for table `dokter`
 --
 
-INSERT INTO `dokter` (`id`, `name`, `userid`, `created_at`, `updated_at`) VALUES
-(1, 'Gilandra', 10, '2023-05-13 23:27:49', '2023-05-13 23:27:49'),
-(2, 'Faishal Rahmat', 11, '2023-05-13 23:30:12', '2023-05-13 23:30:12');
+INSERT INTO `dokter` (`id`, `name`, `userid`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Gilandra', 10, 0, '2023-05-13 23:27:49', '2023-06-21 07:41:09'),
+(2, 'Faishal Rahmat', 11, 1, '2023-05-13 23:30:12', '2023-06-21 07:41:09'),
+(3, 'Fikri', 15, 1, '2023-05-13 23:30:12', '2023-06-21 07:47:28');
 
 -- --------------------------------------------------------
 
@@ -161,6 +171,28 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (19, '2023_06_09_133126_pelayanan', 11),
 (20, '2023_06_13_120610_p_pelayanan', 12),
 (21, '2023_06_13_121144_p_pelayanan', 13);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `nota_pembayaran`
+--
+
+CREATE TABLE `nota_pembayaran` (
+  `kode_notapembayaran` varchar(255) NOT NULL,
+  `kode_resepobat` varchar(255) DEFAULT NULL,
+  `kode_rujukan` varchar(255) DEFAULT NULL,
+  `total` float DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
+
+--
+-- Dumping data for table `nota_pembayaran`
+--
+
+INSERT INTO `nota_pembayaran` (`kode_notapembayaran`, `kode_resepobat`, `kode_rujukan`, `total`, `created_at`, `updated_at`) VALUES
+('pembayaran-1687331398', 'resep-1687331322', NULL, 389000, '2023-06-21 00:09:58', '2023-06-21 00:09:58');
 
 -- --------------------------------------------------------
 
@@ -320,8 +352,7 @@ CREATE TABLE `poli` (
 
 INSERT INTO `poli` (`kode_poli`, `name`, `description`, `dokter`, `ruangan`, `jadwal`, `isActive`, `created_at`, `updated_at`) VALUES
 ('A002', 'Poli Anak', '<div>Poli Untuk anak</div>', 2, '01-001', '08:00 s/d 13:00', 1, '2023-05-14 12:20:37', '2023-05-14 12:20:37'),
-('U001', 'Poli Umum', '<div>Poli untuk umum</div>', 1, '01-002', '08:00 s/d 14:00', 1, '2023-05-14 12:22:38', '2023-05-14 12:22:38'),
-('K001', 'Poli KIA', '<div>cek poli kia</div>', 1, '01-001', '07:00 s/d 15:00', 1, '2023-05-19 08:32:29', '2023-06-13 08:28:57');
+('002', 'Poli', '<div>cej</div>', 3, '01-002', '02:02 s/d 14:00', 1, '2023-06-21 07:47:28', '2023-06-21 07:47:28');
 
 -- --------------------------------------------------------
 
@@ -348,7 +379,8 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`id`, `category_id`, `user_id`, `title`, `slug`, `image`, `excerpt`, `body`, `published_at`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 'Balita Indonesia', 'balita-indonesia', 'post-images/88b0vioVxEaeEy3dSKeWJFSHEiWGubIXtAV1kMla.png', 'Balita indonesia mengalami gizi buruk karena kurang nya perhatian dan gizi oleh orang tua. Karena itu banyak nya balita mengalami kekurusan dan gizi buruk seperti busung lapar.', '<div>Balita indonesia mengalami gizi buruk karena kurang nya perhatian dan gizi oleh orang tua. Karena itu banyak nya balita mengalami kekurusan dan gizi buruk seperti busung lapar.</div>', NULL, '2023-05-12 05:08:06', '2023-05-12 05:08:06');
+(1, 1, 1, 'Balita Indonesia', 'balita-indonesia', 'post-images/88b0vioVxEaeEy3dSKeWJFSHEiWGubIXtAV1kMla.png', 'Balita indonesia mengalami gizi buruk karena kurang nya perhatian dan gizi oleh orang tua. Karena itu banyak nya balita mengalami kekurusan dan gizi buruk seperti busung lapar.', '<div>Balita indonesia mengalami gizi buruk karena kurang nya perhatian dan gizi oleh orang tua. Karena itu banyak nya balita mengalami kekurusan dan gizi buruk seperti busung lapar.</div>', NULL, '2023-05-12 05:08:06', '2023-05-12 05:08:06'),
+(2, 1, 1, 'cek', 'cek', 'post-images/O11atREyBCjrXAGGn5Khj1DpJx0dOtkTWRbpSm6U.jpg', 'cek', '<div>cek</div>', NULL, '2023-06-20 09:23:12', '2023-06-20 09:23:12');
 
 -- --------------------------------------------------------
 
@@ -364,6 +396,14 @@ CREATE TABLE `p_pelayanan` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
+--
+-- Dumping data for table `p_pelayanan`
+--
+
+INSERT INTO `p_pelayanan` (`pelayanan_id`, `kode_rekammedis`, `biaya`, `created_at`, `updated_at`) VALUES
+(1, 'U001-0001-1687331248-1687331301', 14000, NULL, NULL),
+(2, 'U001-0001-1687331248-1687331301', 75000, NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -372,9 +412,17 @@ CREATE TABLE `p_pelayanan` (
 
 CREATE TABLE `p_resep_obat` (
   `kode_resep_obat` varchar(255) NOT NULL,
-  `kode_obat` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
-  `dosis` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `kode_obat` varchar(255) CHARACTER SET utf8mb4  NOT NULL,
+  `dosis` varchar(255) NOT NULL,
+  `qty` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
+
+--
+-- Dumping data for table `p_resep_obat`
+--
+
+INSERT INTO `p_resep_obat` (`kode_resep_obat`, `kode_obat`, `dosis`, `qty`) VALUES
+('resep-1687331322', 'Kapsul-IN001', '2x1 Sehari', 3);
 
 -- --------------------------------------------------------
 
@@ -390,10 +438,16 @@ CREATE TABLE `rekam_medis` (
   `pemeriksaan_fisik` text  NOT NULL,
   `diagnosa` varchar(255)  NOT NULL,
   `tindakan` varchar(255)  NOT NULL,
-  `giz` varchar(255)  NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
+
+--
+-- Dumping data for table `rekam_medis`
+--
+
+INSERT INTO `rekam_medis` (`kode_rekammedis`, `antrian`, `bpjs`, `anamnesa`, `pemeriksaan_fisik`, `diagnosa`, `tindakan`, `created_at`, `updated_at`) VALUES
+('U001-0001-1687331248-1687331301', 'U001-0001-1687331248', '1011931212130', 'cek', 'cek', 'cek', 'obat-resep', '2023-06-21 00:08:21', '2023-06-21 00:08:21');
 
 -- --------------------------------------------------------
 
@@ -404,9 +458,17 @@ CREATE TABLE `rekam_medis` (
 CREATE TABLE `resep_obat` (
   `kode_resep_obat` varchar(255)  NOT NULL,
   `kode_rekamedis` varchar(255) CHARACTER SET utf8mb4  NOT NULL,
+  `status` tinyint(1) DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
+
+--
+-- Dumping data for table `resep_obat`
+--
+
+INSERT INTO `resep_obat` (`kode_resep_obat`, `kode_rekamedis`, `status`, `created_at`, `updated_at`) VALUES
+('resep-1687331322', 'U001-0001-1687331248-1687331301', 0, '2023-06-21 00:08:42', '2023-06-21 00:08:42');
 
 -- --------------------------------------------------------
 
@@ -427,8 +489,8 @@ CREATE TABLE `ruangan` (
 --
 
 INSERT INTO `ruangan` (`kode`, `name`, `status`, `created_at`, `updated_at`) VALUES
-('01-001', 'Ruangan Lt 1 - 001', 0, '2023-05-14 07:47:16', '2023-05-14 07:47:18'),
-('01-002', 'Ruangan Lt 1 - 002', 0, '2023-05-14 00:49:40', '2023-05-14 00:54:18');
+('01-001', 'Ruangan Lt 1 - 001', 1, '2023-05-14 07:47:16', '2023-06-21 07:40:10'),
+('01-002', 'Ruangan Lt 1 - 002', 1, '2023-05-14 00:49:40', '2023-06-21 07:47:28');
 
 -- --------------------------------------------------------
 
@@ -444,6 +506,28 @@ CREATE TABLE `surat_rujukan` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `transaksi`
+--
+
+CREATE TABLE `transaksi` (
+  `invoice` varchar(255) NOT NULL,
+  `kode_notapembayaran` varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL,
+  `total` float DEFAULT NULL,
+  `status` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
+
+--
+-- Dumping data for table `transaksi`
+--
+
+INSERT INTO `transaksi` (`invoice`, `kode_notapembayaran`, `total`, `status`, `created_at`, `updated_at`) VALUES
+('invoice-1687331398', 'pembayaran-1687331398', 389000, 'Settled', '2023-06-21 00:09:58', '2023-06-21 05:46:05');
 
 -- --------------------------------------------------------
 
@@ -485,7 +569,9 @@ INSERT INTO `users` (`id`, `name`, `NIK`, `alamat`, `kepalakeluarga`, `opsibpjs`
 (10, 'Gilandra', '10121212012012022', 'JL Sarinah No 1 A', 'Gilan', 'TIDAK', NULL, '2000-03-09', 23, 'Gilandra', 'Gilandra@dokter.com', NULL, '$2y$10$lFXYwGm0.RVSljUWk4B1auLRaWbZ5hr3cMj9yOCQbMOS9KuXR5Y6.', 1, NULL, '2023-05-13 23:27:49', '2023-05-13 23:27:49', 2),
 (11, 'Faishal Rahmat', '10121212012012009', 'JL Sarijadi No 1 A', 'Dr Faishal', 'TIDAK', NULL, '2000-03-09', 23, 'Faishal', 'faishal@dokter.com', NULL, '$2y$10$6AgKjiUfTBIjOl2JQWKfzOYbMkb/zSa4copAjV/RTH58c1NfxTKwy', 1, NULL, '2023-05-13 23:30:12', '2023-05-13 23:30:12', 2),
 (12, 'Idris Mardefi', '101212120120120220', 'JL Sarijadi No 1 B', 'Idris', 'YA', '1011931212130', '2000-03-09', 23, 'Idris', 'idris@gmail.com', NULL, '$2y$10$SN4MBj.KBOB8rwoyxbOGAONcX5Ww4ZecRDki4U8js5XDKddzYBa0.', 1, NULL, '2023-05-19 08:45:12', '2023-06-10 06:05:23', 0),
-(13, 'Aldy Pratama', '101212131212121212131414', 'JL Sarijadi No 1 A', 'Aldy', 'YA', '1230192381241031312', '2000-03-09', 23, 'Aldy', 'aldy@gmail.com', NULL, '$2y$10$YzwtrvWiMVaHYNm7sTjv7eqP9lRg0AUzCDesQQUtraW0hPB49M8sy', 2, NULL, '2023-06-11 04:46:43', '2023-06-11 04:46:43', 0);
+(13, 'Aldy Pratama', '101212131212121212131414', 'JL Sarijadi No 1 A', 'Aldy', 'YA', '1230192381241031312', '2000-03-09', 23, 'Aldy', 'aldy@gmail.com', NULL, '$2y$10$SN4MBj.KBOB8rwoyxbOGAONcX5Ww4ZecRDki4U8js5XDKddzYBa0.', 0, NULL, '2023-06-11 04:46:43', '2023-06-20 09:48:50', 0),
+(14, 'Kiana Sekar', '123123120841048123', 'JL Sarijadi No 1 A', 'Sumanto', 'YA', '12212113213131', '1945-02-01', 78, 'Kiana', 'kiana@gmail.com', NULL, '$2y$10$JNLggFSRvvpToQuXmHPHY.C9gUVo95FexAhzzNLuTOQvvc2Ml86uG', 0, NULL, '2023-06-20 10:07:37', '2023-06-20 10:09:32', 0),
+(15, 'Fikri', '10121212012012041', 'JL Sarijadi No 1 A', 'Dr Fikri', 'TIDAK', NULL, '2000-03-09', 23, 'Fikri', 'fikri@dokter.com', NULL, '$2y$10$6AgKjiUfTBIjOl2JQWKfzOYbMkb/zSa4copAjV/RTH58c1NfxTKwy', 1, NULL, '2023-05-13 23:30:12', '2023-05-13 23:30:12', 2);
 
 --
 -- Indexes for dumped tables
@@ -523,6 +609,12 @@ ALTER TABLE `failed_jobs`
 --
 ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `nota_pembayaran`
+--
+ALTER TABLE `nota_pembayaran`
+  ADD PRIMARY KEY (`kode_notapembayaran`);
 
 --
 -- Indexes for table `obats`
@@ -576,6 +668,12 @@ ALTER TABLE `surat_rujukan`
   ADD PRIMARY KEY (`kode_rujukan`);
 
 --
+-- Indexes for table `transaksi`
+--
+ALTER TABLE `transaksi`
+  ADD PRIMARY KEY (`invoice`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -604,7 +702,7 @@ ALTER TABLE `category_pelayanan`
 -- AUTO_INCREMENT for table `dokter`
 --
 ALTER TABLE `dokter`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -640,13 +738,13 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -9,6 +9,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardPostController;
 use App\Http\Controllers\AdminCategoryController;
+use App\Http\Controllers\AmbilObatController;
 use App\Http\Controllers\AntrianController;
 use App\Http\Controllers\AntrianDashboardController;
 use App\Http\Controllers\CekAkunController;
@@ -151,6 +152,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard/tambahobatcategory/edit/{obatCategory}', [TambahObatCategoryController::class, 'edit'])->middleware('farmasi');
     Route::put('/dashboard/tambahobatcategory/edit/{obatCategory}', [TambahObatCategoryController::class, 'update'])->middleware('farmasi');
     Route::delete('/dashboard/tambahobatcategory/delete/{obatCategory}', [TambahObatCategoryController::class, 'destroy'])->middleware('farmasi');
+    Route::get("/dashboard/pasienObat", [AmbilObatController::class, 'pasienAmbilObat'])->middleware('farmasi');
+    Route::get('/dashboard/ambilObat/{kodeResepObat}', [AmbilObatController::class, 'listObatPasien'])->middleware("farmasi");
+
     Route::get('/search/categoryobat', function (Request $request) {
         $output = "";
         $query = $request->input('query');

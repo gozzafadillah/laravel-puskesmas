@@ -34,6 +34,7 @@ class PoliController extends Controller
 
     public function store(Request $request)
     {
+
         $validateData = $request->validate([
             'name' => 'required',
             'description' => 'required',
@@ -41,23 +42,28 @@ class PoliController extends Controller
             'ruangan' => 'required',
         ]);
 
+
         if ($request->isActive) {
             $validateData['isActive'] = 1;
         }
-
 
         $validateData['jadwal'] = $request->jadwalStart . " s/d " . $request->jadwalEnd;
 
         $validateData['kode_poli'] = $this->generatePoliCode($validateData['name']);
 
-        $poli = Poli::create($validateData);
+        Poli::create($validateData);
+        Dokter::where('id', $request->dokter)->update(['status' =>  1]);
+        Ruangan::where('kode', $request->ruangan)->update(['status' =>  1]);
 
         return redirect("/dashboard/poli")->with("success", "poli telah ditambahkan");
     }
 
     public function destroy($kode)
     {
+        $poli = Poli::where('kode_poli', $kode)->first();
         Poli::destroy($kode);
+        Dokter::where('id', $poli->dokter)->update(['status' => 0]);
+        $ruangan = Ruangan::where('kode', $poli->ruangan)->update(['status' => 0]);
 
         return redirect("dashboard/poli")->with("success", "poli telah dihapus");
     }

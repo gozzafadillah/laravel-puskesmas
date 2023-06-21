@@ -11,6 +11,7 @@ class Ruangan extends Model
 
     protected $guarded = [];
     protected $table = "ruangan";
+    protected $keyType = 'string';
 
     public $incrementing = false;
     // TODO refactor this kode Ruangan
