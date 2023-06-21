@@ -11,4 +11,9 @@ class NotaPembayaran extends Model
 
     protected $table = 'nota_pembayaran';
     protected $guarded = [];
+
+    public function transaksi()
+    {
+        return $this->hasOne(Transaksi::class, 'kode_notapembayaran', 'kode_notapembayaran');
+    }
 }
