@@ -11,7 +11,7 @@ class TambahObatController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
         // $search = $request->input('search');
         // $obats = Obat::where('nama_obat', 'like', '%' . $search . '%')

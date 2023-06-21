@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
+
     public function index()
     {
         return view('login.index', [
@@ -21,13 +22,13 @@ class LoginController extends Controller
             'email' => 'required|email',
             'password' => 'required'
         ]);
-       
 
-        if(Auth::attempt($credential)) {
+
+        if (Auth::attempt($credential)) {
             $request->session()->regenerate();
             return redirect()->intended('/dashboard');
         }
-        
+
         return back()->with('gagal', 'Login Gagal');
     }
 
@@ -38,6 +39,6 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/posts');
+        return redirect('/home');
     }
 }

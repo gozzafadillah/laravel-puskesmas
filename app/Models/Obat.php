@@ -13,6 +13,7 @@ class Obat extends Model
 
     public $incrementing = false;
     protected $primaryKey = 'kode_obat';
+    protected $keyType = 'string';
 
     public function getRouteKeyName()
     {

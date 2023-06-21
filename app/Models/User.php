@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use PDO;
 
 class User extends Authenticatable
 {
@@ -19,12 +20,12 @@ class User extends Authenticatable
      */
     // protected $fillable = [
     //     'name',
-        // 'username',
+    // 'username',
     //     'email',
     //     'password',
     // ];
 
-    protected $guarded =['id'];
+    protected $guarded = ['id'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -50,8 +51,18 @@ class User extends Authenticatable
         return $this->hasMany(Post::class);
     }
 
+    public function Dokter()
+    {
+        return $this->hasMany(Dokter::class);
+    }
+
     public function getRouteKeyName()
     {
         return 'id';
+    }
+
+    public function Antrian()
+    {
+        return $this->hasOne(Antrian::class, "NIK");
     }
 }
