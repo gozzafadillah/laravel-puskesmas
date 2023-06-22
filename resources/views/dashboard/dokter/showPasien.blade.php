@@ -31,14 +31,7 @@
                   <th>Tindakan</th>
                   <td>{{ $data->tindakan }}</td>
                 </tr>
-                <tr>
-                  <th>GIZ</th>
-                  <td>{{ $data->giz }}</td>
-                </tr>
-                <tr>
-                  <th>GIZ</th>
-                  <td>{{ $data }}</td>
-                </tr>
+
               </tbody>
             </table>
           </div>

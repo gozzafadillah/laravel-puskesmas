@@ -48,13 +48,13 @@
                 : "<a href='#' class='badge bg-danger border-0 text-decoration-none'>sudah dicek</a>" !!}</td>
             <td>{{ $item['created_at'] }}</td>
             <td>
-              <a href="/dashboard/listpasien/{{ $item->kode_antrian }}" class="badge bg-success border-0"><span
-                  data-feather="eye"></span></a>
               @if ($item->status == 0)
                 <a class="badge bg-primary border-0"
                   href="/dashboard/listpasien/rekammedis/form/{{ $item->kode_antrian }}"><span
                     data-feather="plus"></span></a>
               @else
+                <a href="/dashboard/listpasien/{{ $item->kode_antrian }}" class="badge bg-success border-0"><span
+                    data-feather="eye"></span></a>
                 <a class="badge bg-warning border-0"
                   href="/dashboard/listpasien/rekammedis/edit/{{ $item->kode_antrian }}"><span
                     data-feather="edit"></span></a>
