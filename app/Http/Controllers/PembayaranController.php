@@ -19,7 +19,7 @@ class PembayaranController extends Controller
     {
         return view('dashboard.pembayaran.index', [
             'pasien' => RekamMedis::with('dataAntrian')->with('resepObat')->get(),
-            'notaPembayaran' => NotaPembayaran::latest()->get(),
+            'notaPembayaran' => NotaPembayaran::with('transaksi')->latest()->get(),
         ]);
     }
     public function createPembayaran($kode_rekammedis)
