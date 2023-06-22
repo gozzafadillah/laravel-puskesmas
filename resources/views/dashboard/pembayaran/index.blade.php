@@ -41,34 +41,19 @@
         <tbody id="search-results">
           @foreach ($pasien as $user)
             @foreach ($notaPembayaran as $pembayaran)
-              @if ($user->antrian)
-                @if ($pembayaran->kode_resepobat != $user->resepObat->kode_resep_obat)
-                  <tr>
-                    <td>{{ $user->dataAntrian->antrian }}</td>
-                    <td>{{ date('d/m/Y', strtotime($user->created_at)) }}</td>
-                    <td>{{ $user->dataAntrian->name }}</td>
-                    <td>
-                      <div class="d-flex">
-                        <a class="badge bg-warning m-1 border-0"
-                          href="/dashboard/pembayaran/form/{{ $user->kode_rekammedis }}"><span
-                            data-feather="dollar-sign"></span></a>
-                      </div>
-                    </td>
-                  </tr>
-                @else
-                  <tr>
-                    <td>{{ $user->dataAntrian->antrian }}</td>
-                    <td>{{ date('d/m/Y', strtotime($user->created_at)) }}</td>
-                    <td>{{ $user->dataAntrian->name }}</td>
-                    <td>
-                      <div class="d-flex">
-                        <a class="badge bg-primary m-1 border-0"
-                          href="/dashboard/transaksi/{{ $pembayaran->kode_notapembayaran }}"><span
-                            data-feather="eye"></span></a>
-                      </div>
-                    </td>
-                  </tr>
-                @endif
+              @if ($user->resepObat->kode_resep_obat === $pembayaran->kode_resepobat && $pembayaran->transaksi->status !== 'Settled')
+                <tr>
+                  <td>{{ $user->dataAntrian->antrian }}</td>
+                  <td>{{ date('d/m/Y', strtotime($user->created_at)) }}</td>
+                  <td>{{ $user->dataAntrian->name }}</td>
+                  <td>
+                    <div class="d-flex">
+                      <a class="badge bg-warning m-1 border-0"
+                        href="/dashboard/pembayaran/form/{{ $user->kode_rekammedis }}"><span
+                          data-feather="dollar-sign"></span></a>
+                    </div>
+                  </td>
+                </tr>
               @endif
             @endforeach
           @endforeach

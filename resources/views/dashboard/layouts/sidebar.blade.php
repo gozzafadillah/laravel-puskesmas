@@ -109,7 +109,15 @@
                Daftar Obat
              </a>
            </li>
+         </ul>
 
+         <ul class="nav flex-column">
+           <li class="nav-item">
+             <a class="nav-link {{ Request::is('dashboard/pasienObat*') ? 'active' : '' }}" href="/dashboard/pasienObat">
+               <span data-feather="activity" class="align-text-bottom"></span>
+               Ambil Obat
+             </a>
+           </li>
          </ul>
        @endcan
      @else
