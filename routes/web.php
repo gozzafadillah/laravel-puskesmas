@@ -88,6 +88,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     // logging
     Route::get("/dashboard/log/rekammedis", [RekamMedisController::class, 'getRekamMedis']);
+    Route::get("/dashboard/log/resepobat", [ResepObatController::class, 'getResepObat']);
+    Route::get("/dashboard/log/suratrujukan", [SuratRujukanController::class, 'getSuratRujukan']);
 
     Route::resource('/dashboard/profile', ProfileEditController::class)->middleware('auth');
 

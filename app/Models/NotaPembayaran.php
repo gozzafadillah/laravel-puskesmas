@@ -16,4 +16,12 @@ class NotaPembayaran extends Model
     {
         return $this->hasOne(Transaksi::class, 'kode_notapembayaran', 'kode_notapembayaran');
     }
+    public function resepObat()
+    {
+        return $this->belongsTo(ResepObat::class, 'kode_resepobat', 'kode_resep_obat');
+    }
+    public function suratRujukan()
+    {
+        return $this->belongsTo(SuratRujukan::class, 'kode_rujukan', 'kode_rujukan');
+    }
 }

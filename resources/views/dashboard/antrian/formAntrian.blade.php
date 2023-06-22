@@ -8,6 +8,11 @@
   <input name="tgllahir" value="{{ auth()->user()->tgllahir }}" id="tgllahir" type="hidden">
 
   <div class="mb-3">
+    <label for="tanggal" class="form-label">Tanggal Pengambilan Poli</label>
+    <input class="form-control" type="text" disabled id="tanggal" />
+
+  </div>
+  <div class="mb-3">
     <label for="kode_poli" class="form-label">Pilih Poli</label>
     <select class="form-control" name="kode_poli" id="kode_poli">
       @foreach ($polis as $poli)
@@ -21,3 +26,9 @@
     <button type="reset" class="btn btn-danger">Reset</button>
   </div>
 </form>
+
+<script>
+  let currentDate = new Date();
+  let formattedDate = currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1) + '-' + currentDate.getDate();
+  document.getElementById('tanggal').value = formattedDate;
+</script>

@@ -18,4 +18,9 @@ class SuratRujukan extends Model
     {
         return $this->belongsTo(RekamMedis::class, 'kode', 'kode_rekammedis');
     }
+
+    public function notaPembayaran()
+    {
+        return $this->hasOne(NotaPembayaran::class, 'kode_rujukan', 'kode_rujukan');
+    }
 }

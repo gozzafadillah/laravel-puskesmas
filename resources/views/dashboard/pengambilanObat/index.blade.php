@@ -40,17 +40,26 @@
         </thead>
         <tbody id="search-results">
           @foreach ($notaPembayaran as $pasien)
-            <tr>
-              <td>{{ $pasien->transaksi->invoice }}</td>
-              <td>{{ $pasien->transaksi->created_at }}</td>
-              <td>{{ $pasien->transaksi->status }}</td>
-              <td>
-                <div class="d-flex">
-                  <a class="badge bg-primary m-1 border-0" href="/dashboard/ambilObat/{{ $pasien->kode_resepobat }}"><span
-                      data-feather="eye"></span></a>
-                </div>
-              </td>
-            </tr>
+            @if ($pasien->transaksi && $pasien->transaksi->invoice != null && $pasien->kode_resepobat != null)
+              <tr>
+                <td>{{ $pasien->transaksi->invoice }}</td>
+                <td>{{ $pasien->transaksi->created_at }}</td>
+                <td>{{ $pasien->transaksi->status }}</td>
+                @if ($pasien->resepObat->status == 0)
+                  <td>
+                    <div class="d-flex">
+                      <a class="badge bg-primary border-0" href="/dashboard/ambilObat/{{ $pasien->kode_resepobat }}"><span
+                          data-feather="eye"></span></a>
+                    </div>
+                  </td>
+                @else
+                  <td>
+                    <button style="cursor: default" class="badge bg-success border-0">done</button>
+                  </td>
+                @endif
+
+              </tr>
+            @endif
           @endforeach
         </tbody>
       </table>

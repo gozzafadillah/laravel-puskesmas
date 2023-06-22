@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Antrian;
 use App\Models\Dokter;
 use App\Models\Obat;
 use App\Models\ObatCategory;
@@ -25,6 +26,17 @@ class ResepObatController extends Controller
             'resepObat' => $resepKode,
         ]);
     }
+
+    public function getResepObat()
+    {
+        $userSession = auth()->user();
+        $rekamMedis = Antrian::with('rekamMedis')->where('NIK', $userSession->NIK)->get();
+
+        return view('dashboard.resepobat.logResepObat', [
+            'rekamMedis' => $rekamMedis
+        ]);
+    }
+
     public function createResepObat($kodeRekamMedis)
     {
         $obat = Obat::latest()->get();

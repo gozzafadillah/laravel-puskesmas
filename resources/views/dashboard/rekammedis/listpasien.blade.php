@@ -20,7 +20,7 @@
           : '<span class="mx-2 badge bg-danger border-0">Aktif</span>' !!}
     </div>
     <div class="card-footer text-muted">
-      Dibuat pada: {{ $poli['created_at'] }}
+      <p id="tanggal"></p>
     </div>
   </div>
 
@@ -65,4 +65,9 @@
       </tbody>
     </table>
   </div>
+  <script>
+    let currentDate = new Date();
+    let formattedDate = currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1) + '-' + currentDate.getDate();
+    document.getElementById('tanggal').innerHTML = `Tanggal Pengambilan Poli: ${formattedDate}`;
+  </script>
 @endsection

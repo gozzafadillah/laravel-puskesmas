@@ -18,4 +18,9 @@ class ResepObat extends Model
     {
         return $this->belongsTo(RekamMedis::class, 'kode_rekamedis', 'kode_rekammedis');
     }
+
+    public function notaPembayaran()
+    {
+        return $this->hasOne(NotaPembayaran::class, 'kode_resepobat', 'kode_resep_obat');
+    }
 }

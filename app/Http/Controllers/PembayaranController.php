@@ -17,21 +17,24 @@ class PembayaranController extends Controller
 {
     public function listAntrianPembayaran()
     {
+        // ddd(SuratRujukan::with('notaPembayaran')->get());
         return view('dashboard.pembayaran.index', [
-            'pasien' => RekamMedis::with('dataAntrian')->with('resepObat')->get(),
-            'notaPembayaran' => NotaPembayaran::with('transaksi')->latest()->get(),
+            'pasien' => RekamMedis::with('dataAntrian')->with('resepObat')->with("suratRujukan")->get(),
         ]);
     }
     public function createPembayaran($kode_rekammedis)
     {
+        $dataResepObat = [];
         $resepObat = ResepObat::where('kode_rekamedis', $kode_rekammedis)->first();
         $rujukan = SuratRujukan::where('kode_rekammedis', $kode_rekammedis)->first();
-        $dataResepObat = DB::table('p_resep_obat')->where('kode_resep_obat', $resepObat->kode_resep_obat)->get();
+        if ($resepObat !== null) {
+            $dataResepObat = DB::table('p_resep_obat')->where('kode_resep_obat', $resepObat->kode_resep_obat)->get();
+        }
         $pelayananUser = P_Pelayanan::where('kode_rekammedis', $kode_rekammedis)->get();
         return view('dashboard.pembayaran.formPembuatanNota', [
             'pelayanan' => Pelayanan::latest()->get(),
-            'resepObat' => $resepObat,
-            'rujukan' => $rujukan,
+            'dataKode' => $resepObat != null ? $resepObat->kode_resep_obat : $rujukan->kode_rujukan,
+            'status' => $resepObat != null ? "resepObat" : "rujukan",
             'dataResepObat' => $dataResepObat,
             'obats' => Obat::get(),
             'pelayananUser' => $pelayananUser
