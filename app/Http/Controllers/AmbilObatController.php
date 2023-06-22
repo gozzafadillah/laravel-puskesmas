@@ -26,6 +26,12 @@ class AmbilObatController extends Controller
         ]);
     }
 
+    public function changeStatus($resepObat)
+    {
+        ResepObat::where('kode_resep_obat', $resepObat)->update(['status' => 1]);
+        return redirect('/dashboard/pasienObat');
+    }
+
     public function listObatPasien($kodeResepObat)
     {
         $p_resepObat = DB::table('p_resep_obat')->where("kode_resep_obat", $kodeResepObat)->get();

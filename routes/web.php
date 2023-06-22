@@ -158,6 +158,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get("/dashboard/pasienObat", [AmbilObatController::class, 'pasienAmbilObat'])->middleware('farmasi');
     Route::get('/dashboard/ambilObat/{kodeResepObat}', [AmbilObatController::class, 'listObatPasien'])->middleware("farmasi");
     Route::put("/dashboard/ambilObat/obat/{kodeObat}", [AmbilObatController::class, 'updateObat'])->middleware("farmasi");
+    Route::put('/dashboard/ambilobat/s/{resepObat}', [AmbilObatController::class, 'changeStatus'])->middleware('farmasi');
 
     Route::get('/search/categoryobat', function (Request $request) {
         $output = "";
