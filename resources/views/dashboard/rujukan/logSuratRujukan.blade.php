@@ -16,7 +16,7 @@
       </thead>
       <tbody>
         @foreach ($rekamMedis as $data)
-          @if ($data->rekamMedis->suratRujukan)
+          @if ($data->rekamMedis->suratRujukan && $data->rekamMedis->suratRujukan != null)
             <tr>
               <td>{{ $data->rekamMedis->suratRujukan->kode_rujukan }}</td>
               <td>{{ $data->rekamMedis->suratRujukan->created_at }}</td>
