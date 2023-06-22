@@ -154,8 +154,8 @@
            </li>
          @endif
          <li class="nav-item">
-           <a class="nav-link {{ Request::is('#*') ? 'active' : '' }}{{ auth()->user()->cek == 0 || auth()->user()->cek == 2 ? ' disabled' : '' }}"
-             href="#" @if (auth()->user()->cek == 0 || auth()->user()->cek == 2) style="color: gray" @endif>
+           <a class="nav-link {{ Request::is('dashboard/log/transaksi*') ? 'active' : '' }}{{ auth()->user()->cek == 0 || auth()->user()->cek == 2 ? ' disabled' : '' }}"
+             href="/dashboard/log/transaksi" @if (auth()->user()->cek == 0 || auth()->user()->cek == 2) style="color: gray" @endif>
              <span data-feather="grid" class="align-text-bottom"></span>
              Log Nota Transaksi
            </a>

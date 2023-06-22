@@ -90,6 +90,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get("/dashboard/log/rekammedis", [RekamMedisController::class, 'getRekamMedis']);
     Route::get("/dashboard/log/resepobat", [ResepObatController::class, 'getResepObat']);
     Route::get("/dashboard/log/suratrujukan", [SuratRujukanController::class, 'getSuratRujukan']);
+    Route::get("/dashboard/log/transaksi", [PembayaranController::class, 'getTransaksi']);
 
     Route::resource('/dashboard/profile', ProfileEditController::class)->middleware('auth');
 

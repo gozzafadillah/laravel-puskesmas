@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Antrian;
 use App\Models\NotaPembayaran;
 use App\Models\Obat;
 use App\Models\P_Pelayanan;
@@ -20,6 +21,15 @@ class PembayaranController extends Controller
         // ddd(SuratRujukan::with('notaPembayaran')->get());
         return view('dashboard.pembayaran.index', [
             'pasien' => RekamMedis::with('dataAntrian')->with('resepObat')->with("suratRujukan")->get(),
+        ]);
+    }
+    public function getTransaksi()
+    {
+        $NIKPasien = auth()->user()->NIK;
+        $dataRekammedis = Antrian::with('rekamMedis')->where('NIK', $NIKPasien)->get();
+
+        return view('dashboard.transaksi.logTransaksi', [
+            'rekamMedis' => $dataRekammedis
         ]);
     }
     public function createPembayaran($kode_rekammedis)
