@@ -52,43 +52,44 @@
           </div>
         </div>
         <!-- card obat -->
-        <div class="card mt-4">
-          <div class="card-header">
-            History Resep Obat
-          </div>
-          <div class="card-body">
-            @foreach ($dataResepObat as $resepObat)
-              <div class="card mb-3">
-                <div class="card-body">
-                  <h5 class="card-title">{{ $resepObat->kode_obat }}</h5>
-                  @foreach ($obats as $obat)
-                    @if ($obat->kode_obat == $resepObat->kode_obat)
-                      <p>Nama Obat: {{ $obat->nama_obat }}</p>
-                      <p>Biaya: {{ $obat->harga * $resepObat->qty }}</p>
-                      <?php
-                      $total += $obat->harga * $resepObat->qty;
-                      ?>
-                    @endif
-                  @endforeach
-                  <p class="card-text">Kuantitas: {{ $resepObat->qty }}</p>
-                  <p class="card-text">Dosis: {{ $resepObat->dosis }}</p>
+        @if ($dataResepObat !== null)
+          <div class="card mt-4">
+            <div class="card-header">
+              History Resep Obat
+            </div>
+            <div class="card-body">
+              @foreach ($dataResepObat as $resepObat)
+                <div class="card mb-3">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ $resepObat->kode_obat }}</h5>
+                    @foreach ($obats as $obat)
+                      @if ($obat->kode_obat == $resepObat->kode_obat)
+                        <p>Nama Obat: {{ $obat->nama_obat }}</p>
+                        <p>Biaya: {{ $obat->harga * $resepObat->qty }}</p>
+                        <?php
+                        $total += $obat->harga * $resepObat->qty;
+                        ?>
+                      @endif
+                    @endforeach
+                    <p class="card-text">Kuantitas: {{ $resepObat->qty }}</p>
+                    <p class="card-text">Dosis: {{ $resepObat->dosis }}</p>
+                  </div>
                 </div>
-              </div>
-            @endforeach
-          </div>
-          <div class="container my-3 px-3 py-2">
-            <h3>Total : {{ $total }}</h3>
-          </div>
-
-        </div>
-        @if ($resepObat->kode_obat)
-          <input type="hidden" name="kode_resepobat" value="{{ $resepObat->kode_resep_obat }}">
-        @else
-          <input type="hidden" name="kode_rujukan" value="{{ $rujukan->kode_rujukan }}">
+              @endforeach
+            </div>
+            <div class="container my-3 px-3 py-2">
+              <h3>Total : {{ $total }}</h3>
+            </div>
         @endif
-        <input type="hidden" name="total" value="{{ $total }}">
-        <button type="submit" class="btn btn-primary mt-3" id="submitBtn">Tambah Nota</button>
-      </form>
     </div>
+    @if ($status !== 'rujukan')
+      <input type="hidden" name="kode_resepobat" value="{{ $dataKode }}">
+    @else
+      <input type="hidden" name="kode_rujukan" value="{{ $dataKode }}">
+    @endif
+    <input type="hidden" name="total" value="{{ $total }}">
+    <button type="submit" class="btn btn-primary mt-3" id="submitBtn">Tambah Nota</button>
+    </form>
+  </div>
   </div>
 @endsection

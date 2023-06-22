@@ -69,12 +69,12 @@
                Resep Obat Pasien
              </a>
            </li>
-           <li class="nav-item">
+           {{-- <li class="nav-item">
              <a class="nav-link {{ Request::is('/dashboard/listobat*') ? 'active' : '' }}" href="/dashboard/listobat">
                <span data-feather="package" class="align-text-bottom"></span>
                List Obat
              </a>
-           </li>
+           </li> --}}
          </ul>
        @endcan
      @elseif(auth()->user()->is_admin == 3)
@@ -138,12 +138,21 @@
            </a>
          </li>
          <li class="nav-item">
-           <a class="nav-link {{ Request::is('#*') ? 'active' : '' }}{{ auth()->user()->cek == 0 || auth()->user()->cek == 2 ? ' disabled' : '' }}"
-             href="#" @if (auth()->user()->cek == 0 || auth()->user()->cek == 2) style="color: gray" @endif>
+           <a class="nav-link {{ Request::is('dashboard/log/resepobat*') ? 'active' : '' }}{{ auth()->user()->cek == 0 || auth()->user()->cek == 2 ? ' disabled' : '' }}"
+             href="/dashboard/log/resepobat" @if (auth()->user()->cek == 0 || auth()->user()->cek == 2) style="color: gray" @endif>
              <span data-feather="grid" class="align-text-bottom"></span>
              Log Resep Obat
            </a>
          </li>
+         @if (auth()->user()->bpjs)
+           <li class="nav-item">
+             <a class="nav-link {{ Request::is('dashboard/log/suratrujukan') ? 'active' : '' }}{{ auth()->user()->cek == 0 || auth()->user()->cek == 2 ? ' disabled' : '' }}"
+               href="/dashboard/log/suratrujukan" @if (auth()->user()->cek == 0 || auth()->user()->cek == 2) style="color: gray" @endif>
+               <span data-feather="grid" class="align-text-bottom"></span>
+               Log Surat Rujukan
+             </a>
+           </li>
+         @endif
          <li class="nav-item">
            <a class="nav-link {{ Request::is('#*') ? 'active' : '' }}{{ auth()->user()->cek == 0 || auth()->user()->cek == 2 ? ' disabled' : '' }}"
              href="#" @if (auth()->user()->cek == 0 || auth()->user()->cek == 2) style="color: gray" @endif>
@@ -151,13 +160,7 @@
              Log Nota Transaksi
            </a>
          </li>
-         <li class="nav-item">
-           <a class="nav-link {{ Request::is('#*') ? 'active' : '' }}{{ auth()->user()->cek == 0 || auth()->user()->cek == 2 ? ' disabled' : '' }}"
-             href="#" @if (auth()->user()->cek == 0 || auth()->user()->cek == 2) style="color: gray" @endif>
-             <span data-feather="grid" class="align-text-bottom"></span>
-             Log Surat Rujukan
-           </a>
-         </li>
+
          <li class="nav-item">
            <a class="nav-link {{ Request::is('dashboard/log/rekammedis*') ? 'active' : '' }}{{ auth()->user()->cek == 0 || auth()->user()->cek == 2 ? ' disabled' : '' }}"
              href="/dashboard/log/rekammedis" @if (auth()->user()->cek == 0 || auth()->user()->cek == 2) style="color: gray" @endif>

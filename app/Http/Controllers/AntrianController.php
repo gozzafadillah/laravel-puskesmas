@@ -17,6 +17,7 @@ class AntrianController extends Controller
         $poli = Poli::where('isActive', 1)->latest()->get();
         $antrian = [];
         $user = auth()->user();
+        $checkUserAntrian = true;
 
         foreach ($poli as $poli) {
             $query = DB::table('antrian')
@@ -32,7 +33,9 @@ class AntrianController extends Controller
             array_push($antrian, $data);
         }
 
-        $checkUserAntrian = $this->checkUserAntrian($user->NIK);
+        if ($user && $user !== null) {
+            $checkUserAntrian = $this->checkUserAntrian($user->NIK);
+        }
 
 
         return view("antrian.show", [

@@ -24,6 +24,16 @@ class SuratRujukanController extends Controller
             ]
         );
     }
+
+    public function getSuratRujukan()
+    {
+        $userSession = auth()->user();
+        $rekamMedis = Antrian::with('rekamMedis')->where('NIK', $userSession->NIK)->get();
+        return view("dashboard.rujukan.logSuratRujukan", [
+            'rekamMedis' => $rekamMedis
+        ]);
+    }
+
     public function createSuratRujukan($kodeRekamMedis)
     {
         return view("dashboard.rujukan.formRujukan", [
