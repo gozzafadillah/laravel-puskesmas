@@ -27,12 +27,12 @@
           <div class="card-body">
             <h5 class="card-title">{{ $resep->kode_resep_obat }}
             </h5>
-            @foreach ($obat as $obat)
-              @if ($obat->kode_obat == $resep->kode_obat)
-                <p>Nama Obat : {{ $obat->nama_obat }}</p>
+            @foreach ($obat as $obat_resep)
+              @if ($obat_resep->kode_obat == $resep->kode_obat)
+                <p>Nama Obat : {{ $obat_resep->nama_obat }}</p>
                 <p>Stok yang diambil : {{ $resep->qty }}</p>
                 @if ($resep->status !== 1)
-                  <p>Stok yang tersedia : {{ $obat->stok }}</p>
+                  <p>Stok yang tersedia : {{ $obat_resep->stok }}</p>
                 @endif
                 <p style="font-weight: bold">Dosis : {{ $resep->dosis }}</p>
               @endif
