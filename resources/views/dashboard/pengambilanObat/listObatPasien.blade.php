@@ -49,12 +49,12 @@
             @endif
           </div>
         </div>
-        <form action="/dashboard/ambilobat/s/{{ $resep->kode_resep_obat }}" method="post">
-          @csrf
-          @method('put')
-          <button type="submit">Selesai</button>
-        </form>
     </div>
     @endforeach
+    <form action="/dashboard/ambilobat/s/{{ $kodeResepObat }}" method="post">
+      @csrf
+      @method('put')
+      <button type="submit">Selesai</button>
+    </form>
   </div>
 @endsection
