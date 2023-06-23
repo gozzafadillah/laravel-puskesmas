@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 21, 2023 at 03:08 PM
+-- Generation Time: Jun 23, 2023 at 12:04 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -44,7 +44,9 @@ CREATE TABLE `antrian` (
 --
 
 INSERT INTO `antrian` (`kode_antrian`, `antrian`, `name`, `NIK`, `tgllahir`, `kode_poli`, `status`, `created_at`, `updated_at`) VALUES
-('U001-0001-1687331248', 'U001-0001', 'Idris Mardefi', '101212120120120220', '2000-03-09', 'U001', 1, '2023-06-21 00:07:28', '2023-06-21 00:07:28');
+('U001-0001-1687331248', 'U001-0001', 'Idris Mardefi', '101212120120120220', '2000-03-09', 'U001', 1, '2023-06-21 00:07:28', '2023-06-21 00:07:28'),
+('A002-0001-1687427603', 'A002-0001', 'Muhammad Fadillah Abdul Aziz', '101212120120120212', '2000-03-09', 'A002', 1, '2023-06-22 02:53:23', '2023-06-22 02:53:23'),
+('A002-0002-1687440608', 'A002-0002', 'Idris Mardefi', '101212120120120220', '2000-03-09', 'A002', 1, '2023-06-22 06:30:08', '2023-06-22 06:30:50');
 
 -- --------------------------------------------------------
 
@@ -192,7 +194,9 @@ CREATE TABLE `nota_pembayaran` (
 --
 
 INSERT INTO `nota_pembayaran` (`kode_notapembayaran`, `kode_resepobat`, `kode_rujukan`, `total`, `created_at`, `updated_at`) VALUES
-('pembayaran-1687331398', 'resep-1687331322', NULL, 389000, '2023-06-21 00:09:58', '2023-06-21 00:09:58');
+('pembayaran-1687456693', 'resep-1687331322', NULL, 389000, '2023-06-22 10:58:13', '2023-06-22 10:58:13'),
+('pembayaran-1687457527', NULL, 'rujukan-1687440650', 89000, '2023-06-22 11:12:07', '2023-06-22 11:12:07'),
+('pembayaran-1687458284', 'resep-1687427659', NULL, 189000, '2023-06-22 11:24:44', '2023-06-22 11:24:44');
 
 -- --------------------------------------------------------
 
@@ -215,7 +219,7 @@ CREATE TABLE `obats` (
 --
 
 INSERT INTO `obats` (`kode_obat`, `nama_obat`, `kategori_obat`, `stok`, `harga`, `created_at`, `updated_at`) VALUES
-('Kapsul-IN001', 'Intunal Xtra', '2', 41, 100000, '2023-05-19 08:57:18', '2023-06-13 08:04:00'),
+('Kapsul-IN001', 'Intunal Xtra', '2', 35, 100000, '2023-05-19 08:57:18', '2023-06-22 11:35:26'),
 ('Vaksin-SB001', 'Vaksin SB', '1', 48, 120000, '2023-05-19 08:57:18', '2023-06-13 08:04:00'),
 ('Vaksin-SH001', 'Vaksin SH', '1', 161, 100000, '2023-05-19 08:57:18', '2023-06-09 05:20:24');
 
@@ -402,7 +406,15 @@ CREATE TABLE `p_pelayanan` (
 
 INSERT INTO `p_pelayanan` (`pelayanan_id`, `kode_rekammedis`, `biaya`, `created_at`, `updated_at`) VALUES
 (1, 'U001-0001-1687331248-1687331301', 14000, NULL, NULL),
-(2, 'U001-0001-1687331248-1687331301', 75000, NULL, NULL);
+(2, 'U001-0001-1687331248-1687331301', 75000, NULL, NULL),
+(1, 'A002-0001-1687427603-1687427642', 14000, NULL, NULL),
+(2, 'A002-0001-1687427603-1687427642', 75000, NULL, NULL),
+(1, 'A002-0002-1687440001-1687440028', 14000, NULL, NULL),
+(2, 'A002-0002-1687440001-1687440028', 75000, NULL, NULL),
+(33, 'A002-0002-1687440001-1687440028', 42000, NULL, NULL),
+(34, 'A002-0002-1687440001-1687440028', 42000, NULL, NULL),
+(1, 'A002-0002-1687440608-1687440641', 14000, NULL, NULL),
+(2, 'A002-0002-1687440608-1687440641', 75000, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -414,15 +426,17 @@ CREATE TABLE `p_resep_obat` (
   `kode_resep_obat` varchar(255) NOT NULL,
   `kode_obat` varchar(255) CHARACTER SET utf8mb4  NOT NULL,
   `dosis` varchar(255) NOT NULL,
-  `qty` int DEFAULT NULL
+  `qty` int DEFAULT NULL,
+  `status` tinyint(1) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 --
 -- Dumping data for table `p_resep_obat`
 --
 
-INSERT INTO `p_resep_obat` (`kode_resep_obat`, `kode_obat`, `dosis`, `qty`) VALUES
-('resep-1687331322', 'Kapsul-IN001', '2x1 Sehari', 3);
+INSERT INTO `p_resep_obat` (`kode_resep_obat`, `kode_obat`, `dosis`, `qty`, `status`) VALUES
+('resep-1687331322', 'Kapsul-IN001', '2x1 Sehari', 3, 1),
+('resep-1687427659', 'Kapsul-IN001', '1x sehari', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -447,7 +461,9 @@ CREATE TABLE `rekam_medis` (
 --
 
 INSERT INTO `rekam_medis` (`kode_rekammedis`, `antrian`, `bpjs`, `anamnesa`, `pemeriksaan_fisik`, `diagnosa`, `tindakan`, `created_at`, `updated_at`) VALUES
-('U001-0001-1687331248-1687331301', 'U001-0001-1687331248', '1011931212130', 'cek', 'cek', 'cek', 'obat-resep', '2023-06-21 00:08:21', '2023-06-21 00:08:21');
+('U001-0001-1687331248-1687331301', 'U001-0001-1687331248', '1011931212130', 'cek', 'cek', 'cek', 'obat-resep', '2023-06-21 00:08:21', '2023-06-21 00:08:21'),
+('A002-0001-1687427603-1687427642', 'A002-0001-1687427603', '1011931212121', 'cek', 'cek', 'cek diagnosa', 'obat-resep', '2023-06-22 02:54:02', '2023-06-22 02:54:02'),
+('A002-0002-1687440608-1687440641', 'A002-0002-1687440608', '10119312122131', 'ccek', 'cek', 'cek diagnosa', 'surat-rujukan', '2023-06-22 06:30:41', '2023-06-22 06:30:41');
 
 -- --------------------------------------------------------
 
@@ -468,7 +484,8 @@ CREATE TABLE `resep_obat` (
 --
 
 INSERT INTO `resep_obat` (`kode_resep_obat`, `kode_rekamedis`, `status`, `created_at`, `updated_at`) VALUES
-('resep-1687331322', 'U001-0001-1687331248-1687331301', 0, '2023-06-21 00:08:42', '2023-06-21 00:08:42');
+('resep-1687331322', 'U001-0001-1687331248-1687331301', 1, '2023-06-21 00:08:42', '2023-06-21 00:08:42'),
+('resep-1687427659', 'A002-0001-1687427603-1687427642', 1, '2023-06-22 02:54:19', '2023-06-22 12:31:07');
 
 -- --------------------------------------------------------
 
@@ -507,6 +524,13 @@ CREATE TABLE `surat_rujukan` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
+--
+-- Dumping data for table `surat_rujukan`
+--
+
+INSERT INTO `surat_rujukan` (`kode_rujukan`, `kode_rekammedis`, `fasilitas`, `rencana_tindak_lanjut`, `created_at`, `updated_at`) VALUES
+('rujukan-1687440650', 'A002-0002-1687440608-1687440641', 'Perlu Pemeriksaan Penunjang', 'Perlu Pemeriksaan Penunjang', '2023-06-22 06:30:50', '2023-06-22 06:30:50');
+
 -- --------------------------------------------------------
 
 --
@@ -527,7 +551,9 @@ CREATE TABLE `transaksi` (
 --
 
 INSERT INTO `transaksi` (`invoice`, `kode_notapembayaran`, `total`, `status`, `created_at`, `updated_at`) VALUES
-('invoice-1687331398', 'pembayaran-1687331398', 389000, 'Settled', '2023-06-21 00:09:58', '2023-06-21 05:46:05');
+('invoice-1687456693', 'pembayaran-1687456693', 389000, 'Settled', '2023-06-22 10:58:13', '2023-06-22 10:58:21'),
+('invoice-1687457527', 'pembayaran-1687457527', 89000, 'Settled', '2023-06-22 11:12:07', '2023-06-22 11:16:04'),
+('invoice-1687458284', 'pembayaran-1687458284', 189000, 'Settled', '2023-06-22 11:24:44', '2023-06-22 11:24:46');
 
 -- --------------------------------------------------------
 
@@ -568,7 +594,7 @@ INSERT INTO `users` (`id`, `name`, `NIK`, `alamat`, `kepalakeluarga`, `opsibpjs`
 (9, 'Dea Belinda', '101212120120120192', 'JL Sarijadi No 1 A', 'Dea', 'TIDAK', NULL, '2000-03-09', 23, 'Dea', 'dea@gmail.com', NULL, '$2y$10$LhOLOGwWq0uxkSZucSzBVuCkF9hK7COA1yTLwZzG4x.J9oHMwZFya', 1, NULL, '2023-05-13 23:26:20', '2023-05-13 23:26:20', 0),
 (10, 'Gilandra', '10121212012012022', 'JL Sarinah No 1 A', 'Gilan', 'TIDAK', NULL, '2000-03-09', 23, 'Gilandra', 'Gilandra@dokter.com', NULL, '$2y$10$lFXYwGm0.RVSljUWk4B1auLRaWbZ5hr3cMj9yOCQbMOS9KuXR5Y6.', 1, NULL, '2023-05-13 23:27:49', '2023-05-13 23:27:49', 2),
 (11, 'Faishal Rahmat', '10121212012012009', 'JL Sarijadi No 1 A', 'Dr Faishal', 'TIDAK', NULL, '2000-03-09', 23, 'Faishal', 'faishal@dokter.com', NULL, '$2y$10$6AgKjiUfTBIjOl2JQWKfzOYbMkb/zSa4copAjV/RTH58c1NfxTKwy', 1, NULL, '2023-05-13 23:30:12', '2023-05-13 23:30:12', 2),
-(12, 'Idris Mardefi', '101212120120120220', 'JL Sarijadi No 1 B', 'Idris', 'YA', '1011931212130', '2000-03-09', 23, 'Idris', 'idris@gmail.com', NULL, '$2y$10$SN4MBj.KBOB8rwoyxbOGAONcX5Ww4ZecRDki4U8js5XDKddzYBa0.', 1, NULL, '2023-05-19 08:45:12', '2023-06-10 06:05:23', 0),
+(12, 'Idris Mardefi', '101212120120120220', 'JL Sarijadi No 1 B', 'Idris', 'YA', '10119312122131', '2000-03-09', 23, 'Idris', 'idris@gmail.com', NULL, '$2y$10$SN4MBj.KBOB8rwoyxbOGAONcX5Ww4ZecRDki4U8js5XDKddzYBa0.', 1, NULL, '2023-05-19 08:45:12', '2023-06-10 06:05:23', 0),
 (13, 'Aldy Pratama', '101212131212121212131414', 'JL Sarijadi No 1 A', 'Aldy', 'YA', '1230192381241031312', '2000-03-09', 23, 'Aldy', 'aldy@gmail.com', NULL, '$2y$10$SN4MBj.KBOB8rwoyxbOGAONcX5Ww4ZecRDki4U8js5XDKddzYBa0.', 0, NULL, '2023-06-11 04:46:43', '2023-06-20 09:48:50', 0),
 (14, 'Kiana Sekar', '123123120841048123', 'JL Sarijadi No 1 A', 'Sumanto', 'YA', '12212113213131', '1945-02-01', 78, 'Kiana', 'kiana@gmail.com', NULL, '$2y$10$JNLggFSRvvpToQuXmHPHY.C9gUVo95FexAhzzNLuTOQvvc2Ml86uG', 0, NULL, '2023-06-20 10:07:37', '2023-06-20 10:09:32', 0),
 (15, 'Fikri', '10121212012012041', 'JL Sarijadi No 1 A', 'Dr Fikri', 'TIDAK', NULL, '2000-03-09', 23, 'Fikri', 'fikri@dokter.com', NULL, '$2y$10$6AgKjiUfTBIjOl2JQWKfzOYbMkb/zSa4copAjV/RTH58c1NfxTKwy', 1, NULL, '2023-05-13 23:30:12', '2023-05-13 23:30:12', 2);
