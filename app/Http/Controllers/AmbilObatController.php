@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Antrian;
 use App\Models\NotaPembayaran;
 use App\Models\Obat;
-use App\Models\Transaksi;
 use App\Models\RekamMedis;
 use App\Models\ResepObat;
 use Illuminate\Http\Request;
@@ -45,7 +44,7 @@ class AmbilObatController extends Controller
 
     public function updateObat($kodeResepObat)
     {
-        $p_obat = DB::table('p_resep_obat')->where('kode_resep_obat', $kodeResepObat)->first();
+        $p_obat = DB::table('p_resep_obat')->where('kode_obat', $kodeResepObat)->first();
         $obatOld = Obat::where('kode_obat', $p_obat->kode_obat)->first();
         if ($obatOld) {
             if ($obatOld->stok < $p_obat->qty) {

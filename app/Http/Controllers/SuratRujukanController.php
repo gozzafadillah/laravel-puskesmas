@@ -45,16 +45,15 @@ class SuratRujukanController extends Controller
     {
 
         $validatedData = $request->validate([
-            'fasilitas' => 'required',
-            'rencana_tindak_lanjut' => 'required',
+            'kode_rujukan' => 'required',
         ]);
 
         if ($request->kode_rekammedis) {
             // memasukan data rekam medis dari parameter ke foreign key di table surat_rujukan
             $validatedData['kode_rekammedis'] = $request->kode_rekammedis;
         }
-
-        $validatedData['kode_rujukan'] = $this->geneateRujukanKode();
+        $validatedData['fasilitas'] = $request->fasilitas;
+        $validatedData['rencana_tindak_lanjut'] = $request->rencana_tindak_lanjut;
 
         SuratRujukan::create($validatedData);
 
@@ -69,11 +68,5 @@ class SuratRujukanController extends Controller
         $dataRekamMedis = RekamMedis::where('kode_rekammedis', $kode)->first();
         $changeStatusAntrian = Antrian::where('kode_antrian', $dataRekamMedis['antrian'])->update(['status' => 1]);
         return $changeStatusAntrian;
-    }
-
-    function geneateRujukanKode()
-    {
-        $resepKode = 'rujukan-' . time();
-        return $resepKode;
     }
 }

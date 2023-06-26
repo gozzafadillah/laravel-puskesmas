@@ -16,7 +16,7 @@ class SuratRujukan extends Model
 
     public function rekamMedis()
     {
-        return $this->belongsTo(RekamMedis::class, 'kode', 'kode_rekammedis');
+        return $this->belongsTo(RekamMedis::class, 'kode_rekammedis', 'kode_rekammedis');
     }
 
     public function notaPembayaran()

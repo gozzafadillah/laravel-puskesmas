@@ -33,7 +33,7 @@
       <table class="table-striped table-sm table">
         <thead>
           <tr>
-            <th scope="col">Rekam Medis</th>
+            <th scope="col">Kode Rekam Medis</th>
             <th scope="col">Action</th>
           </tr>
         </thead>

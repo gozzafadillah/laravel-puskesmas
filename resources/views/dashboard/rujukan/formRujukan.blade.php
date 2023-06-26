@@ -9,6 +9,11 @@
       <form action="/dashboard/suratrujukan/{{ $kode_rekammedis }}" method="post" class="mb-3">
         @method('post')
         @csrf
+        <div class="mb-3">
+          <h5 for="antrian" class="form-label">Kode Rujukan Berdasarkan BPJS :</h5>
+          <input class="form-control" autofocus type="text" name='kode_rujukan' id='kode_rujukan'>
+
+        </div>
         <input type="hidden" name="kode_rekammedis" id="kode_rekammedis" value="{{ $kode_rekammedis }}">
         <div class="mb-3">
           <h5 for="antrian" class="form-label">Fasilitas perujuk dengan alasan :</h5>
@@ -100,14 +105,14 @@
 
       //   rencana_tindak_lanjut
       $('input[name="rencana_tindak_lanjut"]').change(function() {
-        var selectedValues = [];
-        var lainnya = document.getElementById('lainnya-text2').value;
+        let selectedValues = [];
+        let lainnya = document.getElementById('lainnya-text2').value;
         $('#btn-lainnya2').val(lainnya);
         $('input[name="rencana_tindak_lanjut"]:checked').each(function() {
           selectedValues.push($(this).val());
         });
 
-        var selectedString = selectedValues.join(',');
+        let selectedString = selectedValues.join(',');
         $('#selected-values2').val(selectedString);
       });
       $('#btn-lainnya2').change(function() {

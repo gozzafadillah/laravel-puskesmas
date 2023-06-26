@@ -48,7 +48,9 @@
                 @if ($pasien->resepObat->status == 0)
                   <td>
                     <div class="d-flex">
-                      <a class="badge bg-primary border-0" href="/dashboard/ambilObat/{{ $pasien->kode_resepobat }}"><span
+                      <a class="btn btn-primary {{ $pasien->resepObat->notaPembayaran->transaksi->status == 'Settled' ? '' : 'disabled' }}"
+                        href="/dashboard/ambilObat/{{ $pasien->kode_resepobat }}" role="button"
+                        aria-disabled="{{ $pasien->resepObat->notaPembayaran->transaksi->status == 'Settled' ? 'false' : 'true' }}"><span
                           data-feather="eye"></span></a>
                     </div>
                   </td>
@@ -57,7 +59,6 @@
                     <button style="cursor: default" class="badge bg-success border-0">done</button>
                   </td>
                 @endif
-
               </tr>
             @endif
           @endforeach

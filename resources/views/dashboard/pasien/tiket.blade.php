@@ -11,6 +11,8 @@
         <li class="list-group-item"><strong>Kode Antrian:</strong> {{ $tiket->antrian }}</li>
         <li class="list-group-item"><strong>Kode Poli:</strong> {{ $tiket->kode_poli }}</li>
         <li class="list-group-item"><strong>Nama Pasien:</strong> {{ $tiket->name }}</li>
+        <li class="list-group-item"><strong>Waktu:</strong>
+          {{ \Carbon\Carbon::parse($tiket->created_at)->setTimezone('Asia/Jakarta')->format('d/m/Y H:i:s') }}</li>
       </ul>
     </div>
   </div>

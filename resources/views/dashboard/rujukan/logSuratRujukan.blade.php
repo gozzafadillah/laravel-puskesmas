@@ -19,7 +19,9 @@
           @if ($data->rekamMedis->suratRujukan && $data->rekamMedis->suratRujukan != null)
             <tr>
               <td>{{ $data->rekamMedis->suratRujukan->kode_rujukan }}</td>
-              <td>{{ $data->rekamMedis->suratRujukan->created_at }}</td>
+              <td>
+                {{ \Carbon\Carbon::parse($data->rekamMedis->suratRujukan->created_at)->setTimezone('Asia/Jakarta')->format('d/m/Y H:i:s') }}
+              </td>
               <td>
                 <a class="badge bg-primary border-0" href="#"><span data-feather="eye"></span></a>
               </td>

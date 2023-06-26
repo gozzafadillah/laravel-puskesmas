@@ -19,7 +19,9 @@
           @if ($data->rekamMedis->resepObat && $data->rekamMedis->resepObat != null)
             <tr>
               <td>{{ $data->rekamMedis->resepObat->kode_resep_obat }}</td>
-              <td>{{ $data->rekamMedis->resepObat->created_at }}</td>
+              <td>
+                {{ \Carbon\Carbon::parse($data->rekamMedis->resepObat->created_at)->setTimezone('Asia/Jakarta')->format('d/m/Y H:i:s') }}
+              </td>
               <td>
                 <a class="badge bg-primary border-0" href="#"><span data-feather="eye"></span></a>
               </td>

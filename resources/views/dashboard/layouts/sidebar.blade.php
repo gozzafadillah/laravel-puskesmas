@@ -1,6 +1,5 @@
  <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
    <div class="position-sticky sidebar-sticky pt-3">
-
      @if (auth()->user()->is_admin == 1)
        @can('admin')
          <p class="fs-4 sidebar-heading d-flex justify-content-between align-items-center mb-1 px-3">Admin</p>
@@ -121,7 +120,8 @@
          </ul>
        @endcan
      @else
-       <p class="fs-4 sidebar-heading d-flex justify-content-between align-items-center mb-1 px-3">Pasien</p>
+       <p class="fs-4 sidebar-heading d-flex justify-content-between align-items-center mb-1 px-3">
+         {{ auth()->user()->name }}</p>
 
        <ul class="nav flex-column">
          <li class="nav-item">

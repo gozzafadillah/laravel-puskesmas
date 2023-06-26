@@ -51,10 +51,10 @@
         </div>
     </div>
     @endforeach
-    <form action="/dashboard/ambilobat/s/{{ $kodeResepObat }}" method="post">
+    <form class="container" action="/dashboard/ambilobat/s/{{ $kodeResepObat }}" method="post">
       @csrf
       @method('put')
-      <button type="submit">Selesai</button>
+      <button class="btn btn-primary" type="submit">Selesai</button>
     </form>
   </div>
 @endsection

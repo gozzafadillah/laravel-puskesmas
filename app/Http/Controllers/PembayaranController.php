@@ -18,7 +18,6 @@ class PembayaranController extends Controller
 {
     public function listAntrianPembayaran()
     {
-        // ddd(SuratRujukan::with('notaPembayaran')->get());
         return view('dashboard.pembayaran.index', [
             'pasien' => RekamMedis::with('dataAntrian')->with('resepObat')->with("suratRujukan")->get(),
         ]);
@@ -27,6 +26,7 @@ class PembayaranController extends Controller
     {
         $NIKPasien = auth()->user()->NIK;
         $dataRekammedis = Antrian::with('rekamMedis')->where('NIK', $NIKPasien)->get();
+
 
         return view('dashboard.transaksi.logTransaksi', [
             'rekamMedis' => $dataRekammedis

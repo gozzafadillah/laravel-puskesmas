@@ -19,7 +19,9 @@
           @if ($data->rekamMedis)
             <tr>
               <td>{{ $data->rekamMedis->kode_rekammedis }}</td>
-              <td>{{ $data->rekamMedis->created_at }}</td>
+              <td>
+                {{ \Carbon\Carbon::parse($data->rekamMedis->created_at)->setTimezone('Asia/Jakarta')->format('d/m/Y H:i:s') }}
+              </td>
               <td>
                 <a class="badge bg-primary border-0" href="#"><span data-feather="eye"></span></a>
               </td>

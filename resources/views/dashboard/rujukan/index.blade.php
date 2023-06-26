@@ -33,14 +33,14 @@
       <table class="table-striped table-sm table">
         <thead>
           <tr>
-            <th scope="col">Rekam Medis</th>
+            <th scope="col">No Surat Rujukan</th>
             <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody id="search-results">
-          @foreach ($pasien as $key => $user)
+          @foreach ($pasien as $user)
             <tr>
-              <td>{{ $user->kode_rekammedis }}</td>
+              <td>{{ $user->rekamMedis->suratRUjukan->kode_rujukan }}</td>
               <td>
                 <div class="d-flex">
                   <a class="badge bg-primary m-1 border-0" href="#"><span data-feather="edit"></span></a>
