@@ -86,12 +86,18 @@ Route::group(['middleware' => 'auth'], function () {
         return view('dashboard.index');
     })->middleware('auth');
 
+    // PDF
+    Route::get('/dashboard/pdf/suratRujukan/{suratRujukan}', [SuratRujukanController::class, 'generatePDF']);
+    Route::get('/dashboard/pdf/notaPembayaran/{notaPembayaran}', [PembayaranController::class, 'generatePDF']);
+    Route::get('/dashboard/pdf/resepObat/{resepObat}', [ResepObatController::class, 'generatePDF']);
+
     // logging
     Route::get("/dashboard/log/rekammedis", [RekamMedisController::class, 'getRekamMedis']);
     Route::get("/dashboard/log/resepobat", [ResepObatController::class, 'getResepObat']);
     Route::get("/dashboard/log/suratrujukan", [SuratRujukanController::class, 'getSuratRujukan']);
     Route::get("/dashboard/log/transaksi", [PembayaranController::class, 'getTransaksi']);
 
+    // profile
     Route::resource('/dashboard/profile', ProfileEditController::class)->middleware('auth');
 
     //admin

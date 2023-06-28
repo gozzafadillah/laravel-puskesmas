@@ -7,6 +7,7 @@ use App\Models\Dokter;
 use App\Models\Poli;
 use App\Models\RekamMedis;
 use App\Models\SuratRujukan;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class SuratRujukanController extends Controller
@@ -68,5 +69,12 @@ class SuratRujukanController extends Controller
         $dataRekamMedis = RekamMedis::where('kode_rekammedis', $kode)->first();
         $changeStatusAntrian = Antrian::where('kode_antrian', $dataRekamMedis['antrian'])->update(['status' => 1]);
         return $changeStatusAntrian;
+    }
+
+    public function generatePDF($suratRujukan)
+    {
+        $data = SuratRujukan::where('kode_rujukan', $suratRujukan)->first();
+        $pdf = Pdf::loadView('pdf.suratRujukan', ['data' => $data]);
+        return $pdf->download('surat-rujukan-' . $suratRujukan . '.pdf');
     }
 }

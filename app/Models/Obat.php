@@ -24,4 +24,9 @@ class Obat extends Model
     {
         return $this->belongsTo(ObatCategory::class, 'kategori_obat', 'id');
     }
+
+    public function p_resep_obat()
+    {
+        return $this->hasOne(P_Resepobat::class, 'kode_obat', 'kode_obat');
+    }
 }

@@ -9,6 +9,7 @@ use App\Models\ObatCategory;
 use App\Models\Poli;
 use App\Models\RekamMedis;
 use App\Models\ResepObat;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -104,5 +105,15 @@ class ResepObatController extends Controller
     {
         $resepKode = 'resep-' . time();
         return $resepKode;
+    }
+
+    public function generatePDF($resepObat)
+    {
+        $dataResepObat = ResepObat::with('p_resepobat')->where('kode_resep_obat', $resepObat)->first();
+        $pdf = PDF::loadView('pdf.resepObat', [
+            'resepObat' => $dataResepObat
+        ]);
+
+        return $pdf->download($resepObat . '.pdf');
     }
 }

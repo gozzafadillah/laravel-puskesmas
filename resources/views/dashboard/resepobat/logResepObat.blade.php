@@ -23,7 +23,9 @@
                 {{ \Carbon\Carbon::parse($data->rekamMedis->resepObat->created_at)->setTimezone('Asia/Jakarta')->format('d/m/Y H:i:s') }}
               </td>
               <td>
-                <a class="badge bg-primary border-0" href="#"><span data-feather="eye"></span></a>
+                <a class="badge bg-primary border-0"
+                  href="/dashboard/pdf/resepObat/{{ $data->rekamMedis->resepObat->kode_resep_obat }}"><span
+                    data-feather="eye"></span></a>
               </td>
             </tr>
           @endif
