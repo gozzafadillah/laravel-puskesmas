@@ -23,7 +23,6 @@
 
   <div class="mb-3">
     <button type="submit" class="btn btn-primary">Submit</button>
-    <button type="reset" class="btn btn-danger">Reset</button>
   </div>
 </form>
 
