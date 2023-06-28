@@ -6,11 +6,13 @@ use App\Models\Antrian;
 use App\Models\NotaPembayaran;
 use App\Models\Obat;
 use App\Models\P_Pelayanan;
+use App\Models\P_Resepobat;
 use App\Models\Pelayanan;
 use App\Models\RekamMedis;
 use App\Models\ResepObat;
 use App\Models\SuratRujukan;
 use App\Models\Transaksi;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -24,12 +26,10 @@ class PembayaranController extends Controller
     }
     public function getTransaksi()
     {
-        $NIKPasien = auth()->user()->NIK;
-        $dataRekammedis = Antrian::with('rekamMedis')->where('NIK', $NIKPasien)->get();
-
+        $data = NotaPembayaran::get();
 
         return view('dashboard.transaksi.logTransaksi', [
-            'rekamMedis' => $dataRekammedis
+            'notaPembayaran' => $data
         ]);
     }
     public function createPembayaran($kode_rekammedis)
@@ -112,5 +112,18 @@ class PembayaranController extends Controller
     {
         $kode = "pembayaran-" . time();
         return $kode;
+    }
+
+    public function generatePDF($notaPembayaran)
+    {
+        $data = NotaPembayaran::where('kode_notapembayaran', $notaPembayaran)->first();
+        $p_resepobat = P_Resepobat::with('resepObat')->with('obat')->get();
+        $p_pelayanan = P_Pelayanan::with('pelayanan')->get();
+        $pdf = Pdf::loadView('pdf.notaPembayaran', [
+            'data' => $data,
+            'p_pelayanan' => $p_pelayanan,
+            'p_resepobat' => $p_resepobat,
+        ]);
+        return $pdf->download('nota-pembayaran-' . $notaPembayaran . '.pdf');
     }
 }

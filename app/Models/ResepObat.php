@@ -23,4 +23,9 @@ class ResepObat extends Model
     {
         return $this->hasOne(NotaPembayaran::class, 'kode_resepobat', 'kode_resep_obat');
     }
+
+    public function p_resepobat()
+    {
+        return $this->hasMany(P_Resepobat::class, 'kode_resep_obat', 'kode_resep_obat');
+    }
 }
