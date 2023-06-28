@@ -43,7 +43,9 @@
             @if ($pasien->transaksi && $pasien->transaksi->invoice != null && $pasien->kode_resepobat != null)
               <tr>
                 <td>{{ $pasien->transaksi->invoice }}</td>
-                <td>{{ $pasien->transaksi->created_at }}</td>
+                <td>
+                  {{ \Carbon\Carbon::parse($pasien->transaksi->created_at)->setTimezone('Asia/Jakarta')->format('d/m/Y H:i:s') }}
+                </td>
                 <td>{{ $pasien->transaksi->status }}</td>
                 @if ($pasien->resepObat->status == 0)
                   <td>

@@ -16,18 +16,20 @@
       </thead>
       <tbody>
         @foreach ($rekamMedis as $data)
-          @if ($data->rekamMedis->resepObat && $data->rekamMedis->resepObat != null)
-            <tr>
-              <td>{{ $data->rekamMedis->resepObat->kode_resep_obat }}</td>
-              <td>
-                {{ \Carbon\Carbon::parse($data->rekamMedis->resepObat->created_at)->setTimezone('Asia/Jakarta')->format('d/m/Y H:i:s') }}
-              </td>
-              <td>
-                <a class="badge bg-primary border-0"
-                  href="/dashboard/pdf/resepObat/{{ $data->rekamMedis->resepObat->kode_resep_obat }}"><span
-                    data-feather="eye"></span></a>
-              </td>
-            </tr>
+          @if ($data->rekamMedis && $data->rekamMedis != null)
+            @if ($data->rekamMedis->resepObat || $data->rekamMedis->resepObat != null)
+              <tr>
+                <td>{{ $data->rekamMedis->resepObat->kode_resep_obat }}</td>
+                <td>
+                  {{ \Carbon\Carbon::parse($data->rekamMedis->resepObat->created_at)->setTimezone('Asia/Jakarta')->format('d/m/Y H:i:s') }}
+                </td>
+                <td>
+                  <a class="badge bg-primary border-0"
+                    href="/dashboard/pdf/resepObat/{{ $data->rekamMedis->resepObat->kode_resep_obat }}"><span
+                      data-feather="eye"></span></a>
+                </td>
+              </tr>
+            @endif
           @endif
         @endforeach
       </tbody>

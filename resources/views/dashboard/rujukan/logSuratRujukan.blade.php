@@ -16,18 +16,20 @@
       </thead>
       <tbody>
         @foreach ($rekamMedis as $data)
-          @if ($data->rekamMedis->suratRujukan && $data->rekamMedis->suratRujukan != null)
-            <tr>
-              <td>{{ $data->rekamMedis->suratRujukan->kode_rujukan }}</td>
-              <td>
-                {{ \Carbon\Carbon::parse($data->rekamMedis->suratRujukan->created_at)->setTimezone('Asia/Jakarta')->format('d/m/Y H:i:s') }}
-              </td>
-              <td>
-                <a class="badge bg-primary border-0"
-                  href="/dashboard/pdf/suratRujukan/{{ $data->rekamMedis->suratRujukan->kode_rujukan }}"><span
-                    data-feather="eye"></span></a>
-              </td>
-            </tr>
+          @if ($data->rekamMedis != null && $data->rekamMedis)
+            @if ($data->rekamMedis->suratRujukan && $data->rekamMedis->suratRujukan != null)
+              <tr>
+                <td>{{ $data->rekamMedis->suratRujukan->kode_rujukan }}</td>
+                <td>
+                  {{ \Carbon\Carbon::parse($data->rekamMedis->suratRujukan->created_at)->setTimezone('Asia/Jakarta')->format('d/m/Y H:i:s') }}
+                </td>
+                <td>
+                  <a class="badge bg-primary border-0"
+                    href="/dashboard/pdf/suratRujukan/{{ $data->rekamMedis->suratRujukan->kode_rujukan }}"><span
+                      data-feather="eye"></span></a>
+                </td>
+              </tr>
+            @endif
           @endif
         @endforeach
       </tbody>

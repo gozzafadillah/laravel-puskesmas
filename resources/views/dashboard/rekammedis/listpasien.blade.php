@@ -46,7 +46,7 @@
             <td>{!! $item['status'] != 1
                 ? "<a href='#' class='badge bg-success border-0 text-decoration-none'>belum dicek</a>"
                 : "<a href='#' class='badge bg-danger border-0 text-decoration-none'>sudah dicek</a>" !!}</td>
-            <td>{{ $item['created_at'] }}</td>
+            <td>{{ \Carbon\Carbon::parse($item['created_at'])->setTimezone('Asia/Jakarta')->format('d/m/Y H:i:s') }}</td>
             <td>
               @if ($item->status == 0)
                 <a class="badge bg-primary border-0"

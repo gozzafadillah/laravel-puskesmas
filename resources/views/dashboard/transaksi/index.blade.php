@@ -44,7 +44,8 @@
               @if ($transaksi->kode_notapembayaran == $user->kode_notapembayaran)
                 <tr>
                   <td>{{ $user->kode_notapembayaran }}</td>
-                  <td>{{ $user->created_at }}</td>
+                  <td>{{ \Carbon\Carbon::parse($user->created_at)->setTimezone('Asia/Jakarta')->format('d/m/Y H:i:s') }}
+                  </td>
                   <td>
                     @if ($transaksi->status == 'Pending')
                       <a style="text-decoration: none" class="badge bg-primary border-0">Pending</a>
