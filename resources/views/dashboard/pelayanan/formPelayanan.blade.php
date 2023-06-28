@@ -56,7 +56,7 @@
         @endforeach
         <input type="hidden" name="kode_rekammedis" class="kode_rekammedis" id="kode_rekammedis"
           value="{{ $kodeRekammedis }}">
-        <button type="submit" id="submitBtn">Tambah Pelayanan</button>
+        <button type="submit" class="btn btn-primary" id="submitBtn">Tambah Pelayanan</button>
       </form>
     </div>
   </div>
@@ -107,7 +107,7 @@
           },
           data: payload,
           success: function(response) {
-            alert('Obat berhasil ditambahkan!');
+            alert('Pelayanan berhasil ditambahkan!');
             if (tindakan != "surat-rujukan") {
               window.location.href = "/dashboard/resepobat/form/" + kodeRekammedis;
             } else {
