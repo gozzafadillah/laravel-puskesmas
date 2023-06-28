@@ -25,8 +25,9 @@
         @if ($user->bpjs)
           <div class="mb-3">
             <label for="bpjs" class="form-label">BPJS</label>
-            <input type="text" class="form-control @error('bpjs') is-invalid @enderror" id="bpjs" name="bpjs"
-              placeholder="BPJS" value={{ $user['bpjs'] ? $user['bpjs'] : '' }}>
+            <input type="hidden" name="bpjs" class="form-control" value={{ $user['bpjs'] ? $user['bpjs'] : '' }}>
+            <input type="text" class="form-control @error('bpjs') is-invalid @enderror" placeholder="BPJS"
+              value={{ $user['bpjs'] ? $user['bpjs'] : '' }} disabled>
             @error('bpjs')
               <div class="invalid-feedback">
                 {{ $message }}
