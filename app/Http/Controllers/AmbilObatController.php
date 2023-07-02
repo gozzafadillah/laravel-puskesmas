@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Antrian;
 use App\Models\NotaPembayaran;
 use App\Models\Obat;
+use App\Models\P_Resepobat;
 use App\Models\RekamMedis;
 use App\Models\ResepObat;
 use Illuminate\Http\Request;
@@ -25,12 +26,6 @@ class AmbilObatController extends Controller
         ]);
     }
 
-    public function changeStatus($resepObat)
-    {
-        ResepObat::where('kode_resep_obat', $resepObat)->update(['status' => 1]);
-        return redirect('/dashboard/pasienObat');
-    }
-
     public function listObatPasien($kodeResepObat)
     {
         $p_resepObat = DB::table('p_resep_obat')->where("kode_resep_obat", $kodeResepObat)->get();
@@ -42,19 +37,40 @@ class AmbilObatController extends Controller
         ]);
     }
 
-    public function updateObat($kodeResepObat)
+    public function changeStatus($resepObat)
     {
-        $p_obat = DB::table('p_resep_obat')->where('kode_obat', $kodeResepObat)->first();
-        $obatOld = Obat::where('kode_obat', $p_obat->kode_obat)->first();
-        if ($obatOld) {
-            if ($obatOld->stok < $p_obat->qty) {
-                return redirect("/dashboard/ambilObat/" . $p_obat->kode_resep_obat)->with("error", 'Stok Obat Habis');
+        $dataResepObat = ResepObat::where("kode_resep_obat", $resepObat)->first();
+        foreach ($dataResepObat->p_resepobat as $data) {
+            $changeQty = $this->changeQtyObat($data->kode_obat, $data->qty);
+            if ($changeQty == false) {
+                return redirect('/dashboard/pasienObat')->with('error', 'gagal mengambil obat');
             }
-            $newStok = $obatOld->stok - $p_obat->qty;
-            Obat::where('kode_obat', $kodeResepObat)->update(['stok' => $newStok]);
-            DB::table('p_resep_obat')->where('kode_obat', $kodeResepObat)->update(['status' => 1]);
+            P_Resepobat::where("kode_obat", $data->kode_obat)->update(['status' => 1]);
         }
+        $status = $this->changeStatusResep($resepObat);
+        if ($status == false) {
+            return redirect('/dashboard/pasienObat')->with('error', 'gagal mengambil resep obat');
+        }
+        return redirect('/dashboard/pasienObat');
+    }
 
-        return redirect("/dashboard/ambilObat/" . $p_obat->kode_resep_obat)->with('success', 'Obat ' . $obatOld->nama_obat . 'telah success diambil');
+    public function changeStatusResep($resepObat)
+    {
+        $status = ResepObat::where('kode_resep_obat', $resepObat)->update(['status' => 1]);
+        if ($status) {
+            return true;
+        }
+        return false;
+    }
+
+    public function changeQtyObat($kodeObat, $qty)
+    {
+        $obatOld = Obat::where('kode_obat', $kodeObat)->first();
+        $newStok = $obatOld->stok - $qty;
+        if ($obatOld && $obatOld->stok > $newStok) {
+            Obat::where('kode_obat', $kodeObat)->update(['stok' => $newStok]);
+            return true;
+        }
+        return false;
     }
 }
