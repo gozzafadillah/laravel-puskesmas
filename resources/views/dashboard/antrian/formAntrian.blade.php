@@ -15,6 +15,7 @@
   <div class="mb-3">
     <label for="kode_poli" class="form-label">Pilih Poli</label>
     <select class="form-control" name="kode_poli" id="kode_poli">
+      <option disabled selected>Pilih Poli</option>
       @foreach ($polis as $poli)
         <option value="{{ $poli->kode_poli }}">{{ $poli->name }}</option>
       @endforeach
