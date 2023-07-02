@@ -45,35 +45,37 @@
          </ul>
        @endcan
      @elseif(auth()->user()->is_admin == 2)
+       <?php $dokter = App\Models\Dokter::where('userId', auth()->user()->id)
+           ->where('status', 1)
+           ->first(); ?>
        @can('dokter')
-         <p class="fs-4 sidebar-heading d-flex justify-content-between align-items-center mb-1 px-3">Dokter</p>
-
+         <p class="fs-4 sidebar-heading d-flex justify-content-between align-items-center mb-1 px-3">
+           {{ $dokter == null ? 'Anda Belum terdaftar Di Poli' : 'Dokter' }}</p>
          <ul class="nav flex-column">
            <li class="nav-item">
-             <a class="nav-link {{ Request::is('dashboard/listpasien*') ? 'active' : '' }}" href="/dashboard/listpasien">
+             <a aria-disabled={{ $dokter == null ? 'true' : 'false' }} role="button"
+               class="nav-link {{ $dokter == null ? 'disabled' : '' }} {{ Request::is('dashboard/listpasien*') ? 'active' : '' }}"
+               href="/dashboard/listpasien">
                <span data-feather="mail" class="align-text-bottom"></span>
                List Pasien
              </a>
            </li>
            <li class="nav-item">
-             <a class="nav-link {{ Request::is('dashboard/suratrujukan*') ? 'active' : '' }}"
-               href="/dashboard/suratrujukan">
+             <a aria-disabled={{ $dokter == null ? 'true' : 'false' }}
+               class="nav-link {{ $dokter == null ? 'disabled' : '' }} {{ Request::is('dashboard/suratrujukan*') ? 'active' : '' }}"
+               role="button" href="/dashboard/suratrujukan">
                <span data-feather="package" class="align-text-bottom"></span>
                Surat Rujuk Pasien
              </a>
            </li>
            <li class="nav-item">
-             <a class="nav-link {{ Request::is('dashboard/resepobat*') ? 'active' : '' }}" href="/dashboard/resepobat">
+             <a aria-disabled={{ $dokter == null ? 'true' : 'false' }} role="button"
+               class="nav-link {{ $dokter == null ? 'disabled' : '' }} {{ Request::is('dashboard/resepobat*') ? 'active' : '' }}"
+               href="/dashboard/resepobat">
                <span data-feather="package" class="align-text-bottom"></span>
                Resep Obat Pasien
              </a>
            </li>
-           {{-- <li class="nav-item">
-             <a class="nav-link {{ Request::is('/dashboard/listobat*') ? 'active' : '' }}" href="/dashboard/listobat">
-               <span data-feather="package" class="align-text-bottom"></span>
-               List Obat
-             </a>
-           </li> --}}
          </ul>
        @endcan
      @elseif(auth()->user()->is_admin == 3)
