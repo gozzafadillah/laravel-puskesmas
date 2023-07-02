@@ -64,6 +64,13 @@
         @endforeach
       </tbody>
     </table>
+    <div class="my-5">
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+          {{ $pasien->links() }}
+        </ul>
+      </nav>
+    </div>
   </div>
   <script>
     let currentDate = new Date();

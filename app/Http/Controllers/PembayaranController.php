@@ -26,7 +26,7 @@ class PembayaranController extends Controller
     }
     public function getTransaksi()
     {
-        $data = NotaPembayaran::get();
+        $data = NotaPembayaran::paginate(7);
 
         return view('dashboard.transaksi.logTransaksi', [
             'notaPembayaran' => $data

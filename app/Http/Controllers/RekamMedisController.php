@@ -16,7 +16,7 @@ class RekamMedisController extends Controller
     public function getRekamMedis()
     {
         $NIKPasien = auth()->user()->NIK;
-        $dataRekammedis = Antrian::with('rekamMedis')->where('NIK', $NIKPasien)->get();
+        $dataRekammedis = Antrian::with('rekamMedis')->where('NIK', $NIKPasien)->paginate(7);
 
         return view('dashboard.rekammedis.logRekammedis', [
             'rekamMedis' => $dataRekammedis
@@ -28,7 +28,7 @@ class RekamMedisController extends Controller
         $session = auth()->user();
         $dokter = Dokter::where('userid', '=', $session->id)->value("id");
         $poli =  Poli::where('dokter', '=', $dokter)->first();
-        $pasien = Antrian::where('kode_poli', '=', $poli->kode_poli)->orderBy("kode_antrian")->get();
+        $pasien = Antrian::where('kode_poli', '=', $poli->kode_poli)->orderBy("created_at", "desc")->paginate(5);
 
         return view('dashboard.rekammedis.listpasien', [
             "pasien" => $pasien,
