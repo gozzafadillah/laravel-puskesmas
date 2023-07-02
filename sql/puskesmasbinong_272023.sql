@@ -11,6 +11,22 @@ MySQL - 8.0.30 : Database - puskemasbinong
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+/*Table structure for table `antrian` */
+
+DROP TABLE IF EXISTS `antrian`;
+
+CREATE TABLE `antrian` (
+  `kode_antrian` varchar(255)  NOT NULL,
+  `antrian` varchar(255)  DEFAULT NULL,
+  `name` varchar(255)  NOT NULL,
+  `NIK` varchar(255)  NOT NULL,
+  `tgllahir` varchar(255)  NOT NULL,
+  `kode_poli` varchar(255)  NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 /*Data for the table `antrian` */
 
 insert  into `antrian`(`kode_antrian`,`antrian`,`name`,`NIK`,`tgllahir`,`kode_poli`,`status`,`created_at`,`updated_at`) values 
@@ -25,10 +41,38 @@ insert  into `antrian`(`kode_antrian`,`antrian`,`name`,`NIK`,`tgllahir`,`kode_po
 ('A002-0009-1688292356','A002-0009','Idris Mardefi','101212120120120220','2000-03-09','A002',1,'2023-07-02 10:05:56','2023-07-02 10:05:56'),
 ('A002-0010-1688294592','A002-0010','Idris Mardefi','101212120120120220','2000-03-09','A002',1,'2023-07-02 10:43:12','2023-07-02 10:43:12');
 
+/*Table structure for table `categories` */
+
+DROP TABLE IF EXISTS `categories`;
+
+CREATE TABLE `categories` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255)  NOT NULL,
+  `slug` varchar(255)  NOT NULL,
+  `image` varchar(255)  DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `categories_name_unique` (`name`),
+  UNIQUE KEY `categories_slug_unique` (`slug`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+
 /*Data for the table `categories` */
 
 insert  into `categories`(`id`,`name`,`slug`,`image`,`created_at`,`updated_at`) values 
 (1,'Balita','balita','category-images/IJ4gFd3mXETQ5u41sjCSHf4WWkmgqZbD7ghw7tjx.png','2023-05-12 12:06:48','2023-05-12 12:06:48');
+
+/*Table structure for table `category_pelayanan` */
+
+DROP TABLE IF EXISTS `category_pelayanan`;
+
+CREATE TABLE `category_pelayanan` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `nama_category` varchar(255)  NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `category_pelayanan` */
 
@@ -40,6 +84,20 @@ insert  into `category_pelayanan`(`id`,`nama_category`,`created_at`,`updated_at`
 (5,'tarif tambahan UGD','2023-06-09 20:37:03','2023-06-09 20:37:36'),
 (6,'tarif tambahan laboratorium','2023-06-09 20:37:03','2023-06-09 20:37:36');
 
+/*Table structure for table `dokter` */
+
+DROP TABLE IF EXISTS `dokter`;
+
+CREATE TABLE `dokter` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255)  NOT NULL,
+  `userid` bigint NOT NULL,
+  `status` tinyint(1) DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+
 /*Data for the table `dokter` */
 
 insert  into `dokter`(`id`,`name`,`userid`,`status`,`created_at`,`updated_at`) values 
@@ -48,7 +106,34 @@ insert  into `dokter`(`id`,`name`,`userid`,`status`,`created_at`,`updated_at`) v
 (3,'Fikri',15,1,'2023-05-14 06:30:12','2023-06-21 14:47:28'),
 (4,'Muhammad Fadillah Abdul Aziz',16,0,'2023-07-02 05:59:58','2023-07-02 05:59:58');
 
+/*Table structure for table `failed_jobs` */
+
+DROP TABLE IF EXISTS `failed_jobs`;
+
+CREATE TABLE `failed_jobs` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `uuid` varchar(255)  NOT NULL,
+  `connection` text  NOT NULL,
+  `queue` text  NOT NULL,
+  `payload` longtext  NOT NULL,
+  `exception` longtext  NOT NULL,
+  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 /*Data for the table `failed_jobs` */
+
+/*Table structure for table `migrations` */
+
+DROP TABLE IF EXISTS `migrations`;
+
+CREATE TABLE `migrations` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `migration` varchar(255)  NOT NULL,
+  `batch` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `migrations` */
 
@@ -75,6 +160,20 @@ insert  into `migrations`(`id`,`migration`,`batch`) values
 (20,'2023_06_13_120610_p_pelayanan',12),
 (21,'2023_06_13_121144_p_pelayanan',13);
 
+/*Table structure for table `nota_pembayaran` */
+
+DROP TABLE IF EXISTS `nota_pembayaran`;
+
+CREATE TABLE `nota_pembayaran` (
+  `kode_notapembayaran` varchar(255) NOT NULL,
+  `kode_resepobat` varchar(255) DEFAULT NULL,
+  `kode_rujukan` varchar(255) DEFAULT NULL,
+  `total` float DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`kode_notapembayaran`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 /*Data for the table `nota_pembayaran` */
 
 insert  into `nota_pembayaran`(`kode_notapembayaran`,`kode_resepobat`,`kode_rujukan`,`total`,`created_at`,`updated_at`) values 
@@ -89,11 +188,40 @@ insert  into `nota_pembayaran`(`kode_notapembayaran`,`kode_resepobat`,`kode_ruju
 ('pembayaran-1688292446','resep-1688292409',NULL,1074000,'2023-07-02 10:07:26','2023-07-02 10:07:26'),
 ('pembayaran-1688294652','resep-1688294633',NULL,2349000,'2023-07-02 10:44:12','2023-07-02 10:44:12');
 
+/*Table structure for table `obat_categories` */
+
+DROP TABLE IF EXISTS `obat_categories`;
+
+CREATE TABLE `obat_categories` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255)  NOT NULL,
+  `slug` varchar(255)  NOT NULL,
+  `image` varchar(255)  NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+
 /*Data for the table `obat_categories` */
 
 insert  into `obat_categories`(`id`,`name`,`slug`,`image`,`created_at`,`updated_at`) values 
 (1,'Vaksin','vaksin','obat_category/Lcv8nJ3lgZdEn1pmoTzV8YDs4hY5utbHnUVkFvBk.png','2023-05-19 15:56:51','2023-05-19 15:56:51'),
 (2,'Kapsul','kapsul','obat_category/Lcv8nJ3lgZdEn1pmoTzV8YDs4hY5utbHnUVkFvBk.png','2023-05-19 15:56:51','2023-05-19 15:56:51');
+
+/*Table structure for table `obats` */
+
+DROP TABLE IF EXISTS `obats`;
+
+CREATE TABLE `obats` (
+  `kode_obat` varchar(255)  NOT NULL,
+  `nama_obat` varchar(255)  NOT NULL,
+  `kategori_obat` varchar(255)  NOT NULL,
+  `stok` int NOT NULL,
+  `harga` int NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`kode_obat`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `obats` */
 
@@ -101,6 +229,18 @@ insert  into `obats`(`kode_obat`,`nama_obat`,`kategori_obat`,`stok`,`harga`,`cre
 ('Kapsul-IN001','Intunal Xtra','2',90,6000,'2023-05-19 15:57:18','2023-07-02 10:44:36'),
 ('Vaksin-SB001','Vaksin SB','1',90,120000,'2023-05-19 15:57:18','2023-07-02 10:44:36'),
 ('Vaksin-SH001','Vaksin SH','1',90,100000,'2023-05-19 15:57:18','2023-07-02 10:44:36');
+
+/*Table structure for table `p_pelayanan` */
+
+DROP TABLE IF EXISTS `p_pelayanan`;
+
+CREATE TABLE `p_pelayanan` (
+  `pelayanan_id` bigint NOT NULL,
+  `kode_rekammedis` varchar(255)  NOT NULL,
+  `biaya` float DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `p_pelayanan` */
 
@@ -134,6 +274,20 @@ insert  into `p_pelayanan`(`pelayanan_id`,`kode_rekammedis`,`biaya`,`created_at`
 (1,'A002-0010-1688294592-1688294614',14000,NULL,NULL),
 (2,'A002-0010-1688294592-1688294614',75000,NULL,NULL);
 
+/*Table structure for table `p_resep_obat` */
+
+DROP TABLE IF EXISTS `p_resep_obat`;
+
+CREATE TABLE `p_resep_obat` (
+  `kode_resep_obat` varchar(255) NOT NULL,
+  `kode_obat` varchar(255)  NOT NULL,
+  `dosis` varchar(255) NOT NULL,
+  `qty` int DEFAULT NULL,
+  `status` tinyint(1) DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 /*Data for the table `p_resep_obat` */
 
 insert  into `p_resep_obat`(`kode_resep_obat`,`kode_obat`,`dosis`,`qty`,`status`,`created_at`,`updated_at`) values 
@@ -149,7 +303,32 @@ insert  into `p_resep_obat`(`kode_resep_obat`,`kode_obat`,`dosis`,`qty`,`status`
 ('resep-1688294633','Vaksin-SH001','dosis ...',10,1,NULL,'2023-07-02 10:44:36'),
 ('resep-1688294633','Kapsul-IN001','dosis ...',10,1,NULL,'2023-07-02 10:44:36');
 
+/*Table structure for table `password_reset_tokens` */
+
+DROP TABLE IF EXISTS `password_reset_tokens`;
+
+CREATE TABLE `password_reset_tokens` (
+  `email` varchar(255)  NOT NULL,
+  `token` varchar(255)  NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 /*Data for the table `password_reset_tokens` */
+
+/*Table structure for table `pelayanan` */
+
+DROP TABLE IF EXISTS `pelayanan`;
+
+CREATE TABLE `pelayanan` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `category` bigint NOT NULL,
+  `layanan` varchar(255)  NOT NULL,
+  `biaya` double(8,2) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `pelayanan` */
 
@@ -189,7 +368,43 @@ insert  into `pelayanan`(`id`,`category`,`layanan`,`biaya`,`created_at`,`updated
 (33,6,'asam urat',42000.00,'2023-06-09 20:53:43','2023-06-09 20:53:43'),
 (34,6,'glukosa',42000.00,'2023-06-09 20:53:43','2023-06-09 20:53:43');
 
+/*Table structure for table `personal_access_tokens` */
+
+DROP TABLE IF EXISTS `personal_access_tokens`;
+
+CREATE TABLE `personal_access_tokens` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `tokenable_type` varchar(255)  NOT NULL,
+  `tokenable_id` bigint unsigned NOT NULL,
+  `name` varchar(255)  NOT NULL,
+  `token` varchar(64)  NOT NULL,
+  `abilities` text ,
+  `last_used_at` timestamp NULL DEFAULT NULL,
+  `expires_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
+  KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 /*Data for the table `personal_access_tokens` */
+
+/*Table structure for table `poli` */
+
+DROP TABLE IF EXISTS `poli`;
+
+CREATE TABLE `poli` (
+  `kode_poli` varchar(255) CHARACTER SET utf8mb4  NOT NULL,
+  `name` varchar(255)  NOT NULL,
+  `description` varchar(255)  NOT NULL,
+  `dokter` int NOT NULL,
+  `ruangan` varchar(255)  NOT NULL,
+  `jadwal` varchar(255)  NOT NULL,
+  `isActive` tinyint(1) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `poli` */
 
@@ -197,11 +412,47 @@ insert  into `poli`(`kode_poli`,`name`,`description`,`dokter`,`ruangan`,`jadwal`
 ('A002','Poli Anak','<div>Poli Untuk anak</div>',2,'01-001','08:00 s/d 13:00',1,'2023-05-14 19:20:37','2023-05-14 19:20:37'),
 ('002','Poli','<div>cej</div>',3,'01-002','02:02 s/d 14:00',1,'2023-06-21 14:47:28','2023-06-21 14:47:28');
 
+/*Table structure for table `posts` */
+
+DROP TABLE IF EXISTS `posts`;
+
+CREATE TABLE `posts` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `category_id` bigint unsigned NOT NULL,
+  `user_id` bigint unsigned NOT NULL,
+  `title` varchar(255)  NOT NULL,
+  `slug` varchar(255)  NOT NULL,
+  `image` varchar(255)  DEFAULT NULL,
+  `excerpt` text  NOT NULL,
+  `body` text  NOT NULL,
+  `published_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `posts_slug_unique` (`slug`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+
 /*Data for the table `posts` */
 
 insert  into `posts`(`id`,`category_id`,`user_id`,`title`,`slug`,`image`,`excerpt`,`body`,`published_at`,`created_at`,`updated_at`) values 
 (1,1,1,'Balita Indonesia','balita-indonesia','post-images/88b0vioVxEaeEy3dSKeWJFSHEiWGubIXtAV1kMla.png','Balita indonesia mengalami gizi buruk karena kurang nya perhatian dan gizi oleh orang tua. Karena itu banyak nya balita mengalami kekurusan dan gizi buruk seperti busung lapar.','<div>Balita indonesia mengalami gizi buruk karena kurang nya perhatian dan gizi oleh orang tua. Karena itu banyak nya balita mengalami kekurusan dan gizi buruk seperti busung lapar.</div>',NULL,'2023-05-12 12:08:06','2023-05-12 12:08:06'),
 (2,1,1,'cek','cek','post-images/O11atREyBCjrXAGGn5Khj1DpJx0dOtkTWRbpSm6U.jpg','cek','<div>cek</div>',NULL,'2023-06-20 16:23:12','2023-06-20 16:23:12');
+
+/*Table structure for table `rekam_medis` */
+
+DROP TABLE IF EXISTS `rekam_medis`;
+
+CREATE TABLE `rekam_medis` (
+  `kode_rekammedis` varchar(255) CHARACTER SET utf8mb4  NOT NULL,
+  `antrian` varchar(255) CHARACTER SET utf8mb4  NOT NULL,
+  `bpjs` varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL,
+  `anamnesa` text  NOT NULL,
+  `pemeriksaan_fisik` text  NOT NULL,
+  `diagnosa` varchar(255)  NOT NULL,
+  `tindakan` varchar(255)  NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `rekam_medis` */
 
@@ -217,6 +468,19 @@ insert  into `rekam_medis`(`kode_rekammedis`,`antrian`,`bpjs`,`anamnesa`,`pemeri
 ('A002-0009-1688292356-1688292383','A002-0009-1688292356','10119312122131','cek','cek','cek','obat-resep','2023-07-02 10:06:23','2023-07-02 10:06:23'),
 ('A002-0010-1688294592-1688294614','A002-0010-1688294592','10119312122131','cek','cek','cek','obat-resep','2023-07-02 10:43:34','2023-07-02 10:43:34');
 
+/*Table structure for table `resep_obat` */
+
+DROP TABLE IF EXISTS `resep_obat`;
+
+CREATE TABLE `resep_obat` (
+  `kode_resep_obat` varchar(255)  NOT NULL,
+  `kode_rekamedis` varchar(255) CHARACTER SET utf8mb4  NOT NULL,
+  `status` tinyint(1) DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`kode_resep_obat`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 /*Data for the table `resep_obat` */
 
 insert  into `resep_obat`(`kode_resep_obat`,`kode_rekamedis`,`status`,`created_at`,`updated_at`) values 
@@ -227,11 +491,37 @@ insert  into `resep_obat`(`kode_resep_obat`,`kode_rekamedis`,`status`,`created_a
 ('resep-1688292409','A002-0009-1688292356-1688292383',1,'2023-07-02 10:06:49','2023-07-02 10:40:13'),
 ('resep-1688294633','A002-0010-1688294592-1688294614',1,'2023-07-02 10:43:53','2023-07-02 10:44:36');
 
+/*Table structure for table `ruangan` */
+
+DROP TABLE IF EXISTS `ruangan`;
+
+CREATE TABLE `ruangan` (
+  `kode` varchar(255)  NOT NULL,
+  `name` varchar(255)  NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 /*Data for the table `ruangan` */
 
 insert  into `ruangan`(`kode`,`name`,`status`,`created_at`,`updated_at`) values 
 ('01-001','Ruangan Lt 1 - 001',1,'2023-05-14 14:47:16','2023-06-21 14:40:10'),
 ('01-002','Ruangan Lt 1 - 002',1,'2023-05-14 07:49:40','2023-06-21 14:47:28');
+
+/*Table structure for table `surat_rujukan` */
+
+DROP TABLE IF EXISTS `surat_rujukan`;
+
+CREATE TABLE `surat_rujukan` (
+  `kode_rujukan` varchar(255)  NOT NULL,
+  `kode_rekammedis` varchar(255)  NOT NULL,
+  `fasilitas` varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL,
+  `rencana_tindak_lanjut` varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`kode_rujukan`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `surat_rujukan` */
 
@@ -240,6 +530,20 @@ insert  into `surat_rujukan`(`kode_rujukan`,`kode_rekammedis`,`fasilitas`,`renca
 ('10102131203103131012','A002-0006-1687964764-1687964828','Perlu Pemeriksaan Penunjang',NULL,'2023-06-28 15:08:22','2023-06-28 15:08:22'),
 ('1010213120312131231','A002-0005-1687962614-1687963258','Perlu Pemeriksaan Penunjang,Masih membutuhkan terapi lanjut,cek','Perlu Pemeriksaan Penunjang,Melihat efek Therapy sebelumnya,cek 123','2023-06-28 14:41:56','2023-06-28 14:41:56'),
 ('rujukan-1687753359','A002-0002-1687753270-1687753327','Perlu Pemeriksaan Penunjang','Perlu Pemeriksaan Penunjang','2023-06-26 04:22:39','2023-06-26 04:22:39');
+
+/*Table structure for table `transaksi` */
+
+DROP TABLE IF EXISTS `transaksi`;
+
+CREATE TABLE `transaksi` (
+  `invoice` varchar(255) NOT NULL,
+  `kode_notapembayaran` varchar(255)  DEFAULT NULL,
+  `total` float DEFAULT NULL,
+  `status` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`invoice`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `transaksi` */
 
@@ -254,6 +558,35 @@ insert  into `transaksi`(`invoice`,`kode_notapembayaran`,`total`,`status`,`creat
 ('invoice-1688290330','pembayaran-1688290330',484000,'Settled','2023-07-02 09:32:10','2023-07-02 09:32:13'),
 ('invoice-1688292446','pembayaran-1688292446',1074000,'Settled','2023-07-02 10:07:26','2023-07-02 10:07:30'),
 ('invoice-1688294652','pembayaran-1688294652',2349000,'Settled','2023-07-02 10:44:12','2023-07-02 10:44:15');
+
+/*Table structure for table `users` */
+
+DROP TABLE IF EXISTS `users`;
+
+CREATE TABLE `users` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255)  NOT NULL,
+  `NIK` varchar(255)  NOT NULL,
+  `alamat` varchar(255)  NOT NULL,
+  `kepalakeluarga` varchar(255)  NOT NULL,
+  `opsibpjs` varchar(255)  NOT NULL,
+  `bpjs` varchar(255)  DEFAULT NULL,
+  `tgllahir` date NOT NULL,
+  `age` int NOT NULL,
+  `username` varchar(255)  NOT NULL,
+  `email` varchar(255)  NOT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `password` varchar(255)  NOT NULL,
+  `cek` int NOT NULL,
+  `remember_token` varchar(100)  DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `is_admin` int NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `users_nik_unique` (`NIK`),
+  UNIQUE KEY `users_username_unique` (`username`),
+  UNIQUE KEY `users_email_unique` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `users` */
 
