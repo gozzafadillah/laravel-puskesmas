@@ -3,7 +3,7 @@
 @section('container')
   <div class="row">
     <div class="d-flex justify-content-between flex-md-nowrap align-items-center border-bottom mb-3 flex-wrap pt-3 pb-2">
-      <h1 class="h2">Pembayaran Users Pasien</h1>
+      <h1 class="h2">Pengambilan Obat Pasien</h1>
     </div>
 
     <div class="table-responsive col-lg-6">
@@ -39,20 +39,20 @@
           </tr>
         </thead>
         <tbody id="search-results">
-          @foreach ($notaPembayaran as $pasien)
-            @if ($pasien->transaksi && $pasien->transaksi->invoice != null && $pasien->kode_resepobat != null)
+          @foreach ($notaPembayaran as $pembayaran)
+            @if ($pembayaran->transaksi && $pembayaran->transaksi->invoice != null && $pembayaran->kode_resepobat != null)
               <tr>
-                <td>{{ $pasien->transaksi->invoice }}</td>
+                <td>{{ $pembayaran->transaksi->invoice }}</td>
                 <td>
-                  {{ \Carbon\Carbon::parse($pasien->transaksi->created_at)->setTimezone('Asia/Jakarta')->format('d/m/Y H:i:s') }}
+                  {{ \Carbon\Carbon::parse($pembayaran->transaksi->created_at)->setTimezone('Asia/Jakarta')->format('d/m/Y H:i:s') }}
                 </td>
-                <td>{{ $pasien->transaksi->status }}</td>
-                @if ($pasien->resepObat->status == 0)
+                <td>{{ $pembayaran->transaksi->status }}</td>
+                @if ($pembayaran->resepObat->status == 0)
                   <td>
                     <div class="d-flex">
-                      <a class="btn btn-primary {{ $pasien->resepObat->notaPembayaran->transaksi->status == 'Settled' ? '' : 'disabled' }}"
-                        href="/dashboard/ambilObat/{{ $pasien->kode_resepobat }}" role="button"
-                        aria-disabled="{{ $pasien->resepObat->notaPembayaran->transaksi->status == 'Settled' ? 'false' : 'true' }}"><span
+                      <a class="btn btn-primary {{ $pembayaran->resepObat->notaPembayaran->transaksi->status == 'Settled' ? '' : 'disabled' }}"
+                        href="/dashboard/ambilObat/{{ $pembayaran->kode_resepobat }}" role="button"
+                        aria-disabled="{{ $pembayaran->resepObat->notaPembayaran->transaksi->status == 'Settled' ? 'false' : 'true' }}"><span
                           data-feather="eye"></span></a>
                     </div>
                   </td>
@@ -66,6 +66,13 @@
           @endforeach
         </tbody>
       </table>
+      <div class="my-5">
+        <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-center">
+            {{ $notaPembayaran->links() }}
+          </ul>
+        </nav>
+      </div>
     </div>
   </div>
 

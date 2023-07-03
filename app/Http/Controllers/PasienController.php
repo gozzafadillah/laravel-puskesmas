@@ -26,7 +26,7 @@ class PasienController extends Controller
     {
         Antrian::where('kode_antrian', $kodeAntrian)->delete();
 
-        return redirect('/dashboard/antrian');
+        return redirect()->back();
     }
 
     function checkAntrianStatus($tiket)

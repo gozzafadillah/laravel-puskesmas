@@ -47,11 +47,18 @@
                 ? "<a href='#' class='badge bg-success border-0 text-decoration-none'>belum dicek</a>"
                 : "<a href='#' class='badge bg-danger border-0 text-decoration-none'>sudah dicek</a>" !!}</td>
             <td>{{ \Carbon\Carbon::parse($item['created_at'])->setTimezone('Asia/Jakarta')->format('d/m/Y H:i:s') }}</td>
-            <td>
+            <td style="display:flex; flex-direction: row; gap: 10px;">
               @if ($item->status == 0)
                 <a class="badge bg-primary border-0"
                   href="/dashboard/listpasien/rekammedis/form/{{ $item->kode_antrian }}"><span
                     data-feather="plus"></span></a>
+                <form action="/dashboard/tiket/{{ $item->kode_antrian }}" method="POST">
+                  @csrf
+                  @method('delete')
+                  <button type="submit" class="badge bg-danger border-0"
+                    onclick="confirm('Are you sure you want to delete antrian?')" href=""><span
+                      data-feather="trash"></span></button>
+                </form>
               @else
                 <a href="/dashboard/listpasien/{{ $item->kode_antrian }}" class="badge bg-success border-0"><span
                     data-feather="eye"></span></a>
