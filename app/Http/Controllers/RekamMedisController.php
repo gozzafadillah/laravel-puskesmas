@@ -8,6 +8,7 @@ use App\Models\P_Pelayanan;
 use App\Models\Poli;
 use App\Models\RekamMedis;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class RekamMedisController extends Controller
@@ -92,5 +93,14 @@ class RekamMedisController extends Controller
         // Mengonversi waktu Unix ke tipe data string
         $currentUnixTime = strval($currentUnixTime);
         return $kodeAntrian . "-" . $currentUnixTime;
+    }
+
+    public function generatePDF($rekamMedis)
+    {
+        $data = RekamMedis::where("kode_rekammedis", $rekamMedis)->first();
+        $pdf = Pdf::loadView('pdf.rekamMedis', [
+            'data' => $data,
+        ]);
+        return $pdf->download('rekammedis-' . $rekamMedis . '.pdf');
     }
 }

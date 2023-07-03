@@ -90,6 +90,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard/pdf/suratRujukan/{suratRujukan}', [SuratRujukanController::class, 'generatePDF']);
     Route::get('/dashboard/pdf/notaPembayaran/{notaPembayaran}', [PembayaranController::class, 'generatePDF']);
     Route::get('/dashboard/pdf/resepObat/{resepObat}', [ResepObatController::class, 'generatePDF']);
+    Route::get('/dashboard/pdf/rekamMedis/{rekamMedis}', [RekamMedisController::class, 'generatePDF']);
 
     // logging
     Route::get("/dashboard/log/rekammedis", [RekamMedisController::class, 'getRekamMedis']);

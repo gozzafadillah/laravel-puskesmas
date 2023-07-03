@@ -40,9 +40,10 @@
         </thead>
         <tbody id="search-results">
           @foreach ($pasien as $user)
-            @if ((!$user->resepObat || !$user->resepObat->notaPembayaran) && (!$user->suratRujukan || !$user->suratRujukan->notaPembayaran))
+            @if (
+                (!$user->resepObat || !$user->resepObat->notaPembayaran) &&
+                    (!$user->suratRujukan || !$user->suratRujukan->notaPembayaran))
               <tr>
-                <td>{{ $user->dataAntrian->antrian }}</td>
                 <td>{{ $user->dataAntrian->antrian }}</td>
                 <td>{{ date('d/m/Y', strtotime($user->created_at)) }}</td>
                 <td>{{ $user->dataAntrian->name }}</td>

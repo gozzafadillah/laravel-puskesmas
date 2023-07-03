@@ -119,7 +119,7 @@ class PembayaranController extends Controller
         $data = NotaPembayaran::where('kode_notapembayaran', $notaPembayaran)->first();
         $p_resepobat = P_Resepobat::with('resepObat')->with('obat')->get();
         $p_pelayanan = P_Pelayanan::with('pelayanan')->get();
-        $pdf = Pdf::loadView('pdf.notaPembayaran', [
+        $pdf = Pdf::loadView('pdf.notaTransaksi', [
             'data' => $data,
             'p_pelayanan' => $p_pelayanan,
             'p_resepobat' => $p_resepobat,

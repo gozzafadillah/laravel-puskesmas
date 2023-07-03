@@ -10,7 +10,7 @@
         @method('post')
         @csrf
         <div class="mb-3">
-          <h5 for="antrian" class="form-label">Kode Rujukan Berdasarkan BPJS :</h5>
+          <h5 for="antrian" class="form-label">Kode Rekap Surat Rujukan :</h5>
           <input class="form-control" autofocus type="text" name='kode_rujukan' id='kode_rujukan'>
 
         </div>

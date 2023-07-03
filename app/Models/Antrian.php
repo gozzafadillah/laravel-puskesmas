@@ -21,6 +21,11 @@ class Antrian extends Model
         return 'kode_antrian';
     }
 
+    public function poli()
+    {
+        return $this->hasOne(Poli::class, "kode_poli", "kode_poli");
+    }
+
     public function User()
     {
         return $this->belongsTo(User::class, "NIK", "NIK");
