@@ -14,7 +14,7 @@ class PoliController extends Controller
     public function index()
     {
         return view('dashboard.poli.index', [
-            'data' => Poli::with("dokter")->latest()->get()
+            'data' => Poli::with("dataDokter")->latest()->get()
         ]);
     }
 

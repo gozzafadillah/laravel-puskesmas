@@ -32,7 +32,7 @@
           <tr>
             <td>{{ $poli->kode_poli }}</td>
             <td>{{ $poli->name }}</td>
-            <td>{{ $poli->Dokter->name }}</td>
+            <td>{{ $poli->dataDokter->name }}</td>
             <td>{{ $poli->ruangan }}</td>
             <td>{{ $poli->jadwal . ' WIB' }}</td>
             <td>
