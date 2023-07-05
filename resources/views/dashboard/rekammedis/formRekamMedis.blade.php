@@ -75,9 +75,7 @@
           <label for="tindakan" class="form-label">Tindakan</label>
           <select class="form-control @error('tindakan') is-invalid @enderror" id="tindakan" name="tindakan">
             <option disabled selected>Pilih Tindakan ... </option>
-            @if ($antrian->user->bpjs != null)
-              <option value="surat-rujukan">Surat rujukan</option>
-            @endif
+            <option value="surat-rujukan">Surat rujukan</option>
             <option value="obat-resep">Resep obat</option>
           </select>
           @error('tindakan')
