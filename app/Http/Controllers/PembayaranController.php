@@ -35,6 +35,7 @@ class PembayaranController extends Controller
     public function createPembayaran($kode_rekammedis)
     {
         $dataResepObat = [];
+        $pasien = RekamMedis::where("kode_rekammedis", $kode_rekammedis)->first();
         $resepObat = ResepObat::where('kode_rekamedis', $kode_rekammedis)->first();
         $rujukan = SuratRujukan::where('kode_rekammedis', $kode_rekammedis)->first();
         if ($resepObat !== null) {
@@ -47,7 +48,8 @@ class PembayaranController extends Controller
             'status' => $resepObat != null ? "resepObat" : "rujukan",
             'dataResepObat' => $dataResepObat,
             'obats' => Obat::get(),
-            'pelayananUser' => $pelayananUser
+            'pelayananUser' => $pelayananUser,
+            'pasien' => $pasien,
         ]);
     }
     public function storeNotaPembayaran(Request $request)
@@ -60,12 +62,21 @@ class PembayaranController extends Controller
             'kode_notapembayaran' => $kode_notapembayaran
         ];
 
-        $invoice = [
-            'invoice' => $this->generateInvoice(),
-            'kode_notapembayaran' => $kode_notapembayaran,
-            'total' => $request->total,
-            'status' => 'Pending',
-        ];
+        if ($data['total'] == 0) {
+            $invoice = [
+                'invoice' => $this->generateInvoice(),
+                'kode_notapembayaran' => $kode_notapembayaran,
+                'total' => $request->total,
+                'status' => 'Settled',
+            ];
+        } else {
+            $invoice = [
+                'invoice' => $this->generateInvoice(),
+                'kode_notapembayaran' => $kode_notapembayaran,
+                'total' => $request->total,
+                'status' => 'Pending',
+            ];
+        }
 
         NotaPembayaran::create($data);
         Transaksi::create($invoice);

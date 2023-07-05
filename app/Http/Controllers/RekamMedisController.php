@@ -47,7 +47,9 @@ class RekamMedisController extends Controller
 
         return view('dashboard.dokter.showPasien', [
             'data' => $dataRekammedis,
-            'p_pelayanan' => $p_pelayanan
+            'p_pelayanan' => $p_pelayanan,
+
+
         ]);
     }
 
@@ -67,8 +69,6 @@ class RekamMedisController extends Controller
         if ($request['bpjs']) {
             $validatedData['bpjs'] = $request['bpjs'];
         }
-
-
         RekamMedis::create($validatedData);
 
         return redirect("/dashboard/pelayanan/form/" . $validatedData['kode_rekammedis'] . "?tindakan=" . $validatedData['tindakan']);

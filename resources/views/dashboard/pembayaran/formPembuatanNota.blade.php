@@ -78,7 +78,7 @@
               @endforeach
             </div>
             <div class="container my-3 px-3 py-2">
-              <h3>Total : {{ $total }}</h3>
+              <h3>Total : Rp{{ $pasien->dataAntrian->user->bpjs !== null ? 0 : $total }}</h3>
             </div>
         @endif
     </div>
@@ -87,7 +87,7 @@
     @else
       <input type="hidden" name="kode_rujukan" value="{{ $dataKode }}">
     @endif
-    <input type="hidden" name="total" value="{{ $total }}">
+    <input type="hidden" name="total" value="{{ $pasien->dataAntrian->user->bpjs !== null ? 0 : $total }}">
     <button type="submit" class="btn btn-primary mt-3" id="submitBtn">Tambah Nota</button>
     </form>
   </div>
