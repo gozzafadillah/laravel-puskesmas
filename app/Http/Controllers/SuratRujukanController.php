@@ -17,7 +17,7 @@ class SuratRujukanController extends Controller
         $user = auth()->user()->id;
         $dokter = Dokter::where('userid', $user)->value('id');
         $poli = Poli::where('dokter', $dokter)->value('kode_poli');
-        $suratRujukan = SuratRujukan::where('kode_rekammedis', 'LIKE', $poli . '%')->latest()->get();
+        $suratRujukan = SuratRujukan::where('kode_rekammedis', 'LIKE', $poli . '%')->latest()->paginate(7);
         return view(
             'dashboard.rujukan.index',
             [

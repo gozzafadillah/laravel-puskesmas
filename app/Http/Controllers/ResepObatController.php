@@ -20,7 +20,7 @@ class ResepObatController extends Controller
         $user = auth()->user()->id;
         $dokter = Dokter::where('userid', $user)->value('id');
         $poli = Poli::where('dokter', $dokter)->value('kode_poli');
-        $resepKode = ResepObat::where('kode_rekamedis', 'LIKE', $poli . '%')->latest()->get();
+        $resepKode = ResepObat::where('kode_rekamedis', 'LIKE', $poli . '%')->latest()->paginate(7);
 
 
         return view('dashboard.resepobat.index', [

@@ -43,16 +43,23 @@
               <td>{{ $user->kode_resep_obat }}</td>
               <td>
                 <div class="d-flex">
-                  <a class="badge bg-primary m-1 border-0" href="#"><span data-feather="edit"></span></a>
-                  <a href="#" class="badge bg-success m-1 border-0" data-bs-toggle="modal"
+                  <a class="badge bg-warning m-1 border-0" href="#"><span data-feather="edit"></span></a>
+                  <a href="#" class="badge bg-primary m-1 border-0" data-bs-toggle="modal"
                     data-bs-target="#exampleModal"><span data-feather="eye"></span></a>
-                  <a href="#" class="badge bg-danger m-1 border-0"><span data-feather="trash"></span></a>
+                  {{-- <a href="#" class="badge bg-danger m-1 border-0"><span data-feather="trash"></span></a> --}}
                 </div>
               </td>
             </tr>
           @endforeach
         </tbody>
       </table>
+    </div>
+    <div class="my-5">
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+          {{ $resepObat->links() }}
+        </ul>
+      </nav>
     </div>
   </div>
 

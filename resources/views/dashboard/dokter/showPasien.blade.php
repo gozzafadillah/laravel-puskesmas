@@ -35,6 +35,7 @@
               </tbody>
             </table>
           </div>
+          <a href="/dashboard/listpasien" class="btn btn-primary">Kembali</a>
         </div>
       </div>
     </div>
