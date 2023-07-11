@@ -39,6 +39,10 @@
           </tr>
         </thead>
         <tbody id="search-results">
+          @php
+            $hasUnpaidData = true; // Inisialisasi variabel bantuan
+          @endphp
+
           @foreach ($pasien as $user)
             @if (
                 (!$user->resepObat || !$user->resepObat->notaPembayaran) &&
@@ -55,11 +59,30 @@
                   </div>
                 </td>
               </tr>
+              @php
+                $hasUnpaidData = false; // Set variabel bantuan menjadi true jika ada data yang belum dibayar
+              @endphp
             @endif
           @endforeach
+
+          @if ($hasUnpaidData)
+            <tr>
+              <td colspan="4">
+                <div class="my-5">
+                  <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                      <!-- Tampilkan pagination links hanya jika ada data yang belum dibayar -->
+                      {{ $pasien->links() }}
+                    </ul>
+                  </nav>
+                </div>
+              </td>
+            </tr>
+          @endif
         </tbody>
       </table>
     </div>
+
   </div>
 
   @include('dashboard.layouts.modalPasien')

@@ -39,45 +39,45 @@
           </tr>
         </thead>
         <tbody id="search-results">
-          @foreach ($listTransaksi as $transaksi)
-            @foreach ($notaPembayaran as $user)
-              @if ($transaksi->kode_notapembayaran == $user->kode_notapembayaran)
-                <tr>
-                  <td>{{ $user->kode_notapembayaran }}</td>
-                  <td>{{ \Carbon\Carbon::parse($user->created_at)->setTimezone('Asia/Jakarta')->format('d/m/Y H:i:s') }}
-                  </td>
-                  <td>
-                    @if ($transaksi->status == 'Pending')
-                      <a style="text-decoration: none" class="badge bg-primary border-0">Pending</a>
-                    @endif
-                    @if ($transaksi->status == 'Settled')
-                      <a style="text-decoration: none" class="badge bg-success border-0">Settled</a>
-                    @endif
-                    @if ($transaksi->status == 'Failed')
-                      <a style="text-decoration: none" class="badge bg-danger border-0">Failed</a>
-                    @endif
-                  </td>
-                  {{-- <td>{{ $user->created_at }}</td> --}}
-                  {{-- <td>{{ date('d/m/Y', strtotime($user->created_at)) }}</td>
-              <td>{{ $user->dataAntrian->name }}</td> --}}
-                  <td>
-                    <div class="d-flex gap-2">
-                      <form action="/dashboard/transaksi/{{ $transaksi->invoice }}" method="post">
-                        @csrf
-                        @method('put')
-                        <button type="submit" style="text-decoration: none"
-                          class="badge bg-success border-0">Bayar</button>
-                      </form>
-                      <a class="badge bg-primary border-0" style="text-decoration: none"
-                        href="/dashboard/transaksi/{{ $user->kode_notapembayaran }}"><span data-feather="eye"></span></a>
-                    </div>
-                  </td>
-                </tr>
-              @endif
-            @endforeach
+          @foreach ($notaPembayaran as $pembayaran)
+            <tr>
+              <td>{{ $pembayaran->kode_notapembayaran }}</td>
+              <td>{{ \Carbon\Carbon::parse($pembayaran->created_at)->setTimezone('Asia/Jakarta')->format('d/m/Y H:i:s') }}
+              </td>
+              <td>
+                @if ($pembayaran->transaksi->status == 'Pending')
+                  <a style="text-decoration: none" class="badge bg-primary border-0">Pending</a>
+                @endif
+                @if ($pembayaran->transaksi->status == 'Settled')
+                  <a style="text-decoration: none" class="badge bg-success border-0">Settled</a>
+                @endif
+                @if ($pembayaran->transaksi->status == 'Failed')
+                  <a style="text-decoration: none" class="badge bg-danger border-0">Failed</a>
+                @endif
+              </td>
+              <td>
+                <div class="d-flex gap-2">
+                  <form action="/dashboard/transaksi/{{ $pembayaran->transaksi->invoice }}" method="post">
+                    @csrf
+                    @method('put')
+                    <button type="submit" style="text-decoration: none" class="badge bg-success border-0">Bayar</button>
+                  </form>
+                  <a class="badge bg-primary border-0" style="text-decoration: none"
+                    href="/dashboard/transaksi/{{ $pembayaran->kode_notapembayaran }}"><span
+                      data-feather="eye"></span></a>
+                </div>
+              </td>
+            </tr>
           @endforeach
         </tbody>
       </table>
+    </div>
+    <div class="my-5">
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+          {{ $notaPembayaran->links() }}
+        </ul>
+      </nav>
     </div>
   </div>
 @endsection

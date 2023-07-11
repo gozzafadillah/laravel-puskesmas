@@ -21,7 +21,7 @@ class PembayaranController extends Controller
     public function listAntrianPembayaran()
     {
         return view('dashboard.pembayaran.index', [
-            'pasien' => RekamMedis::with('dataAntrian')->with('resepObat')->with("suratRujukan")->get(),
+            'pasien' => RekamMedis::latest()->paginate(10),
         ]);
     }
     public function getTransaksi()
@@ -108,7 +108,7 @@ class PembayaranController extends Controller
     public function listTransaksi()
     {
         return view('dashboard.transaksi.index', [
-            'notaPembayaran' => NotaPembayaran::latest()->get(),
+            'notaPembayaran' => NotaPembayaran::latest()->paginate(10),
             "listTransaksi" => Transaksi::latest()->get(),
         ]);
     }
