@@ -5,12 +5,12 @@
          <p class="fs-4 sidebar-heading d-flex justify-content-between align-items-center mb-1 px-3">Admin</p>
 
          <ul class="nav flex-column">
-           <li class="nav-item">
+           {{-- <li class="nav-item">
              <a class="nav-link {{ Request::is('#*') ? 'active' : '' }}" href="#">
                <span data-feather="mail" class="align-text-bottom"></span>
                Antrian Berjalan
              </a>
-           </li>
+           </li> --}}
            <li class="nav-item">
              <a class="nav-link {{ Request::is('dashboard/post*') ? 'active' : '' }}" href="/dashboard/posts">
                <span data-feather="file-text" class="align-text-bottom"></span>

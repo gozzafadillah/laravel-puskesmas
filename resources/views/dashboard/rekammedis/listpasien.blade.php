@@ -17,13 +17,12 @@
     <div class="card-footer">
       Status: {!! $poli['isActive']
           ? '<span class="mx-2 badge bg-success border-0">Aktif</span>'
-          : '<span class="mx-2 badge bg-danger border-0">Aktif</span>' !!}
+          : '<span class="mx-2 badge bg-danger border-0">Nonaktif</span>' !!}
     </div>
     <div class="card-footer text-muted">
       <p id="tanggal"></p>
     </div>
   </div>
-
 
   <div class="table-responsive">
     <table class="table-striped table">
@@ -38,7 +37,10 @@
         </tr>
       </thead>
       <tbody>
-        @foreach ($pasien as $item)
+        @php
+          $isDisabled = true; // Mengatur isDisabled menjadi true pada awal iterasi
+        @endphp
+        @foreach ($pasien->sortByDesc('kode_antrian') as $item)
           <tr>
             <td>{{ $item['kode_antrian'] }}</td>
             <td>{{ $item['name'] }}</td>
@@ -48,28 +50,42 @@
                 : "<a href='#' class='badge bg-danger border-0 text-decoration-none'>sudah dicek</a>" !!}</td>
             <td>{{ \Carbon\Carbon::parse($item['created_at'])->setTimezone('Asia/Jakarta')->format('d/m/Y H:i:s') }}</td>
             <td style="display:flex; flex-direction: row; gap: 10px;">
-              @if ($item->status == 0)
-                <a class="badge bg-primary border-0"
-                  href="/dashboard/listpasien/rekammedis/form/{{ $item->kode_antrian }}"><span
-                    data-feather="plus"></span></a>
-                <form action="/dashboard/tiket/{{ $item->kode_antrian }}" method="POST">
+              @if ($item['status'] == 0)
+                @if ($isDisabled)
+                  <span class="badge bg-primary disabled border-0" role="button" aria-disabled="true"><span
+                      data-feather="plus"></span></span>
+                @else
+                  <a class="badge bg-primary border-0" role="button"
+                    href="/dashboard/listpasien/rekammedis/form/{{ $item['kode_antrian'] }}"><span
+                      data-feather="plus"></span></a>
+                  @php
+                    $isDisabled = true; // tombol terbuka, variabel diubah menjadi true agar tombol selanjutnya dinonaktifkan
+                  @endphp
+                @endif
+              @else
+                <a href="/dashboard/listpasien/{{ $item['kode_antrian'] }}" class="badge bg-success border-0"><span
+                    data-feather="eye"></span></a>
+                <a class="badge bg-warning border-0"
+                  href="/dashboard/listpasien/rekammedis/edit/{{ $item['kode_antrian'] }}"><span
+                    data-feather="edit"></span></a>
+              @endif
+              @if ($item['status'] == 0)
+                <form action="/dashboard/tiket/{{ $item['kode_antrian'] }}" method="POST">
                   @csrf
                   @method('delete')
                   <button type="submit" class="badge bg-danger border-0"
-                    onclick="confirm('Are you sure you want to delete antrian?')" href=""><span
+                    onclick="return confirm('Are you sure you want to delete antrian?')"><span
                       data-feather="trash"></span></button>
                 </form>
-              @else
-                <a href="/dashboard/listpasien/{{ $item->kode_antrian }}" class="badge bg-success border-0"><span
-                    data-feather="eye"></span></a>
-                <a class="badge bg-warning border-0"
-                  href="/dashboard/listpasien/rekammedis/edit/{{ $item->kode_antrian }}"><span
-                    data-feather="edit"></span></a>
               @endif
             </td>
           </tr>
+          @php
+            $isDisabled = false; // Mengatur isDisabled menjadi false setelah tombol ditampilkan
+          @endphp
         @endforeach
       </tbody>
+
     </table>
     <div class="my-5">
       <nav aria-label="Page navigation example">

@@ -29,7 +29,7 @@ class RekamMedisController extends Controller
         $session = auth()->user();
         $dokter = Dokter::where('userid', '=', $session->id)->value("id");
         $poli =  Poli::where('dokter', '=', $dokter)->first();
-        $pasien = Antrian::where('kode_poli', '=', $poli->kode_poli)->orderBy("created_at", "desc")->paginate(5);
+        $pasien = Antrian::where('kode_poli', '=', $poli->kode_poli)->orderBy("created_at", "desc")->paginate(10);
 
         return view('dashboard.rekammedis.listpasien', [
             "pasien" => $pasien,

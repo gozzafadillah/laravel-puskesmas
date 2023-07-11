@@ -52,8 +52,7 @@
             href="/posts/{{ $posts[0]->slug }}">{{ $posts[0]->title }}</a></h3>
         <p>
           <small>
-            <h5>By : <a href="/posts?author={{ $posts[0]->author->username }}"
-                class="text-decoration-none">{{ $posts[0]->author->name }}</a> in <a class="text-decoration-none"
+            <h5>Category <a class="text-decoration-none"
                 href="/posts?category={{ $posts[0]->category->slug }}">{{ $posts[0]->category->name }}</a>
             </h5>
           </small>
@@ -89,8 +88,7 @@
                     href="/posts/{{ $post->slug }}">{{ $post->title }}</a></h5>
                 <p>
                   <small>
-                    By : <a href="/posts?author={{ $post->author->username }}"
-                      class="text-decoration-none">{{ $post->author->name }}</a>
+                    Created
                     <small class="text-muted">{{ $post->created_at->diffForHumans() }}</small>
                   </small>
                 </p>
