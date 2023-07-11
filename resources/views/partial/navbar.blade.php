@@ -8,6 +8,37 @@
   }
 </style>
 
+<?php
+$url = '/dashboard';
+
+if (auth()->check()) {
+    $user = App\Models\User::where('id', auth()->user()->id)->first();
+
+    switch ($user->is_admin) {
+        case 1:
+            $url = '/dashboard/verifikasi';
+
+            break;
+
+        case 2:
+            $url = '/dashboard/listpasien';
+
+            break;
+
+        case 3:
+            $url = '/dashboard/pembayaran/list';
+
+            break;
+
+        default:
+            $url = '/dashboard';
+
+            break;
+    }
+}
+
+?>
+
 <div class="position-absolute text-light col-md px-3 py-1" style="background-color: rgba(0, 0, 0, 0.7); font-size: 12px;">
   <?php setlocale(LC_TIME, 'id_ID'); ?>
   <p> {{ strftime('%A, %d %B %Y') }}</p>
@@ -52,7 +83,7 @@
               Selamat Datang, {{ auth()->user()->name }}
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="/dashboard"><i class="bi bi-house-door"></i> My Dashboard</a>
+              <li><a class="dropdown-item" href={{ $url }}><i class="bi bi-house-door"></i> My Dashboard</a>
               </li>
 
               <li>

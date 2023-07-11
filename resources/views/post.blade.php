@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
       <div class="col-md-8">
         <h2 class="mb-3">{{ $post->title }}</h2>
-        <h5>Category <a style="text-decoration:none" href="/posts?category={{ $post->category->slug }}">
+        <h5>Category <a style="text-decoration:none" href="/home?category={{ $post->category->slug }}">
             {{ $post->category->name }}
           </a></h5>
         @if ($post->image)
