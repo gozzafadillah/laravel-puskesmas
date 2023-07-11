@@ -15,13 +15,9 @@ class AmbilObatController extends Controller
 {
     public function pasienAmbilObat()
     {
-        $dataAntrian = Antrian::with("rekamMedis")->with("User")->get();
-        $dataResepObat = RekamMedis::with('resepObat')->get();
-        $notaPembayaran = NotaPembayaran::with("transaksi")->paginate(10);
+        $notaPembayaran = NotaPembayaran::with("transaksi")->orderBy("created_at", "desc")->paginate(10);
 
         return view('dashboard.pengambilanObat.index', [
-            'dataAntrian' => $dataAntrian,
-            'dataResepObat' => $dataResepObat,
             'notaPembayaran' => $notaPembayaran,
         ]);
     }
