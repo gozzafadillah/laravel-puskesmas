@@ -9,7 +9,7 @@
     <div class="table-responsive col-lg-6">
       <div class="row">
         <div class="col-md-6">
-          <form id="search-form" onkeypress="return event.keyCode !== 13;" action="{{ route('listUser') }}" method="GET">
+          <form id="search-form" onkeypress="return event.keyCode != 13;" action="{{ route('listUser') }}" method="GET">
             @csrf
             <div class="input-group mb-3">
               <input autocomplete="off" type="text" name="search" class="form-control"

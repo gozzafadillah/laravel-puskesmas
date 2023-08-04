@@ -1,7 +1,7 @@
 @extends('dashboard.layouts.main')
 
 @section('container')
-  <div class="d-flex justify-content-between flex-md-nowrap align-items-center border-bottom mb-3 flex-wrap pt-3 pb-2">
+  <div class="d-flex justify-content-between flex-md-nowrap align-items-center border-bottom mb-3 flex-wrap pb-2 pt-3">
     <h1 class="h2">Log Rekam Medis</h1>
   </div>
 
@@ -23,8 +23,7 @@
                 {{ \Carbon\Carbon::parse($data->rekamMedis->created_at)->setTimezone('Asia/Jakarta')->format('d/m/Y H:i:s') }}
               </td>
               <td>
-                <a class="badge bg-primary border-0"
-                  href="/dashboard/pdf/rekamMedis/{{ $data->rekamMedis->kode_rekammedis }}"><span
+                <a class="badge bg-primary border-0" href="/dashboard/rekammedis/{{ $data->rekamMedis->antrian }}"><span
                     data-feather="eye"></span></a>
               </td>
             </tr>

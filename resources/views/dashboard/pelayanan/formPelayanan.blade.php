@@ -23,8 +23,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
   </head>
   <div class="row my-5">
-    <div class="d-flex justify-content-between flex-md-nowrap align-items-center border-bottom mb-3 flex-wrap pt-3 pb-2">
-      <h1 class="h2">Form Pembayaran Pasien</h1>
+    <div class="d-flex justify-content-between flex-md-nowrap align-items-center border-bottom mb-3 flex-wrap pb-2 pt-3">
+      <h1 class="h2">Form Pelayanan Pasien</h1>
     </div>
     <div class="table-responsive">
       <form id="tambahNotaPembayaran" action="/dashboard/pelayanan" method="POST">

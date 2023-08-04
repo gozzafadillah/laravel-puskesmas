@@ -35,6 +35,14 @@ class SuratRujukanController extends Controller
         ]);
     }
 
+    public function show($kodeRujukan)
+    {
+        $data = SuratRujukan::where('kode_rujukan', $kodeRujukan)->first();
+        return view("dashboard.rujukan.show", [
+            'data' => $data,
+        ]);
+    }
+
     public function createSuratRujukan($kodeRekamMedis)
     {
         return view("dashboard.rujukan.formRujukan", [

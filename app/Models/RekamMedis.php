@@ -33,4 +33,9 @@ class RekamMedis extends Model
     {
         return $this->belongsTo(ResepObat::class, 'kode_rekammedis', 'kode_rekamedis');
     }
+
+    public function dataDokter()
+    {
+        return $this->hasOne(Dokter::class, 'id', 'dokter');
+    }
 }

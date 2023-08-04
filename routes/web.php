@@ -136,16 +136,20 @@ Route::group(['middleware' => 'auth'], function () {
     //dokter
     Route::get('/dashboard/listobat', [ListObatController::class, 'index'])->middleware('dokter');
     Route::get('/dashboard/listpasien', [RekamMedisController::class, 'showPasien'])->middleware('dokter');
-    Route::get('/dashboard/listpasien/{kodeAntrian}', [RekamMedisController::class, 'getRekamMedisByKode'])->middleware('dokter');
+    Route::get('/dashboard/rekammedis/{kodeAntrian}', [RekamMedisController::class, 'getRekamMedisByKode']);
     Route::get('/dashboard/listpasien/rekammedis/form/{kode}', [RekamMedisController::class, 'createRekamMedis'])->middleware('dokter');
     Route::post("/dashboard/rekammedis", [RekamMedisController::class, "storeRekamMedis"])->middleware('dokter');
+    Route::get("/dashboard/listpasien/rekammedis/{kodeRekammedis}", [RekamMedisController::class, "edit"])->middleware('dokter');
+    Route::put("/dashboard/listpasien/rekammedis/{kodeRekammedis}", [RekamMedisController::class, "update"])->middleware('dokter');
     // surat rujukan
     Route::get("/dashboard/suratrujukan/form/{kodeRekamMedis}", [SuratRujukanController::class, "createSuratRujukan"])->middleware('dokter');
     Route::get('/dashboard/suratrujukan', [SuratRujukanController::class, "index"])->middleware('dokter');
+    Route::get('/dashboard/suratrujukan/{kodeRujukan}', [SuratRujukanController::class, "show"]);
     Route::post("/dashboard/suratrujukan/{kode}", [SuratRujukanController::class, "storeSuratRujukan"])->middleware('dokter');
     // resep obat
     Route::get('/dashboard/resepobat/form/{kodeRekamMedis}', [ResepObatController::class, 'createResepObat'])->middleware("dokter");
     Route::get('/dashboard/resepobat', [ResepObatController::class, 'index'])->middleware('dokter');
+    Route::get('/dashboard/resepobat/{kodeResepObat}', [ResepObatController::class, 'show']);
     Route::post("/dashboard/resepobat", [ResepObatController::class, 'storeResepObat'])->middleware("dokter");
     // pelayanan
     Route::get('/dashboard/pelayanan/form/{kodeRekammedis}', [PelayananController::class, 'createPelayanan'])->middleware('dokter');

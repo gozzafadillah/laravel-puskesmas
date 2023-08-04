@@ -9,6 +9,7 @@ use App\Models\Poli;
 use App\Models\RekamMedis;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Contracts\Support\ValidatedData;
 use Illuminate\Http\Request;
 
 class RekamMedisController extends Controller
@@ -65,6 +66,8 @@ class RekamMedisController extends Controller
 
         $validatedData['antrian'] = $request->kode_antrian;
         $validatedData['kode_rekammedis'] = $this->generateKode($request->kode_antrian);
+        $dokter = Dokter::where('userid', '=', auth()->user()->id)->value("id");
+        $validatedData['dokter'] = $dokter;
 
         if ($request['bpjs']) {
             $validatedData['bpjs'] = $request['bpjs'];
@@ -102,5 +105,38 @@ class RekamMedisController extends Controller
             'data' => $data,
         ]);
         return $pdf->download('rekammedis-' . $rekamMedis . '.pdf');
+    }
+
+
+    public function edit($kodeRekammedis)
+    {
+        $data = RekamMedis::where("kode_rekammedis", $kodeRekammedis)->first();
+        return view("dashboard.rekammedis.editRekamMedis", [
+            'data' => $data,
+        ]);
+    }
+
+    public function update(Request $request, $kodeRekammedis)
+    {
+        $validatedData = $request->validate([
+            'anamnesa' => 'required',
+            'pemeriksaan_Fisik' => 'required',
+            'diagnosa' => 'required',
+        ]);
+
+        $getOld = RekamMedis::where("kode_rekammedis", $kodeRekammedis)->first();
+
+        $validatedData['antrian'] = $request->kode_antrian;
+        $validatedData['kode_rekammedis'] = $kodeRekammedis;
+
+        if ($request['bpjs']) {
+            $validatedData['bpjs'] = $request['bpjs'];
+        }
+        $validatedData['antrian'] = $getOld['antrian'];
+
+
+        RekamMedis::where("kode_rekammedis", $kodeRekammedis)->update($validatedData);
+
+        return redirect("/dashboard/listpasien/" . $validatedData['antrian']);
     }
 }

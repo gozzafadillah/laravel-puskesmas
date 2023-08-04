@@ -66,9 +66,11 @@ if (auth()->check()) {
             Informasi</a>
         </li>
 
-        <li class="nav-item">
-          <a class="nav-link {{ $active === 'antrian' ? 'active' : '' }}" href="/antrian">Antrian</a>
-        </li>
+        @if (auth()->user() == null || auth()->user()->is_admin === 0)
+          <li class="nav-item">
+            <a class="nav-link {{ $active === 'antrian' ? 'active' : '' }}" href="/antrian">Antrian</a>
+          </li>
+        @endif
 
         <li class="nav-item">
           <a class="nav-link {{ $active === 'about' ? 'active' : '' }}" href="/about">Tentang Puskesmas</a>

@@ -70,12 +70,33 @@ class PoliController extends Controller
 
     public function edit($kode)
     {
-        // 
+        return view("dashboard.poli.edit", [
+            'title' => "Edit Poli",
+            'oldPoli' => Poli::where('kode_poli', $kode)->first(),
+            'dokter' => Dokter::latest()->get(),
+            'ruangan' => Ruangan::latest()->get()
+        ]);
     }
 
-    public function update(Poli $poli, $kode)
+    public function update(Request $request, $kode)
     {
-        // 
+
+        $validateData = $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'ruangan' => 'required',
+        ]);
+        $validateData['dokter'] = $request->dokter;
+        if ($request->isActive) {
+            $validateData['isActive'] = 1;
+        }
+
+        $validateData['jadwal'] = $request->jadwalStart . " s/d " . $request->jadwalEnd;
+
+        Poli::where('kode_poli', $kode)->update($validateData);
+        Dokter::where('id', $request->dokter)->update(['status' =>  1]);
+
+        return redirect("/dashboard/poli")->with("success", "poli telah diubah");
     }
 
     public function changeStatusPoli($kodePoli)

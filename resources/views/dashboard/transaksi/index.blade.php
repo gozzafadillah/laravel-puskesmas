@@ -2,14 +2,14 @@
 
 @section('container')
   <div class="row">
-    <div class="d-flex justify-content-between flex-md-nowrap align-items-center border-bottom mb-3 flex-wrap pt-3 pb-2">
+    <div class="d-flex justify-content-between flex-md-nowrap align-items-center border-bottom mb-3 flex-wrap pb-2 pt-3">
       <h1 class="h2">Transaksi Users Pasien</h1>
     </div>
 
     <div class="table-responsive col-lg-6">
       <div class="row">
         <div class="col-md-6">
-          <form id="search-form" onkeypress="return event.keyCode !== 13;" action="{{ route('listUser') }}" method="GET">
+          <form id="search-form" onkeypress="return event.keyCode != 13;" action="{{ route('listUser') }}" method="GET">
             @csrf
             <div class="input-group mb-3">
               <input autocomplete="off" type="text" name="search" class="form-control"

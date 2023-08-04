@@ -1,7 +1,7 @@
 @extends('dashboard.layouts.main')
 
 @section('container')
-  <div class="d-flex justify-content-between flex-md-nowrap align-items-center border-bottom mb-3 flex-wrap pt-3 pb-2">
+  <div class="d-flex justify-content-between flex-md-nowrap align-items-center border-bottom mb-3 flex-wrap pb-2 pt-3">
     <h1 class="h2">List Poli Puskesmas</h1>
   </div>
 
@@ -55,6 +55,8 @@
 
             <td>
               <div class="d-flex gap-2">
+                <a href="/dashboard/poli/{{ $poli->kode_poli }}/edit" class="badge bg-success border-0"><span
+                    data-feather="edit"></span></a>
                 <form action="/dashboard/poli/{{ $poli->kode_poli }}" method="POST">
                   @csrf
                   @method('delete')

@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Antrian;
 use App\Models\Poli;
+use Carbon\Carbon;
+use Carbon\CarbonTimeZone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use PDO;
 
 class AntrianController extends Controller
 {
@@ -93,18 +96,34 @@ class AntrianController extends Controller
 
         // Ambil nomor urut terakhir dari kode antrian untuk poli ini
         $lastKodeAntrian = DB::table('antrian')
-            ->where('kode_poli', $poliKode)
+            ->where('kode_poli', $poliKode)->where('status', 0)
             ->orderByRaw("SUBSTRING_INDEX(antrian, '-', -1) DESC")
-            ->value('antrian');
+            ->first();
 
 
         // Periksa apakah berhasil mendapatkan nomor urut terakhir
-        if ($lastKodeAntrian) {
-            $urutan = (int)explode('-', $lastKodeAntrian)[1] + 1;
+        if ($lastKodeAntrian != null) {
+            $urutan = (int)explode('-', $lastKodeAntrian->antrian)[1] + 1;
         } else {
             // Jika tidak ada nomor urut sebelumnya, beri nomor urut awal 1
             $urutan = 1;
         }
+
+        if ($lastKodeAntrian != null) {
+            // cek tanggal
+            // Set zona waktu ke Indonesia/Jakarta
+            $timezone = new CarbonTimeZone('Asia/Jakarta');
+            Carbon::setTestNow(Carbon::now()->setTimezone($timezone));
+            // Ambil data tanggal hari ini
+            $currentDate = Carbon::now()->format('Ymd');
+            $parts = explode('-', $lastKodeAntrian->kode_antrian);
+            $timestamp = end($parts);
+            $lastDate = Carbon::createFromTimestamp($timestamp)->format('Ymd');
+
+            ($currentDate === $lastDate) ? $urutan : $urutan = 1;
+        }
+
+
 
         $validateData['antrian'] = $poliKode . '-' . str_pad($urutan, 4, '0', STR_PAD_LEFT);
         $validateData['kode_antrian'] = $poliKode . '-' . str_pad($urutan, 4, '0', STR_PAD_LEFT) . '-' . time();

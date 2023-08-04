@@ -30,7 +30,7 @@
           <option value="0" selected>Pilih Dokter</option>
           <hr>
           @foreach ($dokter as $dokter)
-            @if ($dokter->status !== 1)
+            @if ($dokter->status != "1")
               <option value="{{ $dokter->id }}">{{ $dokter->name }}</option>
             @endif
           @endforeach

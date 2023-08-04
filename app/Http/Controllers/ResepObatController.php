@@ -38,6 +38,14 @@ class ResepObatController extends Controller
         ]);
     }
 
+    public function show($kodeResepObat)
+    {
+        $data = ResepObat::where('kode_resep_obat', $kodeResepObat)->first();
+        return view("dashboard.resepobat.show", [
+            'data' => $data,
+        ]);
+    }
+
     public function createResepObat($kodeRekamMedis)
     {
         $obat = Obat::latest()->get();

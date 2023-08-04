@@ -53,7 +53,7 @@
         <p>
           <small>
             <h5>Category <a class="text-decoration-none"
-                href="/posts?category={{ $posts[0]->category->slug }}">{{ $posts[0]->category->name }}</a>
+                href="/home?category={{ $posts[0]->category->slug }}">{{ $posts[0]->category->name }}</a>
             </h5>
           </small>
         </p>
@@ -71,7 +71,7 @@
             <div class="card">
               <div class="position-absolute px-3 py-2" style="background-color: rgba(0, 0, 0, 0.7)">
                 <a class="text-decoration-none text-light"
-                  href="/posts?category={{ $post->category->slug }}">{{ $post->category->name }}</a>
+                  href="/home?category={{ $post->category->slug }}">{{ $post->category->name }}</a>
               </div>
 
               @if ($post->image)

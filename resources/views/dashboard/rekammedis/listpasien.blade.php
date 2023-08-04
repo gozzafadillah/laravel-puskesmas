@@ -1,7 +1,18 @@
 @extends('dashboard.layouts.main')
 
 @section('container')
-  <div class="d-flex justify-content-between flex-md-nowrap align-items-center border-bottom mb-3 flex-wrap pt-3 pb-2">
+  {{-- hitung user dengan status 0 --}}
+  @php
+    $index = 0;
+  @endphp
+  @foreach ($pasien as $item)
+    @php
+      if ($item['status'] == 0) {
+          $index++;
+      }
+    @endphp
+  @endforeach
+  <div class="d-flex justify-content-between flex-md-nowrap align-items-center border-bottom mb-3 flex-wrap pb-2 pt-3">
     <h1 class="h2">List Pasien</h1>
   </div>
   <div class="card">
@@ -38,9 +49,13 @@
       </thead>
       <tbody>
         @php
-          $isDisabled = true; // Mengatur isDisabled menjadi true pada awal iterasi
+          if ($index > 1) {
+              $isDisabled = true; // Mengatur isDisabled menjadi true pada awal iterasi
+          } else {
+              $isDisabled = false; // Mengatur isDisabled menjadi true pada awal iterasi
+          }
         @endphp
-        @foreach ($pasien->sortByDesc('kode_antrian') as $item)
+        @foreach ($pasien as $item)
           <tr>
             <td>{{ $item['kode_antrian'] }}</td>
             <td>{{ $item['name'] }}</td>
@@ -51,7 +66,7 @@
             <td>{{ \Carbon\Carbon::parse($item['created_at'])->setTimezone('Asia/Jakarta')->format('d/m/Y H:i:s') }}</td>
             <td style="display:flex; flex-direction: row; gap: 10px;">
               @if ($item['status'] == 0)
-                @if ($isDisabled)
+                @if ($isDisabled == true)
                   <span class="badge bg-primary disabled border-0" role="button" aria-disabled="true"><span
                       data-feather="plus"></span></span>
                 @else
@@ -63,10 +78,10 @@
                   @endphp
                 @endif
               @else
-                <a href="/dashboard/listpasien/{{ $item['kode_antrian'] }}" class="badge bg-success border-0"><span
+                <a href="/dashboard/rekammedis/{{ $item['kode_antrian'] }}" class="badge bg-success border-0"><span
                     data-feather="eye"></span></a>
                 <a class="badge bg-warning border-0"
-                  href="/dashboard/listpasien/rekammedis/edit/{{ $item['kode_antrian'] }}"><span
+                  href="/dashboard/listpasien/rekammedis/{{ $item['kode_antrian'] }}"><span
                     data-feather="edit"></span></a>
               @endif
               @if ($item['status'] == 0)

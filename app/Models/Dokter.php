@@ -22,4 +22,9 @@ class Dokter extends Model
     {
         return $this->hasOne(Poli::class, 'dokter');
     }
+
+    public function rekamMedis()
+    {
+        return $this->hasMany(RekamMedis::class, 'dokter');
+    }
 }

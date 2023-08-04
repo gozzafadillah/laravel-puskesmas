@@ -2,7 +2,7 @@
 
 @section('container')
   <div class="row">
-    <div class="d-flex justify-content-between flex-md-nowrap align-items-center border-bottom mb-3 flex-wrap pt-3 pb-2">
+    <div class="d-flex justify-content-between flex-md-nowrap align-items-center border-bottom mb-3 flex-wrap pb-2 pt-3">
       <h1 class="h2">List Pasien Dengan Surat Rujukan</h1>
     </div>
 
@@ -34,6 +34,7 @@
         <thead>
           <tr>
             <th scope="col">Kode Rekam Medis</th>
+            <th scope="col">Nama</th>
             <th scope="col">Action</th>
           </tr>
         </thead>
@@ -41,11 +42,12 @@
           @foreach ($resepObat as $user)
             <tr>
               <td>{{ $user->kode_resep_obat }}</td>
+              <td>{{ $user->rekamMedis->dataAntrian->user->name }}</td>
               <td>
                 <div class="d-flex">
-                  <a class="badge bg-warning m-1 border-0" href="#"><span data-feather="edit"></span></a>
-                  <a href="#" class="badge bg-primary m-1 border-0" data-bs-toggle="modal"
-                    data-bs-target="#exampleModal"><span data-feather="eye"></span></a>
+                  {{-- <a class="badge bg-warning m-1 border-0" href="#"><span data-feather="edit"></span></a> --}}
+                  <a href="/dashboard/resepobat/{{ $user->kode_resep_obat }}" class="badge bg-primary m-1 border-0"><span
+                      data-feather="eye"></span></a>
                   {{-- <a href="#" class="badge bg-danger m-1 border-0"><span data-feather="trash"></span></a> --}}
                 </div>
               </td>
