@@ -66,6 +66,7 @@ Route::get('/categories', function () {
 });
 
 Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest'); //user yang belum login dapat akses
+Route::get("/verifEmail/{token}", [RegisterController::class, "verifEmail"]);
 Route::post('/login', [LoginController::class, 'authenticate']);
 Route::post('/logout', [LoginController::class, 'logout']);
 

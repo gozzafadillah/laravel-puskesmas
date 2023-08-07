@@ -55,8 +55,8 @@
 
             <td>
               <div class="d-flex gap-2">
-                <a href="/dashboard/poli/{{ $poli->kode_poli }}/edit" class="badge bg-success border-0"><span
-                    data-feather="edit"></span></a>
+                {{-- <a href="/dashboard/poli/{{ $poli->kode_poli }}/edit" class="badge bg-success border-0"><span
+                    data-feather="edit"></span></a> --}}
                 <form action="/dashboard/poli/{{ $poli->kode_poli }}" method="POST">
                   @csrf
                   @method('delete')

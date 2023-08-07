@@ -44,7 +44,8 @@
                 </tr>
                 <tr>
                   <th>Dibuat</th>
-                  <td>{{ $data->created_at }}</td>
+                  <td>{{ \Carbon\Carbon::parse($data->created_at)->setTimezone('Asia/Jakarta')->format('d/m/Y H:i:s') }}
+                  </td>
                 </tr>
 
               </tbody>
