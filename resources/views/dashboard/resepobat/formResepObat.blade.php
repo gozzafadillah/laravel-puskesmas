@@ -8,7 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
   </head>
   <div class="row">
-    <div class="d-flex justify-content-between flex-md-nowrap align-items-center border-bottom mb-3 flex-wrap pt-3 pb-2">
+    <div class="d-flex justify-content-between flex-md-nowrap align-items-center border-bottom mb-3 flex-wrap pb-2 pt-3">
       <h1 class="h2">Form Resep Obat</h1>
     </div>
     <div class="table-responsive">
@@ -23,7 +23,7 @@
                 <th>Nama</th>
                 <th>Stok</th>
                 <th>Kuantitas</th>
-                <th>Dosis</th>
+                <th>Catatan</th>
               </tr>
             </thead>
             <tbody>
@@ -39,7 +39,7 @@
                       <input type="number" class="qty" name="qty[{{ $data->kode_obat }}]" value="0">
                     </td>
                     <td>
-                      <input type="text" class="dosis" name="dosis[{{ $data->kode_obat }}]" value="dosis ...">
+                      <textarea type="text" class="dosis" name="dosis[{{ $data->kode_obat }}]" placeholder="catatan ..."></textarea>
                     </td>
                   </tr>
                 @endif

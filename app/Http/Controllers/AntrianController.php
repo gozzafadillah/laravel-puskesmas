@@ -50,6 +50,54 @@ class AntrianController extends Controller
         ]);
     }
 
+    public function getAntrianStatus()
+    {
+        $polis = Poli::with('antrian')->get();
+        $data = [];
+
+        foreach ($polis as $poli) {
+            $query = DB::table('antrian')
+                ->where('kode_poli', $poli->kode_poli)
+                ->where('status', 0)
+                ->orderByRaw("SUBSTRING_INDEX(antrian, '-', -1) ASC")
+                ->value('antrian');
+
+            $newData = [
+                "antrian" => $query,
+                "kode_poli" => $poli->kode_poli
+            ];
+            $data[] = $newData;
+        }
+
+
+        return response()->json($data);
+    }
+
+    public function checkAntrianStatus($tiket)
+    {
+        $cekAdaAntrian = DB::table('antrian')
+            ->where('kode_poli', $tiket->poli->kode_poli)
+            ->where('kode_antrian', "!=", $tiket->kode_antrian)
+            ->whereRaw("SUBSTRING_INDEX(kode_antrian, '-', -1) < SUBSTRING_INDEX(?, '-', -1)", [$tiket->kode_antrian])
+            ->orderByRaw("SUBSTRING_INDEX(kode_antrian, '-', -1) DESC")
+            ->first();
+        if ($cekAdaAntrian === null) {
+            return true;
+        } else {
+            $previousAntrian = DB::table('antrian')
+                ->where('kode_poli', $tiket->poli->kode_poli)
+                ->where('kode_antrian', "!=", $tiket->kode_antrian)
+                ->orderByRaw("SUBSTRING_INDEX(kode_antrian, '-', -1) DESC")
+                ->value('status');
+            if ($previousAntrian === 1) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+
     function checkUserAntrian($nik)
     {
         $antrian = Antrian::where('NIK', $nik)->where('status', 0)->first();
@@ -81,7 +129,7 @@ class AntrianController extends Controller
 
 
         $poliKode = $validateData['kode_poli'];
-
+        $urutan = 1;
 
         $NIK = $validateData['NIK'];
 
@@ -94,39 +142,33 @@ class AntrianController extends Controller
             }
         }
 
-        // Ambil nomor urut terakhir dari kode antrian untuk poli ini
-        $lastKodeAntrian = DB::table('antrian')
-            ->where('kode_poli', $poliKode)->where('status', 0)
-            ->orderByRaw("SUBSTRING_INDEX(antrian, '-', -1) DESC")
-            ->first();
+        // cek database kosong atau tidak 
+        $antrian = Antrian::all();
 
-
-        // Periksa apakah berhasil mendapatkan nomor urut terakhir
-        if ($lastKodeAntrian != null) {
-            $urutan = (int)explode('-', $lastKodeAntrian->antrian)[1] + 1;
-        } else {
-            // Jika tidak ada nomor urut sebelumnya, beri nomor urut awal 1
+        if ($antrian->where("kode_poli", $poliKode)->isEmpty()) {
             $urutan = 1;
-        }
+        } else {
 
-        if ($lastKodeAntrian != null) {
-            // cek tanggal
-            // Set zona waktu ke Indonesia/Jakarta
+            // Ambil nomor urut terakhir dari kode antrian untuk poli ini
+            $lastKodeAntrian = DB::table('antrian')
+                ->where('kode_poli', $poliKode)
+                ->orderBy("created_at", "DESC")
+                ->first();
+            // ambil tanggal sekarang
             $timezone = new CarbonTimeZone('Asia/Jakarta');
             Carbon::setTestNow(Carbon::now()->setTimezone($timezone));
-            // Ambil data tanggal hari ini
             $currentDate = Carbon::now()->format('Ymd');
+            // ambil tanggal dari kode antrian terakhir
             $parts = explode('-', $lastKodeAntrian->kode_antrian);
             $timestamp = end($parts);
             $lastDate = Carbon::createFromTimestamp($timestamp)->format('Ymd');
-
-            ($currentDate === $lastDate) ? $urutan : $urutan = 1;
+            // jika tanggal sekarang sama dengan tanggal kode antrian terakhir maka antrian ditambah 1
+            ($currentDate == $lastDate) ? $urutan = (int)explode('-', $lastKodeAntrian->antrian)[1] + 1 : $urutan = 1;
         }
-
-
-
         $validateData['antrian'] = $poliKode . '-' . str_pad($urutan, 4, '0', STR_PAD_LEFT);
         $validateData['kode_antrian'] = $poliKode . '-' . str_pad($urutan, 4, '0', STR_PAD_LEFT) . '-' . time();
+
+
 
         // Simpan data antrian ke dalam database
         Antrian::create($validateData);

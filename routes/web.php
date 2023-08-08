@@ -76,6 +76,7 @@ Route::post('/register', [RegisterController::class, 'store']);
 // antrian
 Route::get("/antrian", [AntrianController::class, "showAntrians"]);
 Route::post("/antrian", [AntrianController::class, "store"]);
+Route::get('/get-antrian-status', [AntrianController::class, 'getAntrianStatus']);
 
 
 // Middleware auth

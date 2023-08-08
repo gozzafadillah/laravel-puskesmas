@@ -2,83 +2,50 @@
 
 @section('container')
   <div class="row justify-content-center">
-    <div class="col-12 text-center">
-      <h2 class="section-title mb-3">Nomor Antrian</h2>
-    </div>
-    <!-- Poli-item -->
     @foreach ($polis as $poli)
       <div class="col-lg-4 col-sm-6 mb-4">
         <div class="d-block match-height border-0 bg-white px-4 py-5 text-center shadow"
           style="width: 300px; height: 230px;">
-          <p class="h3">{{ $poli->name }}</p>
+          <p class="h2">{{ $poli->name }}</p>
           <br>
-          @foreach ($antrian as $antrianItem)
-            @if ($poli->kode_poli === $antrianItem->kode_poli)
-              @if ($antrianItem->antrian)
-                <p class="fs-1">{{ $antrianItem->antrian }}</p>
-                <p class="mb-0">&nbsp;</p>
-              @else
-                <p class="fs-3">Tidak Ada Antrian</p>
-                <p class="mb-0">&nbsp;</p>
-              @endIf
-            @endif
-          @endforeach
+          <p class="fs-3" id="antrianInfo{{ $poli->kode_poli }}">Loading...</p>
+          <p style="display: none" class="fs-1" id="antrianStatus{{ $poli->kode_poli }}">Loading...</p>
+          <p class="mb-0">&nbsp;</p>
         </div>
       </div>
     @endforeach
-
-    {{-- @if ($checkUserAntrian === true)
-      <div id="daftar-antrian" class="col-lg-12 col-sm-12 mb-5" style="cursor: pointer">
-        <div class="text-light d-block bg-primary match-height border-0 px-4 py-5 text-center shadow"
-          style="height: 150px;">
-          <p class="h3">Daftar Antrian</p>
-        </div>
-      </div>
-    @else
-      <a href="/dashboard/tiket" class="col-lg-12 col-sm-12 mb-5" style="cursor: pointer; text-decoration: none">
-        <div class="text-light d-block bg-success match-height border-0 px-4 py-5 text-center shadow"
-          style="height: 150px;">
-          <p class="h3">Tiket Anda</p>
-        </div>
-      </a>
-    @endif
-
-    {{-- Data daftar antrian --}}
-    {{-- <div id="form-data" class="row justify-content-center" style="display: none">
-      @auth
-        <div class="col-12 text-center">
-          <h2 class="section-title my-2">Daftar Antrian</h2>
-        </div>
-        <div class="col-lg-6 col-sm-6">
-          @include('antrian/formAntrian')
-          <button id="tombol-close" class="btn btn-success mb-5">Close</button>
-        </div>
-      @else
-        <div class="col-12 text-center">
-          <a href="/login" class="btn btn-danger">
-            <h2 class="section-title m-3">Login/Register Terlebih Dahulu!</h2>
-          </a>
-        </div>
-      @endauth
-    </div> --}}
-
   </div>
+@endsection
 
-  <script>
-    $(document).ready(function() {
-      // Event onClick pada tombol "Tambah Data"
-      $('#daftar-antrian').on('click', function() {
-        // Tampilkan form
-        $('#form-data').show();
-        $('#daftar-antrian').hide();
-      });
+<!-- jQuery CDN -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-      // Event onClick pada tombol "Close"
-      $('#tombol-close').on('click', function() {
-        // Sembunyikan form
-        $('#form-data').hide();
-        $('#daftar-antrian').show();
+<script>
+  function updateAntrianInfo(poliKode, antrian) {
+    if (antrian) {
+      $(`#antrianInfo${poliKode}`).text(antrian);
+    } else {
+      $(`#antrianInfo${poliKode}`).text("Antrian Kosong");
+    }
+  }
+
+  function updateAntrianStatus(poliKode, status) {
+    if (status === true) {
+      $(`#antrianStatus${poliKode}`).text("Sedang Dilayani");
+    } else {
+      $(`#antrianStatus${poliKode}`).text("Menunggu");
+    }
+  }
+
+  function getAntrianData() {
+    $.get("/get-antrian-status", function(data) {
+      data.forEach(item => {
+        updateAntrianInfo(item.kode_poli, item.antrian || "Antrian Kosong");
+        updateAntrianStatus(item.kode_poli, item.status);
       });
     });
-  </script>
-@endsection
+  }
+
+  // Mulai polling setiap 5 detik
+  setInterval(getAntrianData, 5000);
+</script>
