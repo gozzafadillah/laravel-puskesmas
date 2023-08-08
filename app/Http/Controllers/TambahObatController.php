@@ -51,6 +51,8 @@ class TambahObatController extends Controller
             'harga' => 'required'
         ]);
 
+        $validatedData['deskripsi'] = $request['deskripsi'];
+
         Obat::create($validatedData);
         return redirect('/dashboard/tambahobat')->with('status', 'Obat Berhasil ditambah');
     }
@@ -89,6 +91,8 @@ class TambahObatController extends Controller
             'stok' => 'required',
             'harga' => 'required'
         ]);
+
+        $validatedData['deskripsi'] = $request['deskripsi'];
 
         Obat::where('kode_obat', $kode_obat)
             ->update($validatedData);

@@ -29,6 +29,11 @@ class LoginController extends Controller
             $userRole = User::where('email', $credential['email'])->first();
             $request->session()->regenerate();
 
+            if ($userRole->cek == 3) {
+                Auth::logout();
+                return back()->with('gagal', 'Akun anda belum di verifikasi');
+            }
+
             switch ($userRole->is_admin) {
                     // admin
                 case 1:

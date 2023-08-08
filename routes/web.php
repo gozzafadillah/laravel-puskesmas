@@ -200,4 +200,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource("/dashboard/antrian", AntrianDashboardController::class);
     Route::get("/dashboard/tiket", [PasienController::class, "getTIket"]);
     Route::delete('/dashboard/tiket/{kodeAntrian}', [PasienController::class, 'cancelAntrian']);
+    Route::get('/check_tiket_status', [PasienController::class, "checkTiketStatus"])->name('check_tiket_status');
 });

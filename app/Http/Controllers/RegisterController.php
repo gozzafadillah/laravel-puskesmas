@@ -39,11 +39,8 @@ class RegisterController extends Controller
 
         $validateData['password'] = bcrypt($validateData['password']);
         // $validateData['password'] = Hash::make($validateData['password']); //fitur enskripsi laravel
-
         // check dia punya bpjs atau tidak
-        if ($validateData['bpjs'] == null) {
-            $validateData['cek'] = 1;
-        }
+        $validateData['cek'] = 3;
 
         // Hitung umur dari tanggal lahir
         $tgllahir = new DateTime($validateData['tgllahir']);
@@ -90,15 +87,19 @@ class RegisterController extends Controller
 
         DB::insert('insert into account_verif values(?, ?, ?, ?, ? ,?)', [null, $data['user_id'], $data['token_verif'],  '0', $data['created_at'], $data['updated_at']]);
         $response = $mj->post(Resources::$Email, ['body' => $body]);
-        ddd($response);
         $response->success() && var_dump($response->getData());
     }
 
     public function verifEmail($token)
     {
         $user = DB::table('account_verif')->where('token_verif', $token)->first();
+        $getUser = User::where('id', $user->user_id)->first();
         if ($user) {
-            User::where('id', $user->user_id)->update(['cek' => 1]);
+            if ($getUser->bpjs != null) {
+                User::where('id', $user->user_id)->update(['cek' => 2]);
+            } else {
+                User::where('id', $user->user_id)->update(['cek' => 1]);
+            }
             DB::table('account_verif')->where('token_verif', $token)->delete();
             return redirect('/login')->with('status', 'Akun Anda Berhasil di Verifikasi, Silahkan Login');
         } else {

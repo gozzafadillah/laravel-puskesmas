@@ -51,4 +51,16 @@ class PasienController extends Controller
             }
         }
     }
+
+    public function checkTiketStatus()
+    {
+        $user = auth()->user();
+        $tiket = Antrian::where('NIK', $user->NIK)
+            ->where('status', 0)
+            ->first();
+        $status = $this->checkAntrianStatus($tiket);
+
+        // Kembalikan status tiket dalam format JSON
+        return response()->json($status);
+    }
 }

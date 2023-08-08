@@ -2,7 +2,7 @@
 
 @section('container')
   <div class="row">
-    <div class="d-flex justify-content-between flex-md-nowrap align-items-center border-bottom mb-3 flex-wrap pt-3 pb-2">
+    <div class="d-flex justify-content-between flex-md-nowrap align-items-center border-bottom mb-3 flex-wrap pb-2 pt-3">
       <h1 class="h2">Pembayaran Users Pasien</h1>
     </div>
 
@@ -53,9 +53,8 @@
                 <td>{{ $user->dataAntrian->name }}</td>
                 <td>
                   <div class="d-flex">
-                    <a class="badge bg-warning m-1 border-0"
-                      href="/dashboard/pembayaran/form/{{ $user->kode_rekammedis }}"><span
-                        data-feather="dollar-sign"></span></a>
+                    <a class="btn btn-success btn-sm"
+                      href="/dashboard/pembayaran/form/{{ $user->kode_rekammedis }}">Bayar</a>
                   </div>
                 </td>
               </tr>

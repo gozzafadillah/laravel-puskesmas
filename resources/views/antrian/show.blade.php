@@ -27,7 +27,7 @@
       </div>
     @endforeach
 
-    @if ($checkUserAntrian === true)
+    {{-- @if ($checkUserAntrian === true)
       <div id="daftar-antrian" class="col-lg-12 col-sm-12 mb-5" style="cursor: pointer">
         <div class="text-light d-block bg-primary match-height border-0 px-4 py-5 text-center shadow"
           style="height: 150px;">
@@ -44,7 +44,7 @@
     @endif
 
     {{-- Data daftar antrian --}}
-    <div id="form-data" class="row justify-content-center" style="display: none">
+    {{-- <div id="form-data" class="row justify-content-center" style="display: none">
       @auth
         <div class="col-12 text-center">
           <h2 class="section-title my-2">Daftar Antrian</h2>
@@ -60,7 +60,7 @@
           </a>
         </div>
       @endauth
-    </div>
+    </div> --}}
 
   </div>
 

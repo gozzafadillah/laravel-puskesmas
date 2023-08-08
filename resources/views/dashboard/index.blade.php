@@ -7,7 +7,11 @@
 
   @if (auth()->user()->cek == 2)
     <div class="alert alert-danger" role="alert">
-      Tunggu Petugas Verifikasi Data BPJS Kamu yaaa! Jika waktunya lebih dari 2 Jam Silahkan Hubungi Petugas!
+      @if (auth()->user()->bpjs != null)
+        Tunggu Petugas Verifikasi Data BPJS Kamu yaaa! Jika waktunya lebih dari 2 Jam Silahkan Hubungi Petugas!
+      @else
+        Silahkan Verifikasi Email Anda!
+      @endif
     </div>
   @elseif(auth()->user()->cek == 0)
     <div class="alert alert-danger" role="alert">

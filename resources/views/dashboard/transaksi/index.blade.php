@@ -60,7 +60,8 @@
                   <form action="/dashboard/transaksi/{{ $pembayaran->transaksi->invoice }}" method="post">
                     @csrf
                     @method('put')
-                    <button type="submit" style="text-decoration: none" class="badge bg-success border-0">Bayar</button>
+                    <button type="submit" style="text-decoration: none"
+                      class="badge bg-{{ $pembayaran->transaksi->status != 'Settled' ? 'danger' : 'success' }} border-0">Bayar</button>
                   </form>
                   <a class="badge bg-primary border-0" style="text-decoration: none"
                     href="/dashboard/transaksi/{{ $pembayaran->kode_notapembayaran }}"><span
