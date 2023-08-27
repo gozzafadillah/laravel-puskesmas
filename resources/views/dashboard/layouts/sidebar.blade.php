@@ -146,15 +146,13 @@
              Log Resep Obat
            </a>
          </li>
-         @if (auth()->user()->bpjs == null)
-           <li class="nav-item">
-             <a class="nav-link {{ Request::is('dashboard/log/suratrujukan') ? 'active' : '' }}{{ auth()->user()->cek == 0 || auth()->user()->cek == 2 ? ' disabled' : '' }}"
-               href="/dashboard/log/suratrujukan" @if (auth()->user()->cek == 0 || auth()->user()->cek == 2) style="color: gray" @endif>
-               <span data-feather="grid" class="align-text-bottom"></span>
-               Log Surat Rujukan
-             </a>
-           </li>
-         @endif
+         <li class="nav-item">
+           <a class="nav-link {{ Request::is('dashboard/log/suratrujukan') ? 'active' : '' }}{{ auth()->user()->cek == 0 || auth()->user()->cek == 2 ? ' disabled' : '' }}"
+             href="/dashboard/log/suratrujukan" @if (auth()->user()->cek == 0 || auth()->user()->cek == 2) style="color: gray" @endif>
+             <span data-feather="grid" class="align-text-bottom"></span>
+             Log Surat Rujukan
+           </a>
+         </li>
 
          @if (auth()->user()->bpjs == null)
            <li class="nav-item">

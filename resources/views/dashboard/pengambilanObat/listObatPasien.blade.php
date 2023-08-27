@@ -2,7 +2,7 @@
 
 @section('container')
   <div class="container mb-5">
-    <div class="d-flex justify-content-between flex-md-nowrap align-items-center border-bottom mb-3 flex-wrap pt-3 pb-2">
+    <div class="d-flex justify-content-between flex-md-nowrap align-items-center border-bottom mb-3 flex-wrap pb-2 pt-3">
       <h1 class="h2">Pengambilan Obat</h1>
     </div>
 
@@ -42,7 +42,7 @@
                   @if ($resep->status !== 1)
                     <p>Stok yang tersedia : {{ $obat_resep->stok }}</p>
                   @endif
-                  <p style="font-weight: bold">Dosis : {{ $resep->dosis }}</p>
+                  <p style="font-weight: bold">Catatan : {{ $resep->dosis }}</p>
                 @endif
               @endforeach
               @if ($resep->status !== 1)

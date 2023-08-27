@@ -72,7 +72,7 @@
                       @endif
                     @endforeach
                     <p class="card-text">Kuantitas: {{ $resepObat->qty }}</p>
-                    <p class="card-text">Dosis: {{ $resepObat->dosis }}</p>
+                    <p class="card-text">Catatan: {{ $resepObat->dosis }}</p>
                   </div>
                 </div>
               @endforeach

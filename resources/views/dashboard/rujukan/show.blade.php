@@ -52,12 +52,11 @@
                   <td>{{ \Carbon\Carbon::parse($data->created_at)->setTimezone('Asia/Jakarta')->format('d/m/Y H:i:s') }}
                   </td>
                 </tr>
-
               </tbody>
             </table>
           </div>
           <a href="{{ url()->previous() }}" class="btn btn-primary mb-3">Kembali</a>
-          @if (auth()->user()->is_admin == 0)
+          @if (auth()->user()->is_admin == 0 && !auth()->user()->bpjs)
             <a href="/dashboard/pdf/suratRujukan/{{ $data->kode_rujukan }}" class="btn btn-success mb-3">Unduh</a>
           @endif
         </div>

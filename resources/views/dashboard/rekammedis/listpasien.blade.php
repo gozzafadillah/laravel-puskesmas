@@ -5,13 +5,15 @@
   @php
     $index = 0;
   @endphp
-  @foreach ($pasien as $item)
-    @php
-      if ($item['status'] == 0) {
-          $index++;
-      }
-    @endphp
-  @endforeach
+  @if ($pasien !== null)
+    @foreach ($pasien as $item)
+      @php
+        if ($item['status'] == 0) {
+            $index++;
+        }
+      @endphp
+    @endforeach
+  @endif
   <div class="d-flex justify-content-between flex-md-nowrap align-items-center border-bottom mb-3 flex-wrap pb-2 pt-3">
     <h1 class="h2">List Pasien</h1>
   </div>
@@ -48,57 +50,64 @@
         </tr>
       </thead>
       <tbody>
-        @php
-          if ($index > 1) {
-              $isDisabled = true; // Mengatur isDisabled menjadi true pada awal iterasi
-          } else {
-              $isDisabled = false; // Mengatur isDisabled menjadi true pada awal iterasi
-          }
-        @endphp
-        @foreach ($pasien as $item)
-          <tr>
-            <td>{{ $item['kode_antrian'] }}</td>
-            <td>{{ $item['name'] }}</td>
-            <td>{{ $item['NIK'] }}</td>
-            <td>{!! $item['status'] != 1
-                ? "<a href='#' class='badge bg-success border-0 text-decoration-none'>belum dicek</a>"
-                : "<a href='#' class='badge bg-danger border-0 text-decoration-none'>sudah dicek</a>" !!}</td>
-            <td>{{ \Carbon\Carbon::parse($item['created_at'])->setTimezone('Asia/Jakarta')->format('d/m/Y H:i:s') }}</td>
-            <td style="display:flex; flex-direction: row; gap: 10px;">
-              @if ($item['status'] == 0)
-                @if ($isDisabled == true)
-                  <span class="badge bg-primary disabled border-0" role="button" aria-disabled="true"><span
-                      data-feather="plus"></span></span>
-                @else
-                  <a class="badge bg-primary border-0" role="button"
-                    href="/dashboard/listpasien/rekammedis/form/{{ $item['kode_antrian'] }}"><span
-                      data-feather="plus"></span></a>
-                  @php
-                    $isDisabled = true; // tombol terbuka, variabel diubah menjadi true agar tombol selanjutnya dinonaktifkan
-                  @endphp
-                @endif
-              @else
-                <a href="/dashboard/rekammedis/{{ $item['kode_antrian'] }}" class="badge bg-success border-0"><span
-                    data-feather="eye"></span></a>
-                <a class="badge bg-warning border-0"
-                  href="/dashboard/listpasien/rekammedis/{{ $item['kode_antrian'] }}"><span
-                    data-feather="edit"></span></a>
-              @endif
-              @if ($item['status'] == 0)
-                <form action="/dashboard/tiket/{{ $item['kode_antrian'] }}" method="POST">
-                  @csrf
-                  @method('delete')
-                  <button type="submit" class="badge bg-danger border-0"
-                    onclick="return confirm('Are you sure you want to delete antrian?')"><span
-                      data-feather="trash"></span></button>
-                </form>
-              @endif
-            </td>
-          </tr>
+        @if ($pasien !== null)
           @php
-            $isDisabled = false; // Mengatur isDisabled menjadi false setelah tombol ditampilkan
+            if ($index > 1) {
+                $isDisabled = true; // Mengatur isDisabled menjadi true pada awal iterasi
+            } else {
+                $isDisabled = false; // Mengatur isDisabled menjadi true pada awal iterasi
+            }
           @endphp
-        @endforeach
+          @foreach ($pasien as $item)
+            <tr>
+              <td>{{ $item['kode_antrian'] }}</td>
+              <td>{{ $item['name'] }}</td>
+              <td>{{ $item['NIK'] }}</td>
+              <td>{!! $item['status'] != 1
+                  ? "<a href='#' class='badge bg-success border-0 text-decoration-none'>belum dicek</a>"
+                  : "<a href='#' class='badge bg-danger border-0 text-decoration-none'>sudah dicek</a>" !!}</td>
+              <td>{{ \Carbon\Carbon::parse($item['created_at'])->setTimezone('Asia/Jakarta')->format('d/m/Y H:i:s') }}
+              </td>
+              <td style="display:flex; flex-direction: row; gap: 10px;">
+                @if ($item['status'] == 0)
+                  @if ($isDisabled == true)
+                    <span class="badge bg-primary disabled border-0" role="button" aria-disabled="true"><span
+                        data-feather="plus"></span></span>
+                  @else
+                    <a class="badge bg-primary border-0" role="button"
+                      href="/dashboard/listpasien/rekammedis/form/{{ $item['kode_antrian'] }}"><span
+                        data-feather="plus"></span></a>
+                    @php
+                      $isDisabled = true; // tombol terbuka, variabel diubah menjadi true agar tombol selanjutnya dinonaktifkan
+                    @endphp
+                  @endif
+                @else
+                  <a href="/dashboard/rekammedis/{{ $item['kode_antrian'] }}" class="badge bg-success border-0"><span
+                      data-feather="eye"></span></a>
+                  <a class="badge bg-warning border-0"
+                    href="/dashboard/listpasien/rekammedis/{{ $item['kode_antrian'] }}"><span
+                      data-feather="edit"></span></a>
+                @endif
+                @if ($item['status'] == 0)
+                  <form action="/dashboard/tiket/{{ $item['kode_antrian'] }}" method="POST">
+                    @csrf
+                    @method('delete')
+                    <button type="submit" class="badge bg-danger border-0"
+                      onclick="return confirm('Are you sure you want to delete antrian?')"><span
+                        data-feather="trash"></span></button>
+                  </form>
+                @endif
+              </td>
+            </tr>
+            @php
+              $isDisabled = false; // Mengatur isDisabled menjadi false setelah tombol ditampilkan
+            @endphp
+          @endforeach
+        @else
+          <tr>
+            <td colspan="6" class="text-center">Data Kosong</td>
+          </tr>
+        @endif
       </tbody>
 
     </table>
