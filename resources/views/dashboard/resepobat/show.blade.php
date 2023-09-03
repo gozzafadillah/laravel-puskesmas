@@ -29,7 +29,7 @@
                   <tr>
                     <th>Rekammedis</th>
                     <td><a style="text-decoration: none; color:rgb(49, 163, 49); font-weight: bold;"
-                        href="/dashboard/listpasien/{{ $data->rekamMedis->antrian }}">Link
+                        href="/dashboard/rekammedis/{{ $data->rekamMedis->antrian }}">Link
                         Rekammedis</a>
                     </td>
                   </tr>
