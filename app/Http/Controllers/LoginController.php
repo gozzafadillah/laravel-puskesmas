@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class LoginController extends Controller
 {
@@ -67,5 +68,12 @@ class LoginController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/home');
+    }
+
+    public function link()
+    {
+        Storage::link();
+
+        return redirect()->back();
     }
 }

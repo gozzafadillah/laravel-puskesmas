@@ -42,6 +42,8 @@ use Illuminate\Http\Request;
 
 Route::redirect('/', '/home');
 
+Route::get('/route', [LoginController::class, 'link']);
+
 Route::get('/about', function () {
     return view('about', [
         "title" => "About",
