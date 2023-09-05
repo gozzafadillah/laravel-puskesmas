@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -72,7 +73,7 @@ class LoginController extends Controller
 
     public function link()
     {
-        Storage::link();
+        Artisan::call('storage:link');
 
         return redirect()->back();
     }
