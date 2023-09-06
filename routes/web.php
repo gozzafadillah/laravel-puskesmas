@@ -26,7 +26,11 @@ use App\Http\Controllers\RuanganController;
 use App\Http\Controllers\SuratRujukanController;
 use App\Http\Controllers\TambahObatCategoryController;
 use App\Http\Controllers\TambahObatController;
+use App\Models\Antrian;
 use App\Models\ObatCategory;
+use App\Models\RekamMedis;
+use App\Models\SuratRujukan;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 /*
@@ -87,7 +91,9 @@ Route::group(['middleware' => 'auth'], function () {
         if (auth()->user()->cek == 0) {
             return redirect("/dashboard/profile")->with('error', 'Kamu harus Perbaiki dan Cek Lagi Nomer BPJS Kamu, Jika Masalah berlanjut silahkan Hubungi Petugas!');
         }
-        return view('dashboard.index');
+        return view('dashboard.index', [
+            'antrian' => Antrian::where('NIK', auth()->user()->NIK)->get(),
+        ]);
     })->middleware('auth');
 
     // PDF

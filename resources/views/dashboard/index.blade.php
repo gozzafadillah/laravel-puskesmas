@@ -30,7 +30,13 @@
         <div class="card bg-primary text-light">
           <div class="card-body">
             <h5 class="card-title">Rekam Medis</h5>
-            <h5 class="card-text text-center">10</h5>
+            <?php
+            $dataAntrian = [];
+            foreach ($antrian as $value) {
+                array_push($dataAntrian, $value->rekamMedis);
+            }
+            ?>
+            <h5 class="card-text text-center">{{ count($dataAntrian) }}</h5>
           </div>
         </div>
       </div>
@@ -38,7 +44,15 @@
         <div class="card bg-success text-light">
           <div class="card-body">
             <h5 class="card-title">Surat Rujukan</h5>
-            <h5 class="card-text text-center">1</h5>
+            <?php
+            $suratRujukan = 0;
+            foreach ($dataAntrian as $value) {
+                if ($value->suratRujukan) {
+                    $suratRujukan++;
+                }
+            }
+            ?>
+            <h5 class="card-text text-center">{{ $suratRujukan }}</h5>
           </div>
         </div>
       </div>
@@ -46,7 +60,18 @@
         <div class="card bg-danger text-light">
           <div class="card-body">
             <h5 class="card-title">Resep Obat</h5>
-            <h5 class="card-text text-center">2</h5>
+            <?php
+            $resepObat = 0;
+            foreach ($dataAntrian as $value) {
+                if ($value->resepObat) {
+                    $resepObat++;
+                }
+            }
+            
+            ?>
+
+
+            <h5 class="card-text text-center">{{ $resepObat }}</h5>
           </div>
         </div>
       </div>

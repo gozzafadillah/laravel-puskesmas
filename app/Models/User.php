@@ -63,6 +63,6 @@ class User extends Authenticatable
 
     public function Antrian()
     {
-        return $this->hasOne(Antrian::class, "NIK");
+        return $this->hasMany(Antrian::class, "NIK", 'NIK');
     }
 }
