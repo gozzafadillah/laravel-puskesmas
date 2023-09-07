@@ -61,7 +61,9 @@
                     @csrf
                     @method('put')
                     <button type="submit" style="text-decoration: none"
-                      class="badge bg-{{ $pembayaran->transaksi->status != 'Settled' ? 'danger' : 'success' }} border-0">Bayar</button>
+                      class="badge bg-{{ $pembayaran->transaksi->status != 'Settled' ? 'danger' : 'success' }} border-0"
+                      onclick="return 
+                       confirm('apakah sudah bayar?')">Bayar</button>
                   </form>
                   <a class="badge bg-primary border-0" style="text-decoration: none"
                     href="/dashboard/transaksi/{{ $pembayaran->kode_notapembayaran }}"><span
